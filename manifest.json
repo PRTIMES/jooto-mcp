@@ -1,0 +1,222 @@
+{
+  "manifest_version": "0.3",
+  "name": "jooto-mcp-server",
+  "display_name": "Jooto",
+  "version": "0.0.0",
+  "description": "Jooto project management tool integration. Create, update, and manage projects, tasks, lists, labels, checklists, and comments.",
+  "long_description": "Jooto MCP Server provides full integration with the Jooto project management API. Manage your projects, tasks, lists, labels, checklists, comments, and team members directly from Claude Desktop. Requires a Jooto Enterprise plan API key.",
+  "author": {
+    "name": "jooto-mcp-server"
+  },
+  "license": "ISC",
+  "server": {
+    "type": "node",
+    "entry_point": "server.cjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server.cjs"
+      ],
+      "env": {
+        "JOOTO_API_KEY": "${user_config.jooto_api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "jooto_api_key": {
+      "type": "string",
+      "title": "Jooto API Key",
+      "description": "Your Jooto Enterprise plan API key. Get it from Jooto settings.",
+      "required": true,
+      "sensitive": true
+    }
+  },
+  "tools": [
+    {
+      "name": "jooto-list-board",
+      "description": "List projects"
+    },
+    {
+      "name": "jooto-get-board",
+      "description": "Get project details"
+    },
+    {
+      "name": "jooto-create-board",
+      "description": "Create a new project"
+    },
+    {
+      "name": "jooto-update-board",
+      "description": "Update a project"
+    },
+    {
+      "name": "jooto-delete-board",
+      "description": "Delete a project"
+    },
+    {
+      "name": "jooto-list-member",
+      "description": "List project members"
+    },
+    {
+      "name": "jooto-list-list",
+      "description": "List all lists in a project"
+    },
+    {
+      "name": "jooto-get-list",
+      "description": "Get list details"
+    },
+    {
+      "name": "jooto-create-list",
+      "description": "Create a new list"
+    },
+    {
+      "name": "jooto-update-list",
+      "description": "Update a list"
+    },
+    {
+      "name": "jooto-delete-list",
+      "description": "Delete a list"
+    },
+    {
+      "name": "jooto-archive-list",
+      "description": "Archive a list"
+    },
+    {
+      "name": "jooto-reorder-list",
+      "description": "Reorder lists"
+    },
+    {
+      "name": "jooto-list-task",
+      "description": "List tasks in a project"
+    },
+    {
+      "name": "jooto-get-task",
+      "description": "Get task details"
+    },
+    {
+      "name": "jooto-create-task",
+      "description": "Create a new task"
+    },
+    {
+      "name": "jooto-update-task",
+      "description": "Update a task"
+    },
+    {
+      "name": "jooto-delete-task",
+      "description": "Delete a task"
+    },
+    {
+      "name": "jooto-search-task",
+      "description": "Search tasks by keyword"
+    },
+    {
+      "name": "jooto-move-task",
+      "description": "Move a task between lists/projects"
+    },
+    {
+      "name": "jooto-archive-task",
+      "description": "Archive a task"
+    },
+    {
+      "name": "jooto-list-comment",
+      "description": "List task comments"
+    },
+    {
+      "name": "jooto-get-comment",
+      "description": "Get a specific comment"
+    },
+    {
+      "name": "jooto-create-comment",
+      "description": "Add a comment to a task"
+    },
+    {
+      "name": "jooto-update-comment",
+      "description": "Update a comment"
+    },
+    {
+      "name": "jooto-list-label",
+      "description": "List project labels"
+    },
+    {
+      "name": "jooto-get-label",
+      "description": "Get label details"
+    },
+    {
+      "name": "jooto-create-label",
+      "description": "Create a label"
+    },
+    {
+      "name": "jooto-update-label",
+      "description": "Update a label"
+    },
+    {
+      "name": "jooto-delete-label",
+      "description": "Delete a label"
+    },
+    {
+      "name": "jooto-list-checklist",
+      "description": "List task checklists"
+    },
+    {
+      "name": "jooto-get-checklist",
+      "description": "Get checklist details"
+    },
+    {
+      "name": "jooto-create-checklist",
+      "description": "Create a checklist"
+    },
+    {
+      "name": "jooto-update-checklist",
+      "description": "Update a checklist"
+    },
+    {
+      "name": "jooto-delete-checklist",
+      "description": "Delete a checklist"
+    },
+    {
+      "name": "jooto-list-checklist-item",
+      "description": "List checklist items"
+    },
+    {
+      "name": "jooto-get-checklist-item",
+      "description": "Get a checklist item"
+    },
+    {
+      "name": "jooto-create-checklist-item",
+      "description": "Create a checklist item"
+    },
+    {
+      "name": "jooto-update-checklist-item",
+      "description": "Update a checklist item"
+    },
+    {
+      "name": "jooto-delete-checklist-item",
+      "description": "Delete a checklist item"
+    },
+    {
+      "name": "jooto-get-organization",
+      "description": "Get organization info"
+    },
+    {
+      "name": "jooto-list-user",
+      "description": "List all users"
+    },
+    {
+      "name": "jooto-get-user",
+      "description": "Get user details"
+    },
+    {
+      "name": "jooto-get-rate-limit",
+      "description": "Check API rate limits"
+    }
+  ],
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=14.0.0"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "typescript-mcp-server",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc -w & node --watch dist/index.js",
+    "test": "vitest run tests/*-mock.test.js",
+    "test:watch": "vitest",
+    "build:mcpb": "bash scripts/build-mcpb.sh",
+    "version": "node scripts/sync-manifest-version.mjs && git add manifest.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "esbuild": "^0.27.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  }
+}

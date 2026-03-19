@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "user-api": {
+      "command": "node",
+      "args": ["test-server.js"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "jooto-api": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "JOOTO_API_KEY": "YOUR_JOOTO_API_KEY_HERE"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

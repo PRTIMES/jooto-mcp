@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpm build:mcpb
+
+      - name: Create source zip
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          STAGE="jooto-mcp-server-${VERSION}"
+          mkdir "$STAGE"
+          cp dist/bundle.cjs "$STAGE/server.cjs"
+          cp README.md LICENSE manifest.json "$STAGE/"
+          zip -rq "dist/${STAGE}.zip" "$STAGE"
+          rm -rf "$STAGE"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.mcpb
+            dist/*.zip
+          generate_release_notes: true

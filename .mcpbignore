@@ -1,0 +1,11 @@
+src/
+tests/
+*.ts
+tsconfig.json
+vitest.config.js
+.git/
+.gitignore
+mcp-config.json
+jooto-openapi.json
+scripts/
+dist/mcpb-staging/

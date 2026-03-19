@@ -1,0 +1,140 @@
+/**
+ * MCP Resource Template 定義
+ *
+ * URI スキーム: jooto:///...
+ * Jooto ドメイン語彙: board→project, category→label
+ */
+
+export interface ResourceTemplateDefinition {
+  uriTemplate: string;
+  name: string;
+  description: string;
+  mimeType: string;
+}
+
+export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
+  // === Organization ===
+  {
+    uriTemplate: 'jooto:///organization',
+    name: '組織情報',
+    description: '組織情報を取得します',
+    mimeType: 'application/json',
+  },
+  // === Rate Limit ===
+  {
+    uriTemplate: 'jooto:///rate-limit',
+    name: 'レート制限情報',
+    description: 'APIのレート制限情報を取得します',
+    mimeType: 'application/json',
+  },
+  // === Users ===
+  {
+    uriTemplate: 'jooto:///users',
+    name: 'ユーザー一覧',
+    description: 'ユーザー一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///users/{userId}',
+    name: 'ユーザー詳細',
+    description: '特定のユーザー情報を取得します',
+    mimeType: 'application/json',
+  },
+  // === Projects (= boards) ===
+  {
+    uriTemplate: 'jooto:///projects',
+    name: 'プロジェクト一覧',
+    description: 'プロジェクト一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}',
+    name: 'プロジェクト詳細',
+    description: '特定のプロジェクト情報を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/members',
+    name: 'プロジェクトメンバー一覧',
+    description: 'プロジェクトのメンバー一覧を取得します',
+    mimeType: 'application/json',
+  },
+  // === Lists ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/lists',
+    name: 'リスト一覧',
+    description: 'プロジェクト内のリスト一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/lists/{listId}',
+    name: 'リスト詳細',
+    description: 'プロジェクト内の特定のリスト情報を取得します',
+    mimeType: 'application/json',
+  },
+  // === Labels (= categories) ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/labels',
+    name: 'ラベル一覧',
+    description: 'プロジェクトのラベル一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/labels/{labelId}',
+    name: 'ラベル詳細',
+    description: '特定のラベルを取得します',
+    mimeType: 'application/json',
+  },
+  // === Tasks ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks',
+    name: 'タスク一覧',
+    description: 'プロジェクト内のタスク一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}',
+    name: 'タスク詳細',
+    description: '特定のプロジェクト内の特定のタスク情報を取得します',
+    mimeType: 'application/json',
+  },
+  // === Comments ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments',
+    name: 'コメント一覧',
+    description: 'タスクのコメント一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments/{commentId}',
+    name: 'コメント詳細',
+    description: '特定のコメントを取得します',
+    mimeType: 'application/json',
+  },
+  // === Checklists ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists',
+    name: 'チェックリスト一覧',
+    description: 'タスクのチェックリスト一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}',
+    name: 'チェックリスト詳細',
+    description: '特定のチェックリストを取得します',
+    mimeType: 'application/json',
+  },
+  // === Checklist Items ===
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items',
+    name: 'チェックリストアイテム一覧',
+    description: 'チェックリストのアイテム一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items/{itemId}',
+    name: 'チェックリストアイテム詳細',
+    description: '特定のチェックリストアイテムを取得します',
+    mimeType: 'application/json',
+  },
+];

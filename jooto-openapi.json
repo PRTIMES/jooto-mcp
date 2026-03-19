@@ -1,0 +1,6333 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Jooto API",
+    "version": "1.0",
+    "description": "タスク・プロジェクト管理ツールJooto（https://www.jooto.com）のオープンAPIドキュメントです。Jooto APIはエンタープライズプランでのみご利用いただけます。不具合やご不明点等ございましたらお問い合わせよりご連絡くださいませ。"
+  },
+  "servers": [
+    {
+      "url": "https://api.jooto.com"
+    }
+  ],
+  "paths": {
+    "/v1/organization": {
+      "parameters": [],
+      "get": {
+        "summary": "組織情報取得",
+        "operationId": "get-organizations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        },
+        "description": "組織の詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "組織の更新",
+        "operationId": "update-organization",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrganizationPatchRequestBody"
+        },
+        "description": "組織の更新",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/users": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/order"
+        },
+        {
+          "$ref": "#/components/parameters/order_by"
+        },
+        {
+          "$ref": "#/components/parameters/per_page"
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        }
+      ],
+      "get": {
+        "summary": "ユーザー一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/OrganizationUser"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-organizations-id-users",
+        "description": "組織のユーザー一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/notifications": {
+      "get": {
+        "summary": "お知らせ一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "notifications": {
+                          "type": "array",
+                          "description": "取得したお知らせの一覧",
+                          "items": {
+                            "$ref": "#/components/schemas/Activity"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-system_notifications",
+        "description": "組織のお知らせを取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/users/{id}/role": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ユーザーのID"
+        }
+      ],
+      "put": {
+        "summary": "ユーザー権限更新",
+        "operationId": "put-organization-id-users-user_id-role",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationUser"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrganizationUserRolePutRequestBody"
+        },
+        "description": "組織のユーザーの権限を更新する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ユーザーのID"
+        }
+      ],
+      "get": {
+        "summary": "ユーザー情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationUser"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-organization-id-users-user_id",
+        "description": "組織のユーザーの詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards": {
+      "get": {
+        "summary": "プロジェクト一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Board"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-projects",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "archived",
+            "description": "省略された場合は全てのプロジェクトを、false の場合はアーカイブされていないプロジェクトを、true の場合はアーカイブされたプロジェクトを返却します。"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/order_by_order_id_title"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "description": "組織内プロジェクトの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "プロジェクト新規作成",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-projects",
+        "description": "プロジェクトを新規作成する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BoardPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/boards/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "get": {
+        "summary": "プロジェクト情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id",
+        "description": "プロジェクトの詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "プロジェクト情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-boards-id",
+        "description": "プロジェクトの詳細情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BoardPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "アーカイブプロジェクト削除",
+        "operationId": "delete-boards-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "description": "アーカイブされたプロジェクトを削除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/archive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "post": {
+        "summary": "プロジェクトアーカイブ",
+        "operationId": "post-boards-id-archive",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "description": "プロジェクトをアーカイブする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/unarchive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "post": {
+        "summary": "アーカイブプロジェクト復元",
+        "operationId": "post-boards-id-unarchive",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "description": "アーカイブプロジェクトの復元をする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/v1/boards/update_order": {
+      "post": {
+        "summary": "プロジェクト順序変更",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Board"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-update_order",
+        "description": "プロジェクトの並び順を変更する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "board_ids": {
+                    "type": "array",
+                    "description": "プロジェクトのIDの配列",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "required": [
+                  "board_ids"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/favorites": {
+      "get": {
+        "summary": "お気に入りプロジェクト一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "boards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Board"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-favorites",
+        "description": "組織内お気に入りプロジェクトの一覧を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/order_by_order_id_title"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "お気に入りプロジェクト追加",
+        "operationId": "post-boards-favorites",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "description": "お気に入りプロジェクトへ追加する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "board_id": {
+                    "type": "string",
+                    "description": "プロジェクトのID"
+                  },
+                  "order_id": {
+                    "type": "string",
+                    "description": "プロジェクトの位置"
+                  }
+                },
+                "required": [
+                  "board_id"
+                ]
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/favorites/{id}": {
+      "delete": {
+        "summary": "お気に入りプロジェクト削除",
+        "operationId": "delete-boards-favorites",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "description": "お気に入りプロジェクトから削除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ]
+    },
+    "/v1/boards/favorites/update_order": {
+      "post": {
+        "summary": "お気に入りプロジェクト順序変更",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-board-favorites-update_order",
+        "description": "お気に入りプロジェクトの並び順を変更する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "board_id": {
+                    "type": "number",
+                    "description": "プロジェクトのID"
+                  },
+                  "order_id": {
+                    "type": "number",
+                    "description": "プロジェクトの位置"
+                  }
+                },
+                "required": [
+                  "board_id",
+                  "order_id"
+                ]
+              }
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/notification_config": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "get": {
+        "summary": "お知らせ設定取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationConfig"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-notifications",
+        "description": "プロジェクトのお知らせ設定情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "お知らせ設定更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationConfig"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-boards-id-notifications",
+        "description": "プロジェクトのお知らせ設定情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NotificationConfigPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/activities": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "$ref": "#/components/parameters/per_page"
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        }
+      ],
+      "get": {
+        "summary": "行動履歴取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "activities": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Activity"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-histories",
+        "description": "プロジェクトの行動履歴を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/users": {
+      "get": {
+        "summary": "メンバー一覧取得",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "プロジェクトのID"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/order_by"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BoardUser"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-users",
+        "description": "プロジェクトに所属するメンバーの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "メンバー追加",
+        "operationId": "post-boards-id-users",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "プロジェクトのID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BoardUser"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "プロジェクトにメンバーを追加する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "users": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AddUserPayload"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/users/{user_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "ユーザーのID"
+        }
+      ],
+      "delete": {
+        "summary": "メンバー削除",
+        "operationId": "delete-boards-id-users",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "プロジェクトからメンバーを削除する"
+      }
+    },
+    "/v1/boards/{id}/users/{user_id}/role": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "ユーザーのID"
+        }
+      ],
+      "put": {
+        "summary": "メンバー権限更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoardUser"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "put-boards-id-users-user_id-role",
+        "description": "プロジェクトメンバーの権限を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BoardUserRolePutRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/attachments": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "get": {
+        "summary": "添付ファイル一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "attachments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Attachment"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-attachments",
+        "description": "添付ファイルの一覧を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/attachments/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "添付ファイルのID"
+        }
+      ],
+      "get": {
+        "summary": "添付ファイルダウンロード",
+        "tags": [],
+        "operationId": "get-attachments-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "添付ファイルをダウンロードする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "添付ファイル削除",
+        "operationId": "delete-attachments-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "description": "添付ファイルを削除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/lists": {
+      "get": {
+        "summary": "リスト一覧取得",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "プロジェクトのID"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "name": "archived",
+            "in": "query",
+            "required": false,
+            "description": "アーカイブされたかどうか"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "lists": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/List"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-lists",
+        "description": "プロジェクト内リストの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "リスト作成",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "プロジェクトのID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-lists",
+        "description": "リストを新規作成する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ListPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/lists/{list_id}/archive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "リストのID"
+        }
+      ],
+      "post": {
+        "summary": "リストのアーカイブ",
+        "operationId": "post-boards-id-lists-list_id-archive",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                }
+              }
+            }
+          }
+        },
+        "description": "リストをアーカイブする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/lists/{list_id}/unarchive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "リストのID"
+        }
+      ],
+      "post": {
+        "summary": "アーカイブリスト復元",
+        "operationId": "post-boards-id-lists-list_id-unarchive",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                }
+              }
+            }
+          }
+        },
+        "description": "アーカイブリストを復元する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/lists/{list_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "リストのID"
+        }
+      ],
+      "patch": {
+        "summary": "リスト情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-board-id-lists-list_id",
+        "description": "リストの詳細情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ListPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "リスト情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-board-id-lists-list_id",
+        "description": "リストの詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "アーカイブリスト削除",
+        "operationId": "delete-board-id-lists-list_id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "description": "アーカイブされたリストを削除する",
+        "parameters": [],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/lists/update_order": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "リスト順序変更",
+        "operationId": "post-boards-id-lists-update_order",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "lists": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/List"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "リストの並び順を変更する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "list_ids": {
+                    "type": "array",
+                    "description": "リストのIDの配列",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "required": [
+                  "list_ids"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "get": {
+        "summary": "タスク一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tasks": {
+                          "$ref": "#/components/schemas/Task"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-tasks",
+        "description": "プロジェクト内タスクの一覧を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "category_ids",
+            "description": "ラベルのIDの配列"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "in": "query",
+            "name": "assignee_ids",
+            "description": "担当者のID"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "in": "query",
+            "name": "deadline_since",
+            "description": "指定した日時以降の締め切りのタスクを取得する"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "in": "query",
+            "description": "指定した日時以前の締め切りのタスクを取得する",
+            "name": "deadline_until"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "followed",
+            "description": "フォローされているかどうか"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "archived",
+            "description": "アーカイブされているかどうか"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "to_do",
+                  "done",
+                  "cancel",
+                  "pending"
+                ]
+              }
+            },
+            "in": "query",
+            "required": false,
+            "name": "status",
+            "description": "タスクのステータス"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "タスク作成",
+        "operationId": "post-boards-id-tasks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "description": "タスクを新規作成する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TaskPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/search": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "get": {
+        "summary": "タスク一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tasks": {
+                          "$ref": "#/components/schemas/TaskSearch"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-tasks-search",
+        "description": "プロジェクト内タスクの一覧を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search_query",
+            "description": "フリーワード検索用のクエリ"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks/{task_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "patch": {
+        "summary": "タスク情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-boards-id-tasks-task_id",
+        "description": "タスクの詳細情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TaskPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "アーカイブタスク削除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "delete-boards-id-tasks-task_id",
+        "description": "アーカイブされたタスクを削除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "タスク情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-tasks-task_id",
+        "description": "タスクの詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/move": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "タスク移動",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-tasks-id-move",
+        "description": "タスクを移動する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "board_id": {
+                    "type": "number",
+                    "description": "プロジェクトのID"
+                  },
+                  "list_id": {
+                    "type": "number",
+                    "description": "リストのID"
+                  }
+                },
+                "required": [
+                  "board_id",
+                  "list_id"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks/{task_id}/archive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "タスクアーカイブ",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-tasks-task_id-archive",
+        "description": "タスクをアーカイブする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks/{task_id}/unarchive": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "アーカイブタスク復元",
+        "tags": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "destination_list_id": {
+                    "type": "number",
+                    "description": "復元先のリストID"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-tasks-task_id-unarchive",
+        "description": "アーカイブタスクを復元する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/activities": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "get": {
+        "summary": "アクティビティログ取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "activities": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Activity"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tasks-id-activities",
+        "description": "タスクのアクティビティログを取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks/{task_id}/follow": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "フォロー追加",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-tasks-task_id-follow",
+        "description": "タスクをフォローする",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/tasks/{task_id}/unfollow": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "フォロー解除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-tasks-task_id-unfollow",
+        "description": "タスクのフォローを解除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/comments": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "get": {
+        "summary": "コメント一覧取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "comments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Comment"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tasks-id-comments",
+        "description": "タスク内コメントの一覧を取得する",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "コメント追加",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-tasks-id-comments",
+        "description": "コメントを新規追加する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CommentUpdateRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/comments/{comment_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "comment_id",
+          "in": "path",
+          "required": true,
+          "description": "コメントのID"
+        }
+      ],
+      "delete": {
+        "summary": "コメント削除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "delete-tasks-id-comments-comment_id",
+        "description": "コメントを削除する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "コメント情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-tasks-id-comments-comment_id",
+        "description": "コメントを更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CommentUpdateRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": []
+      },
+      "get": {
+        "summary": "コメント情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tasks-id-comments-comment_id",
+        "description": "コメントの詳細情報を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/categories": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        }
+      ],
+      "post": {
+        "summary": "ラベル追加",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-boards-id-categories",
+        "description": "ラベルを新規作成する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "ラベル一覧取得",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "プロジェクトのID"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/order_by"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "categories": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Category"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-boards-id-categories",
+        "description": "ラベルの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/boards/{id}/categories/{category_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "プロジェクトのID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "category_id",
+          "in": "path",
+          "required": true,
+          "description": "ラベルのID"
+        }
+      ],
+      "patch": {
+        "summary": "ラベル情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-boards-id-categories-category_id",
+        "description": "ラベルの情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "ラベル削除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "delete-boards-id-categories-category_id",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/checklists": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "チェックリスト新規追加",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checklist"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-tasks-id-checklists",
+        "description": "チェックリストを新規追加する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ChecklistPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "チェックリスト一覧取得",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "タスクのID"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/order_by_title"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "checklists": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Checklist"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tasks-id-checklists",
+        "description": "タスク内チェックリストの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/checklists/{checklist_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "checklist_id",
+          "in": "path",
+          "required": true,
+          "description": "チェックリストのID"
+        }
+      ],
+      "delete": {
+        "summary": "チェックリスト削除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "delete-tasks-id-checklists-checklist_id",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "チェックリスト情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checklist"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-tasks-id-checklists-checklist_id",
+        "description": "チェックリストの情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ChecklistPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/checklists/{id}/items": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "チェックリストのID"
+        }
+      ],
+      "post": {
+        "summary": "アイテム追加",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-checklists-id-items",
+        "description": "アイテムを新規追加する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ItemPostRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "アイテム一覧取得",
+        "tags": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "チェックリストのID"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/per_page"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Item"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonListResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-checklists-id-items",
+        "description": "チェックリスト内アイテムの一覧を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/checklists/{id}/items/{item_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "チェックリストのID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "アイテムのID"
+        }
+      ],
+      "delete": {
+        "summary": "アイテム削除",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            }
+          }
+        },
+        "operationId": "delete-checklists-id-items-item_id",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "アイテムを削除する"
+      },
+      "patch": {
+        "summary": "アイテム情報更新",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-checklists-id-items-item_id",
+        "description": "アイテムの情報を更新する",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ItemPatchRequestBody"
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/tasks/{id}/comments/attachment": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "タスクのID"
+        }
+      ],
+      "post": {
+        "summary": "添付ファイル送信",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-tasks-id-comments-attachment",
+        "description": "添付ファイルをアップロードする",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "ファイルのバイナリ"
+                  },
+                  "comment_id": {
+                    "type": "number",
+                    "description": "特定コメントのファイルとしてアップロード"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/rate_limit": {
+      "get": {
+        "summary": "レート制限情報取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              },
+              "X-MonthlyRateLimit-Limit": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Limit"
+              },
+              "X-MonthlyRateLimit-Remaining": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Remaining"
+              },
+              "X-MonthlyRateLimit-Reset": {
+                "$ref": "#/components/headers/X-MonthlyRateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimit"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rate_limit",
+        "description": "現在設定されているレート制限数と残数を取得する",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Organization": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "title": "Organization",
+        "description": "組織の情報",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "組織のID"
+          },
+          "name": {
+            "type": "string",
+            "description": "組織の名前"
+          },
+          "information": {
+            "type": "object",
+            "description": "組織の情報",
+            "properties": {
+              "corporation_name": {
+                "type": "string",
+                "description": "会社名/組織名"
+              },
+              "representative_name": {
+                "type": "string",
+                "description": "担当者名"
+              },
+              "department": {
+                "type": "string",
+                "description": "部署名:\n  * 経営者・役員 -- management_executives\n  * 経理・財務 -- finance\n  * 人事・総務 -- hr\n  * 経営企画 -- corporate_planning\n  * 情報システム -- information_system\n  * 営業・販売 -- sales\n  * 企画・調査・マーケティング -- planning_research_marketing\n  * 広報・PR -- pr\n  * 開発・技術 -- development\n  * 生産・製造 -- production_manufacturing\n  * 専門職（法律・会計） -- profession\n  * その他 -- other\n",
+                "enum": [
+                  "management_executives",
+                  "finance",
+                  "hr",
+                  "corporate_planning",
+                  "information_system",
+                  "sales",
+                  "planning_research_marketing",
+                  "pr",
+                  "development",
+                  "production_manufacturing",
+                  "profession",
+                  "other"
+                ]
+              },
+              "industry": {
+                "type": "string",
+                "description": "業種:\n  * 運輸・交通 -- operation_transportation\n  * 士業 -- professional\n  * インターネットサービス -- internet_service\n  * コンサルティング -- consulting_service\n  * Web制作・Web開発 -- web_dev\n  * 医療・介護・福祉 -- medical_nursing\n  * 建設・不動産 -- construction_real_estate\n  * マスコミ・広告・マーケティング -- advertising_marketing\n  * 教育機関 -- educational_institution\n  * 飲食・外食 -- food_beverage\n  * サービス -- service\n  * 流通・卸・小売 -- distribution_wholesale_retail\n  * NPO・団体・協会等 -- npo\n  * 製造・メーカー -- manufacturer\n  * IT・通信 -- it_communication\n  * その他 -- other\n",
+                "enum": [
+                  "operation_transportation",
+                  "professional",
+                  "internet_service",
+                  "consulting_service",
+                  "web_dev",
+                  "medical_nursing",
+                  "construction_real_estate",
+                  "advertising_marketing",
+                  "educational_institution",
+                  "food_beverage",
+                  "service",
+                  "distribution_wholesale_retail",
+                  "npo",
+                  "manufacturer",
+                  "it_communication",
+                  "other"
+                ]
+              },
+              "people": {
+                "type": "string",
+                "description": "人数・規模",
+                "enum": [
+                  "1_4",
+                  "5_49",
+                  "50_99",
+                  "100_299",
+                  "300_499",
+                  "500_999",
+                  "1000_up"
+                ]
+              },
+              "postal_code": {
+                "type": "string",
+                "description": "郵便番号"
+              },
+              "address": {
+                "type": "string",
+                "description": "住所"
+              },
+              "billing_email": {
+                "type": "string",
+                "description": "請求先メールアドレス"
+              },
+              "company_url": {
+                "type": "string",
+                "description": "会社URL"
+              },
+              "country": {
+                "type": "string",
+                "description": "国:\n  * オーストリア -- AT\n  * オーストラリア -- AU\n  * ベルギー -- BE\n  * ブラジル -- BR\n  * カナダ -- CA\n  * スイス -- CH\n  * 中華人民共和国 -- CN\n  * ドイツ -- DE\n  * デンマーク -- DK\n  * フィンランド -- FI\n  * フランス -- FR\n  * イギリス -- GB\n  * 香港 -- HK\n  * インドネシア -- ID\n  * インド -- IN\n  * アイスランド -- IS\n  * イタリア -- IT\n  * 日本 -- JP\n  * 大韓民国 -- KR\n  * マレーシア -- MY\n  * オランダ -- NL\n  * ニュージーランド -- NZ\n  * フィリピン -- PH\n  * ポーランド -- PL\n  * ポルトガル -- PT\n  * ロシア -- RU\n  * スウェーデン -- SE\n  * シンガポール -- SG\n  * タイ -- TH\n  * 台湾 -- TW\n  * アメリカ合衆国 -- US\n  * ベトナム -- VN\n",
+                "enum": [
+                  "AT",
+                  "AU",
+                  "BE",
+                  "BR",
+                  "CA",
+                  "CH",
+                  "CN",
+                  "DE",
+                  "FI",
+                  "FR",
+                  "GB",
+                  "HK",
+                  "ID",
+                  "IN",
+                  "PL",
+                  "PT",
+                  "RU",
+                  "SE",
+                  "SG",
+                  "TH",
+                  "TW",
+                  "US",
+                  "VN"
+                ]
+              },
+              "role": {
+                "type": "string",
+                "description": "担当者の役職:\n  * 役員相当 -- officer\n  * 部長相当 -- director\n  * 課長相当 -- chief\n  * 主任・係長相当 -- leader\n  * 一般職員相当 -- general_staff\n  * その他 -- other\n",
+                "enum": [
+                  "officer",
+                  "director",
+                  "chief",
+                  "leader",
+                  "general_staff",
+                  "other"
+                ]
+              },
+              "tel": {
+                "type": "string",
+                "description": "電話番号"
+              },
+              "department_member_size": {
+                "type": "string",
+                "description": "部署の規模",
+                "enum": [
+                  "1_4",
+                  "5_10",
+                  "11_20",
+                  "21_30",
+                  "31_50",
+                  "50_up"
+                ]
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "OrganizationPatchPayload": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "title": "OrganizationPatchPayload",
+        "description": "組織更新用のリクエストボディ",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "組織の名前"
+          },
+          "information": {
+            "type": "object",
+            "description": "組織の情報",
+            "properties": {
+              "corporation_name": {
+                "type": "string",
+                "description": "会社名/組織名"
+              },
+              "representative_name": {
+                "type": "string",
+                "description": "担当者名"
+              },
+              "department": {
+                "type": "string",
+                "description": "部署名:\n  * 経営者・役員 -- management_executives\n  * 経理・財務 -- finance\n  * 人事・総務 -- hr\n  * 経営企画 -- corporate_planning\n  * 情報システム -- information_system\n  * 営業・販売 -- sales\n  * 企画・調査・マーケティング -- planning_research_marketing\n  * 広報・PR -- pr\n  * 開発・技術 -- development\n  * 生産・製造 -- production_manufacturing\n  * 専門職（法律・会計） -- profession\n  * その他 -- other\n",
+                "enum": [
+                  "management_executives",
+                  "finance",
+                  "hr",
+                  "corporate_planning",
+                  "information_system",
+                  "sales",
+                  "planning_research_marketing",
+                  "pr",
+                  "development",
+                  "production_manufacturing",
+                  "profession",
+                  "other"
+                ]
+              },
+              "industry": {
+                "type": "string",
+                "description": "業種:\n  * 運輸・交通 -- operation_transportation\n  * 士業 -- professional\n  * インターネットサービス -- internet_service\n  * コンサルティング -- consulting_service\n  * Web制作・Web開発 -- web_dev\n  * 医療・介護・福祉 -- medical_nursing\n  * 建設・不動産 -- construction_real_estate\n  * マスコミ・広告・マーケティング -- advertising_marketing\n  * 教育機関 -- educational_institution\n  * 飲食・外食 -- food_beverage\n  * サービス -- service\n  * 流通・卸・小売 -- distribution_wholesale_retail\n  * NPO・団体・協会等 -- npo\n  * 製造・メーカー -- manufacturer\n  * IT・通信 -- it_communication\n  * その他 -- other\n",
+                "enum": [
+                  "operation_transportation",
+                  "professional",
+                  "internet_service",
+                  "consulting_service",
+                  "web_dev",
+                  "medical_nursing",
+                  "construction_real_estate",
+                  "advertising_marketing",
+                  "educational_institution",
+                  "food_beverage",
+                  "service",
+                  "distribution_wholesale_retail",
+                  "npo",
+                  "manufacturer",
+                  "it_communication",
+                  "other"
+                ]
+              },
+              "people": {
+                "type": "string",
+                "description": "人数・規模",
+                "enum": [
+                  "1_4",
+                  "5_49",
+                  "50_99",
+                  "100_299",
+                  "300_499",
+                  "500_999",
+                  "1000_up"
+                ]
+              },
+              "postal_code": {
+                "type": "string",
+                "description": "郵便番号"
+              },
+              "address": {
+                "type": "string",
+                "description": "住所"
+              },
+              "billing_email": {
+                "type": "string",
+                "description": "請求先メールアドレス"
+              },
+              "company_url": {
+                "type": "string",
+                "description": "会社URL"
+              },
+              "country": {
+                "type": "string",
+                "description": "国:\n  * オーストリア -- AT\n  * オーストラリア -- AU\n  * ベルギー -- BE\n  * ブラジル -- BR\n  * カナダ -- CA\n  * スイス -- CH\n  * 中華人民共和国 -- CN\n  * ドイツ -- DE\n  * デンマーク -- DK\n  * フィンランド -- FI\n  * フランス -- FR\n  * イギリス -- GB\n  * 香港 -- HK\n  * インドネシア -- ID\n  * インド -- IN\n  * アイスランド -- IS\n  * イタリア -- IT\n  * 日本 -- JP\n  * 大韓民国 -- KR\n  * マレーシア -- MY\n  * オランダ -- NL\n  * ニュージーランド -- NZ\n  * フィリピン -- PH\n  * ポーランド -- PL\n  * ポルトガル -- PT\n  * ロシア -- RU\n  * スウェーデン -- SE\n  * シンガポール -- SG\n  * タイ -- TH\n  * 台湾 -- TW\n  * アメリカ合衆国 -- US\n  * ベトナム -- VN\n",
+                "enum": [
+                  "AT",
+                  "AU",
+                  "BE",
+                  "BR",
+                  "CA",
+                  "CH",
+                  "CN",
+                  "DE",
+                  "FI",
+                  "FR",
+                  "GB",
+                  "HK",
+                  "ID",
+                  "IN",
+                  "PL",
+                  "PT",
+                  "RU",
+                  "SE",
+                  "SG",
+                  "TH",
+                  "TW",
+                  "US",
+                  "VN"
+                ]
+              },
+              "role": {
+                "type": "string",
+                "description": "担当者の役職:\n  * 役員相当 -- officer\n  * 部長相当 -- director\n  * 課長相当 -- chief\n  * 主任・係長相当 -- leader\n  * 一般職員相当 -- general_staff\n  * その他 -- other\n",
+                "enum": [
+                  "officer",
+                  "director",
+                  "chief",
+                  "leader",
+                  "general_staff",
+                  "other"
+                ]
+              },
+              "tel": {
+                "type": "string",
+                "description": "電話番号"
+              },
+              "department_member_size": {
+                "type": "string",
+                "description": "部署の規模",
+                "enum": [
+                  "1_4",
+                  "5_10",
+                  "11_20",
+                  "21_30",
+                  "31_50",
+                  "50_up"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "OrganizationUser": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "description": "組織のユーザー情報",
+        "title": "OrganizationUser",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ユーザーのID"
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "プロフィール画像"
+          },
+          "name": {
+            "type": "string",
+            "description": "ユーザー名"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "ディスプレイ名"
+          },
+          "email": {
+            "type": "string",
+            "description": "メールアドレス"
+          },
+          "role": {
+            "$ref": "#/components/schemas/OrganizationUserRoleEnum"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "更新日時",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "Activity": {
+        "title": "Activity",
+        "x-stoplight": {
+          "id": "dnk4sybnka1ma"
+        },
+        "type": "object",
+        "description": "お知らせ(行動履歴)の情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "お知らせのID"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/OrganizationUser"
+          },
+          "data": {
+            "type": "string",
+            "description": "お知らせ本文"
+          },
+          "type": {
+            "type": "string",
+            "description": "お知らせの種別"
+          },
+          "task": {
+            "$ref": "#/components/schemas/Task"
+          },
+          "board": {
+            "$ref": "#/components/schemas/Board"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          }
+        },
+        "required": [
+          "data",
+          "type",
+          "created_at"
+        ]
+      },
+      "AddUserPayload": {
+        "title": "Board",
+        "type": "object",
+        "description": "メンバー追加のリクエストボディ",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ユーザーID"
+          },
+          "role": {
+            "$ref": "#/components/schemas/BoardUserRoleEnum"
+          }
+        },
+        "required": [
+          "id",
+          "role"
+        ]
+      },
+      "Board": {
+        "title": "Board",
+        "x-stoplight": {
+          "id": "4zt2glltkm0qj"
+        },
+        "type": "object",
+        "description": "プロジェクトの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "プロジェクトのID"
+          },
+          "title": {
+            "type": "string",
+            "description": "プロジェクト名"
+          },
+          "description": {
+            "type": "string",
+            "description": "プロジェクトの説明"
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "プロジェクトの画像"
+          },
+          "archived": {
+            "type": "boolean",
+            "description": "アーカイブされているかどうか"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "archived",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "Task": {
+        "title": "Task",
+        "x-stoplight": {
+          "id": "av5qom9bfk5je"
+        },
+        "type": "object",
+        "description": "タスクの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "タスクのID"
+          },
+          "task_number": {
+            "type": "number",
+            "description": "タスクの番号"
+          },
+          "name": {
+            "type": "string",
+            "description": "タスクの名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "タスクの説明"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          },
+          "start_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "タスクの開始日時"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "タスクの締め切り日時"
+          },
+          "board_id": {
+            "type": "number",
+            "description": "プロジェクトのID"
+          },
+          "list_id": {
+            "type": "number",
+            "description": "リストのID"
+          },
+          "creator_id": {
+            "type": "number",
+            "description": "タスク作成者のID"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "effort": {
+            "type": "string",
+            "description": "タスクの予定"
+          },
+          "actual": {
+            "type": "string",
+            "description": "タスクの実績"
+          },
+          "archived": {
+            "type": "boolean",
+            "description": "アーカイブされているかどうか"
+          },
+          "followed": {
+            "type": "boolean",
+            "description": "フォロー中かどうか"
+          },
+          "status": {
+            "type": "string",
+            "description": "タスクのステータス",
+            "enum": [
+              "to_do",
+              "done",
+              "cancel",
+              "pending"
+            ],
+            "default": "to_do"
+          }
+        },
+        "required": [
+          "id",
+          "task_number",
+          "name",
+          "created_at",
+          "updated_at",
+          "board_id",
+          "list_id",
+          "creator_id",
+          "archived",
+          "followed",
+          "status"
+        ]
+      },
+      "TaskSearch": {
+        "title": "Task",
+        "x-stoplight": {
+          "id": "av5qom9bfk5je"
+        },
+        "type": "object",
+        "description": "タスクの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "タスクのID"
+          },
+          "task_number": {
+            "type": "number",
+            "description": "タスクの番号"
+          },
+          "name": {
+            "type": "string",
+            "description": "タスクの名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "タスクの説明"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          },
+          "start_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "タスクの開始日時"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "タスクの締め切り日時"
+          },
+          "board_id": {
+            "type": "number",
+            "description": "プロジェクトのID"
+          },
+          "list_id": {
+            "type": "number",
+            "description": "リストのID"
+          },
+          "creator_id": {
+            "type": "number",
+            "description": "タスク作成者のID"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "checklists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Checklist"
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "archived": {
+            "type": "boolean",
+            "description": "アーカイブされているかどうか"
+          },
+          "followed": {
+            "type": "boolean",
+            "description": "フォロー中かどうか"
+          },
+          "status": {
+            "type": "string",
+            "description": "タスクのステータス",
+            "enum": [
+              "to_do",
+              "done",
+              "cancel",
+              "pending"
+            ],
+            "default": "to_do"
+          }
+        },
+        "required": [
+          "id",
+          "task_number",
+          "name",
+          "created_at",
+          "updated_at",
+          "board_id",
+          "list_id",
+          "creator_id",
+          "archived",
+          "followed",
+          "status"
+        ]
+      },
+      "TaskPostPayload": {
+        "title": "TaskPostPayload",
+        "x-stoplight": {
+          "id": "av5qom9bfk5je"
+        },
+        "type": "object",
+        "description": "タスク新規作成用のリクエストボディ",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "タスクの名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "タスクの説明"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "start_date_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "list_id": {
+            "type": "number",
+            "description": "リストのID"
+          },
+          "category_ids": {
+            "type": "array",
+            "description": "カテゴリーのID",
+            "items": {
+              "type": "number"
+            }
+          },
+          "effort": {
+            "type": "string",
+            "description": "タスクの予定"
+          },
+          "actual": {
+            "type": "string",
+            "description": "タスクの実績"
+          },
+          "status": {
+            "type": "string",
+            "description": "タスクのステータス",
+            "enum": [
+              "to_do",
+              "done",
+              "cancel",
+              "pending"
+            ],
+            "default": "to_do"
+          }
+        },
+        "required": [
+          "name",
+          "list_id"
+        ]
+      },
+      "TaskPatchPayload": {
+        "title": "TaskPatchPayload",
+        "x-stoplight": {
+          "id": "av5qom9bfk5je"
+        },
+        "type": "object",
+        "description": "タスク更新用のリクエストボディ",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "タスクの名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "タスクの説明"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "start_date_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "list_id": {
+            "type": "number",
+            "description": "リストのID"
+          },
+          "category_ids": {
+            "type": "array",
+            "description": "カテゴリーのID",
+            "items": {
+              "type": "number"
+            }
+          },
+          "effort": {
+            "type": "string",
+            "description": "タスクの予定"
+          },
+          "actual": {
+            "type": "string",
+            "description": "タスクの実績"
+          },
+          "status": {
+            "type": "string",
+            "description": "タスクのステータス",
+            "enum": [
+              "to_do",
+              "done",
+              "cancel",
+              "pending"
+            ],
+            "default": "to_do"
+          }
+        }
+      },
+      "CommonListResponse": {
+        "title": "CommonListResponse",
+        "x-stoplight": {
+          "id": "ozqp6d3mgm4ne"
+        },
+        "type": "object",
+        "description": "リストで返却するレスポンスの共通項目",
+        "properties": {
+          "page": {
+            "type": "number",
+            "description": "現在のページ"
+          },
+          "per_page": {
+            "type": "number",
+            "description": "1ページあたりの取得件数"
+          },
+          "total": {
+            "type": "number",
+            "description": "アイテムの合計件数"
+          },
+          "total_pages": {
+            "type": "number",
+            "description": "1ページあたりの取得件数をper_page とした場合の合計ページ数"
+          }
+        }
+      },
+      "OrganizationUserRoleEnum": {
+        "type": "string",
+        "title": "OrganizationUserRoleEnum",
+        "x-stoplight": {
+          "id": "g8gktfe0nrp6y"
+        },
+        "description": "組織上の権限のenum",
+        "enum": [
+          "administrator",
+          "account_administrator",
+          "staff",
+          "guest",
+          "viewer"
+        ]
+      },
+      "OrganizationUserUpdateRoleEnum": {
+        "type": "string",
+        "title": "OrganizationUserUpdateRoleEnum",
+        "x-stoplight": {
+          "id": "g8gktfe0nrp6f"
+        },
+        "description": "組織上の権限のenum",
+        "enum": [
+          "administrator",
+          "account_administrator",
+          "staff",
+          "guest"
+        ]
+      },
+      "OrganizationUserRolePutPayload": {
+        "title": "OrganizationUserRolePutRequestBody",
+        "x-stoplight": {
+          "id": "0ee57k9kd9cmz"
+        },
+        "type": "object",
+        "description": "組織のユーザー権限更新用のリクエストボディ",
+        "x-examples": {
+
+        },
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/OrganizationUserUpdateRoleEnum"
+          }
+        }
+      },
+      "BoardPatchPayload": {
+        "title": "BoardPatchPayload",
+        "x-stoplight": {
+          "id": "obv1bx4jsymih"
+        },
+        "type": "object",
+        "description": "プロジェクト更新用のリクエストボディ",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "プロジェクト名"
+          },
+          "description": {
+            "type": "string",
+            "description": "プロジェクトの説明"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "プロジェクトの画像",
+            "format": "binary"
+          }
+        }
+      },
+      "BoardPostPayload": {
+        "title": "BoardPostPayload",
+        "x-stoplight": {
+          "id": "obv1bx4jsymih"
+        },
+        "type": "object",
+        "description": "プロジェクト新規作成用のリクエストボディ",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "プロジェクト名"
+          },
+          "description": {
+            "type": "string",
+            "description": "プロジェクトの説明"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "プロジェクトの画像",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "NotificationConfigItem": {
+        "title": "NotificationConfigItem",
+        "x-stoplight": {
+          "id": "pludgq5mi8xt9"
+        },
+        "type": "object",
+        "description": "",
+        "properties": {
+          "bell": {
+            "type": "boolean",
+            "description": "お知らせで通知するかどうか"
+          },
+          "email": {
+            "type": "boolean",
+            "description": "メールで通知するかどうか"
+          }
+        },
+        "required": [
+          "bell",
+          "email"
+        ]
+      },
+      "NotificationConfig": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "description": "プロジェクト毎のお知らせの設定情報",
+        "properties": {
+          "add_remove_assignee_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_task_name_description": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_start_due_date": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "mention": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_comment": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_category": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_attachment": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_checklist": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "item_start_due_date": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_checklist_item": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "move_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "archive_restore_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "delete_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_effort": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_actual": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_status": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          }
+        },
+        "required": [
+          "add_remove_assignee_task",
+          "update_task_name_description",
+          "task_start_due_date",
+          "mention",
+          "add_delete_comment",
+          "update_category",
+          "add_delete_attachment",
+          "add_delete_checklist",
+          "item_start_due_date",
+          "update_checklist_item",
+          "move_task",
+          "archive_restore_task",
+          "delete_task",
+          "task_effort",
+          "task_actual",
+          "task_status"
+        ]
+      },
+      "NotificationConfigPatchPayload": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "description": "プロジェクト毎のお知らせの設定更新用のリクエストボディ",
+        "properties": {
+          "add_remove_assignee_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_task_name_description": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_start_due_date": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "mention": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_comment": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_category": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_attachment": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "add_delete_checklist": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "item_start_due_date": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "update_checklist_item": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "move_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "archive_restore_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "delete_task": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_effort": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_actual": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          },
+          "task_status": {
+            "$ref": "#/components/schemas/NotificationConfigItem"
+          }
+        }
+      },
+      "BoardUser": {
+        "type": "object",
+        "x-examples": {
+
+        },
+        "title": "BoardUser",
+        "description": "プロジェクトに参加しているメンバーの情報",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ユーザーのID"
+          },
+          "email": {
+            "type": "string",
+            "description": "メールアドレス"
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "プロフィール画像"
+          },
+          "role": {
+            "type": "string",
+            "description": "プロジェクト上の権限"
+          },
+          "name": {
+            "type": "string",
+            "description": "ユーザー名"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "ディスプレイ名"
+          },
+          "organization_role": {
+            "$ref": "#/components/schemas/OrganizationUserRoleEnum"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "BoardUserRoleEnum": {
+        "type": "string",
+        "title": "BoardUserRoleEnum",
+        "x-stoplight": {
+          "id": "s74ddn24j50tr"
+        },
+        "description": "プロジェクトの権限のenum\n```\nowner: \"プロジェクトマネージャー\"\nmember: \"メンバー\"\nsub_member: \"サブメンバー\"\nnon_member: \"外部メンバー\"\nviewer: \"閲覧者\"\n```",
+        "enum": [
+          "owner",
+          "member",
+          "sub_member",
+          "non_member",
+          "viewer"
+        ]
+      },
+      "BoardUserRolePutPayload": {
+        "title": "BoardUserRolePutPayload",
+        "x-stoplight": {
+          "id": "c4iu3y49yzd22"
+        },
+        "type": "object",
+        "description": "プロジェクトメンバーの権限更新用のリクエストボディ",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/BoardUserRoleEnum"
+          }
+        }
+      },
+      "Attachment": {
+        "title": "Attachment",
+        "x-stoplight": {
+          "id": "fdnwsxh6znzei"
+        },
+        "type": "object",
+        "description": "添付ファイルの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "添付ファイルのID"
+          },
+          "board_id": {
+            "type": "string",
+            "description": "プロジェクトのID"
+          },
+          "task_id": {
+            "type": "string",
+            "description": "タスクのID"
+          },
+          "comment_id": {
+            "type": "string",
+            "description": "コメントのID"
+          },
+          "owner_id": {
+            "type": "string",
+            "description": "作成者のID"
+          },
+          "url": {
+            "type": "string",
+            "description": "ファイルのURL"
+          },
+          "name": {
+            "type": "string",
+            "description": "添付ファイルの名前"
+          },
+          "content_type": {
+            "type": "string",
+            "description": "添付ファイルのContent-Type "
+          },
+          "size": {
+            "type": "string",
+            "description": "添付ファイルのサイズ"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "アップロードされた日時"
+          }
+        },
+        "required": [
+          "id",
+          "board_id",
+          "task_id",
+          "comment_id",
+          "url",
+          "size",
+          "uploaded_at"
+        ]
+      },
+      "List": {
+        "title": "List",
+        "x-stoplight": {
+          "id": "qbnjdwdqx1l3v"
+        },
+        "type": "object",
+        "description": "リストの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "リストのID"
+          },
+          "name": {
+            "type": "string",
+            "description": "リストの名前"
+          },
+          "order": {
+            "type": "number",
+            "description": "プロジェクト上でのリストの順番"
+          },
+          "color": {
+            "type": "string",
+            "description": "リストの色コード"
+          },
+          "archived": {
+            "type": "boolean",
+            "description": "アーカイブされているかどうか"
+          },
+          "is_done_list": {
+            "type": "boolean",
+            "description": "完了リストかどうか"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "archived",
+          "is_done_list",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "ListPostPayload": {
+        "title": "ListPostPayload",
+        "x-stoplight": {
+          "id": "qbnjdwdqx1l3v"
+        },
+        "type": "object",
+        "description": "リストの新規作成用のリクエストボディ",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "リストの名前"
+          },
+          "color": {
+            "type": "string",
+            "description": "リストの色コード"
+          },
+          "is_done_list": {
+            "type": "boolean",
+            "description": "完了リストかどうか"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ListPatchPayload": {
+        "title": "ListPostPayload",
+        "x-stoplight": {
+          "id": "qbnjdwdqx1l3v"
+        },
+        "type": "object",
+        "description": "リストの更新用のリクエストボディ",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "リストの名前"
+          },
+          "color": {
+            "type": "string",
+            "description": "リストの色コード"
+          },
+          "is_done_list": {
+            "type": "boolean",
+            "description": "完了リストかどうか"
+          }
+        }
+      },
+      "Checklist": {
+        "title": "Checklist",
+        "x-stoplight": {
+          "id": "g0f96ul87ewfj"
+        },
+        "type": "object",
+        "description": "タスクのチェックリストの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "チェックリストのID"
+          },
+          "title": {
+            "type": "string",
+            "description": "チェックリストの名前"
+          },
+          "task_id": {
+            "type": "number",
+            "description": "タスクのID"
+          },
+          "percentage": {
+            "type": "number",
+            "description": "チェックリストの進捗"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "task_id",
+          "percentage",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "ChecklistPatchPayload": {
+        "title": "ChecklistPatchPayload",
+        "x-stoplight": {
+          "id": "g0f96ul87ewfj"
+        },
+        "type": "object",
+        "description": "タスクのチェックリスト更新用のリクエストボディ",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "チェックリストの名前"
+          }
+        }
+      },
+      "ChecklistPostPayload": {
+        "title": "ChecklistPostPayload",
+        "x-stoplight": {
+          "id": "g0f96ul87ewfj"
+        },
+        "type": "object",
+        "description": "タスクのチェックリスト新規作成用のリクエストボディ",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "チェックリストの名前"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "Item": {
+        "title": "Item",
+        "x-stoplight": {
+          "id": "ctcf8glotkj2v"
+        },
+        "type": "object",
+        "description": "チェックリスト内アイテムの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "アイテムのID"
+          },
+          "checked": {
+            "type": "boolean",
+            "description": "完了チェックされているかどうか"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "アイテムの内容"
+          },
+          "start_date_time": {
+            "type": "string",
+            "description": "開始日時"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "締め切り日時"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "assigned_user_ids",
+          "content",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "ItemPostPayload": {
+        "title": "ItemPostPayload",
+        "x-stoplight": {
+          "id": "ctcf8glotkj2v"
+        },
+        "type": "object",
+        "description": "チェックリスト内アイテム新規作成用のリクエストボディ",
+        "properties": {
+          "checked": {
+            "type": "boolean",
+            "description": "完了チェックされているかどうか"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "アイテムの内容"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "締め切り日時"
+          },
+          "start_date_time": {
+            "type": "string",
+            "description": "開始日時"
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "ItemPatchPayload": {
+        "title": "ItemPatchPayload",
+        "x-stoplight": {
+          "id": "ctcf8glotkj2v"
+        },
+        "type": "object",
+        "description": "チェックリスト内アイテム更新用のリクエストボディ",
+        "properties": {
+          "checked": {
+            "type": "boolean",
+            "description": "完了チェックされているかどうか"
+          },
+          "assigned_user_ids": {
+            "type": "array",
+            "description": "アサインされているユーザーIDの配列",
+            "items": {
+              "type": "number"
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "アイテムの内容"
+          },
+          "deadline_date_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "締め切り日時"
+          },
+          "start_date_time": {
+            "type": "string",
+            "description": "開始日時"
+          }
+        }
+      },
+      "Comment": {
+        "title": "Comment",
+        "x-stoplight": {
+          "id": "axb2dg5h76rlo"
+        },
+        "type": "object",
+        "description": "コメントの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "コメントのID"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "datetime",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "更新日時",
+            "format": "date-time"
+          },
+          "task_id": {
+            "type": "number",
+            "description": "タスクID"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attachment"
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "コメントの内容"
+          },
+          "mentioned_users": {
+            "type": "array",
+            "description": "コメント内でメンションされているユーザーの一覧",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "description": "ユーザーのID"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "ユーザーの名前"
+                },
+                "display_name": {
+                  "type": "string",
+                  "description": "ユーザーのディスプレイ名"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "display_name"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "task_id",
+          "attachments",
+          "content",
+          "mentioned_users"
+        ]
+      },
+      "CommentUpdatePayload": {
+        "title": "CommentUpdatePayload",
+        "x-stoplight": {
+          "id": "axb2dg5h76rlo"
+        },
+        "type": "object",
+        "description": "コメント更新用のリクエストボディ",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "コメントの内容"
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "Category": {
+        "title": "Category",
+        "x-stoplight": {
+          "id": "k0hbf2ghx1wjy"
+        },
+        "type": "object",
+        "description": "ラベルの情報",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ラベルのID"
+          },
+          "board_id": {
+            "type": "number",
+            "description": "プロジェクトのID"
+          },
+          "color": {
+            "type": "string",
+            "description": "ラベルの色"
+          },
+          "name": {
+            "type": "string",
+            "description": "ラベルの名前"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時"
+          }
+        },
+        "required": [
+          "id",
+          "board_id",
+          "color",
+          "name",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "CategoryPatchPayload": {
+        "title": "CategoryPatchPayload",
+        "x-stoplight": {
+          "id": "k0hbf2ghx1wjy"
+        },
+        "type": "object",
+        "description": "ラベルの更新用のリクエストボディ",
+        "properties": {
+          "color": {
+            "type": "string",
+            "description": "ラベルの色"
+          },
+          "name": {
+            "type": "string",
+            "description": "ラベルの名前"
+          }
+        }
+      },
+      "CategoryPostPayload": {
+        "title": "CategoryPostPayload",
+        "x-stoplight": {
+          "id": "k0hbf2ghx1wjy"
+        },
+        "type": "object",
+        "description": "ラベル新規作成用のリクエストボディ",
+        "properties": {
+          "color": {
+            "type": "string",
+            "description": "ラベルの色"
+          },
+          "name": {
+            "type": "string",
+            "description": "ラベルの名前"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "RateLimit": {
+        "title": "RateLimit",
+        "x-stoplight": {
+          "id": "80lmi6jilrd4s"
+        },
+        "type": "object",
+        "description": "レートリミットの情報",
+        "properties": {
+          "get": {
+            "$ref": "#/components/schemas/RateLimitItem"
+          },
+          "update": {
+            "$ref": "#/components/schemas/RateLimitItem"
+          }
+        }
+      },
+      "RateLimitItem": {
+        "title": "RateLimitItem",
+        "x-stoplight": {
+          "id": "jzwehc3n2prd0"
+        },
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "number",
+            "description": "1分間に受付可能な最大リクエスト数"
+          },
+          "remaining": {
+            "type": "number",
+            "description": "残リクエスト数"
+          },
+          "reset": {
+            "type": "number",
+            "description": "リクエスト数の計測がリセットされる時刻(UNIX時間)"
+          }
+        },
+        "required": [
+          "limit",
+          "remaining",
+          "reset"
+        ]
+      },
+      "ErrorResponse": {
+        "title": "ErrorResponse",
+        "x-stoplight": {
+          "id": "tilly0y9eo8yh"
+        },
+        "type": "object",
+        "description": "エラー返却時のデータ構造",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "エラーメッセージ"
+                },
+                "resource": {
+                  "type": "string",
+                  "description": "エラーの発生した対象のリソース名"
+                },
+                "field": {
+                  "type": "string",
+                  "description": "エラーの発生した対象のフィールド名"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Jooto-Api-Key"
+      }
+    },
+    "requestBodies": {
+      "OrganizationPatchRequestBody": {
+        "description": "組織更新用のリクエストボディ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationPatchPayload"
+            },
+            "examples": {
+
+            }
+          }
+        }
+      },
+      "OrganizationUserRolePutRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationUserRolePutPayload"
+            }
+          }
+        },
+        "description": "組織のユーザー権限更新用のリクエストボディ"
+      },
+      "BoardPostRequestBody": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/BoardPostPayload"
+            }
+          }
+        },
+        "description": "プロジェクト新規作成用のリクエストボディ"
+      },
+      "BoardPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BoardPatchPayload"
+            }
+          }
+        },
+        "description": "プロジェクト更新用のリクエストボディ"
+      },
+      "NotificationConfigPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotificationConfigPatchPayload"
+            }
+          }
+        },
+        "description": "プロジェクト毎のお知らせの設定更新用のリクエストボディ"
+      },
+      "BoardUserRolePutRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BoardUserRolePutPayload"
+            }
+          }
+        },
+        "description": "プロジェクトメンバーの権限更新用のリクエストボディ"
+      },
+      "ListPostRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListPostPayload"
+            }
+          }
+        },
+        "description": "リスト新規作成用のリクエストボディ"
+      },
+      "TaskPostRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TaskPostPayload"
+            }
+          }
+        },
+        "description": "タスク新規作成用のリクエストボディ"
+      },
+      "TaskPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TaskPatchPayload"
+            }
+          }
+        },
+        "description": "タスク更新用のリクエストボディ"
+      },
+      "CommentUpdateRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CommentUpdatePayload"
+            }
+          }
+        },
+        "description": "コメント更新用のリクエストボディ"
+      },
+      "CategoryPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CategoryPatchPayload"
+            }
+          }
+        },
+        "description": "ラベル更新用のリクエストボディ"
+      },
+      "ChecklistPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ChecklistPatchPayload"
+            }
+          }
+        },
+        "description": "チェックリスト更新用のリクエストボディ"
+      },
+      "ItemPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ItemPatchPayload"
+            }
+          }
+        },
+        "description": "アイテム更新用のリクエストボディ"
+      },
+      "ItemPostRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ItemPostPayload"
+            }
+          }
+        },
+        "description": "アイテム新規作成用のリクエストボディ"
+      },
+      "ListPatchRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListPatchPayload"
+            }
+          }
+        },
+        "description": "リスト更新用のリクエストボディ"
+      },
+      "CategoryPostRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CategoryPostPayload"
+            }
+          }
+        },
+        "description": "ラベル新規作成用のリクエストボディ"
+      },
+      "ChecklistPostRequestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ChecklistPostPayload"
+            }
+          }
+        },
+        "description": "チェックリスト新規作成用のリクエストボディ"
+      }
+    },
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "number"
+        },
+        "description": "取得したいページ番号"
+      },
+      "per_page": {
+        "name": "per_page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "number"
+        },
+        "description": "1ページあたりの取得件数"
+      },
+      "order": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "“asc\"または\"desc” (未指定の場合は\"desc\")"
+      },
+      "order_by": {
+        "name": "order_by",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "\"id\"または\"name\" (未指定の場合は\"id\")"
+      },
+      "order_by_title": {
+        "name": "order_by",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "\"id\"または\"title\" (未指定の場合は\"id\")"
+      },
+      "order_by_order_id_title": {
+        "name": "order_by",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "\"id\",\"order_id\"または\"title\" (未指定の場合は\"order_id\")"
+      }
+    },
+    "headers": {
+      "X-RateLimit-Limit": {
+        "description": "1 分間に受付可能な最大リクエスト数",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 600
+      },
+      "X-RateLimit-Remaining": {
+        "description": "残リクエスト数",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 600
+      },
+      "X-RateLimit-Reset": {
+        "description": "リクエスト数の計測がリセットされる時刻(UNIX 時間)",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 1664593200
+      },
+      "X-MonthlyRateLimit-Limit": {
+        "description": "1ヶ月で受付可能な最大リクエスト数",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 100
+      },
+      "X-MonthlyRateLimit-Remaining": {
+        "description": "1ヶ月で受付可能なリクエスト数の残数",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 100
+      },
+      "X-MonthlyRateLimit-Reset": {
+        "description": "1ヶ月で受付可能なリクエスト数の計測がリセットされる時刻(UNIX 時間)",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 1698796800
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
