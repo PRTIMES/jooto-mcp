@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "jooto-mcp-server",
   "display_name": "Jooto",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Jooto project management tool integration. Create, update, and manage projects, tasks, lists, labels, checklists, and comments.",
   "long_description": "Jooto MCP Server provides full integration with the Jooto project management API. Manage your projects, tasks, lists, labels, checklists, comments, and team members directly from Claude Desktop. Requires a Jooto Enterprise plan API key.",
   "author": {
