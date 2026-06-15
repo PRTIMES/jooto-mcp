@@ -33,7 +33,7 @@
   },
   "tools": [
     {
-      "name": "jooto-list-board",
+      "name": "jooto-list-boards",
       "description": "List projects"
     },
     {
@@ -53,11 +53,11 @@
       "description": "Delete a project"
     },
     {
-      "name": "jooto-list-member",
+      "name": "jooto-list-board-members",
       "description": "List project members"
     },
     {
-      "name": "jooto-list-list",
+      "name": "jooto-list-lists",
       "description": "List all lists in a project"
     },
     {
@@ -85,7 +85,7 @@
       "description": "Reorder lists"
     },
     {
-      "name": "jooto-list-task",
+      "name": "jooto-list-tasks",
       "description": "List tasks in a project"
     },
     {
@@ -117,7 +117,7 @@
       "description": "Archive a task"
     },
     {
-      "name": "jooto-list-comment",
+      "name": "jooto-list-comments",
       "description": "List task comments"
     },
     {
@@ -133,7 +133,7 @@
       "description": "Update a comment"
     },
     {
-      "name": "jooto-list-label",
+      "name": "jooto-list-labels",
       "description": "List project labels"
     },
     {
@@ -153,7 +153,7 @@
       "description": "Delete a label"
     },
     {
-      "name": "jooto-list-checklist",
+      "name": "jooto-list-checklists",
       "description": "List task checklists"
     },
     {
@@ -173,7 +173,7 @@
       "description": "Delete a checklist"
     },
     {
-      "name": "jooto-list-checklist-item",
+      "name": "jooto-list-checklist-items",
       "description": "List checklist items"
     },
     {
@@ -197,7 +197,7 @@
       "description": "Get organization info"
     },
     {
-      "name": "jooto-list-user",
+      "name": "jooto-list-users",
       "description": "List all users"
     },
     {
