@@ -67,15 +67,15 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Lists ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/lists{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/lists{?page,detail_level}',
     name: 'リスト一覧',
-    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {
-    uriTemplate: 'jooto:///projects/{projectId}/lists/archived{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/lists/archived{?page,detail_level}',
     name: 'アーカイブ済みリスト一覧',
-    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します',
+    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {

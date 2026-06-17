@@ -53,6 +53,7 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-list-archived-lists': z.object({
     board_id: z.number({
@@ -60,6 +61,7 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-get-list': z.object({
     board_id: z.number({

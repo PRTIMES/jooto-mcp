@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse } from './formatters.js';
+import { formatBoardListResponse, formatListsResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -75,14 +75,20 @@ export async function processListBoardMembersTool(args: z.infer<ToolSchemas['joo
 
 export async function processListListsTool(args: z.infer<ToolSchemas['jooto-list-lists']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=false`, { page: args.page })),
+    async () => formatListsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=false`, { page: args.page })),
+      args.detail_level
+    ),
     'リスト一覧の取得に失敗しました'
   );
 }
 
 export async function processListArchivedListsTool(args: z.infer<ToolSchemas['jooto-list-archived-lists']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=true`, { page: args.page })),
+    async () => formatListsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=true`, { page: args.page })),
+      args.detail_level
+    ),
     'アーカイブ済みリスト一覧の取得に失敗しました'
   );
 }

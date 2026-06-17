@@ -15,14 +15,24 @@ const paginationProperties = {
   },
 };
 
-const boardListDetailLevelProperty = {
-  detail_level: {
-    type: 'string',
-    enum: ['compact', 'standard'],
-    description: '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
-    default: 'compact',
-  },
-};
+function detailLevelProperty(description: string) {
+  return {
+    detail_level: {
+      type: 'string',
+      enum: ['compact', 'standard'],
+      description,
+      default: 'compact',
+    },
+  };
+}
+
+const boardListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。'
+);
+
+const projectListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。'
+);
 
 export const toolDefinitions = [
   // === Read（取得系） ===
@@ -119,7 +129,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-lists',
-    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -128,13 +138,14 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...projectListDetailLevelProperty,
       },
       required: ['board_id'],
     },
   },
   {
     name: 'jooto-list-archived-lists',
-    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します',
+    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -143,6 +154,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...projectListDetailLevelProperty,
       },
       required: ['board_id'],
     },
