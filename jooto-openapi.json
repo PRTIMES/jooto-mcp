@@ -51,7 +51,11 @@
         "description": "組織の詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -96,7 +100,11 @@
         "description": "組織の更新",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -170,7 +178,11 @@
         "description": "組織のユーザー一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -239,7 +251,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -298,7 +314,10 @@
         "description": "組織のユーザーの権限を更新する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -354,7 +373,11 @@
         "description": "組織のユーザーの詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -436,7 +459,11 @@
         "description": "組織内プロジェクトの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -482,7 +509,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -539,7 +570,11 @@
         "description": "プロジェクトの詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -585,7 +620,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "organization_administrator_and_board_member",
+              "organization_administrator_and_board_sub_member"
+            ]
           }
         ]
       },
@@ -620,7 +659,11 @@
         "description": "アーカイブされたプロジェクトを削除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "organization_administrator_and_board_sub_member",
+              "organization_administrator_and_board_member"
+            ]
           }
         ]
       }
@@ -675,7 +718,11 @@
         "description": "プロジェクトをアーカイブする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "organization_administrator_and_board_member",
+              "organization_administrator_and_board_sub_member"
+            ]
           }
         ]
       }
@@ -730,7 +777,11 @@
         "description": "アーカイブプロジェクトの復元をする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "organization_administrator_and_board_member",
+              "organization_administrator_and_board_sub_member"
+            ]
           }
         ],
         "parameters": []
@@ -809,12 +860,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
+        }
       }
     },
     "/v1/boards/favorites": {
@@ -886,7 +932,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -949,9 +999,7 @@
             "application/xml": {
               "schema": {
                 "type": "object",
-                "properties": {
-
-                }
+                "properties": {}
               }
             }
           },
@@ -959,7 +1007,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -996,7 +1048,11 @@
         "description": "お気に入りプロジェクトから削除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       },
@@ -1076,7 +1132,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -1132,7 +1192,11 @@
         "description": "プロジェクトのお知らせ設定情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -1178,7 +1242,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -1193,12 +1261,6 @@
           "in": "path",
           "required": true,
           "description": "プロジェクトのID"
-        },
-        {
-          "$ref": "#/components/parameters/per_page"
-        },
-        {
-          "$ref": "#/components/parameters/page"
         }
       ],
       "get": {
@@ -1263,7 +1325,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -1346,7 +1412,11 @@
         "description": "プロジェクトに所属するメンバーの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -1431,7 +1501,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -1487,7 +1560,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ],
         "description": "プロジェクトからメンバーを削除する"
@@ -1556,7 +1632,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -1638,7 +1717,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -1686,9 +1769,7 @@
               "application/octet-stream": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-
-                  }
+                  "properties": {}
                 }
               }
             }
@@ -1697,7 +1778,11 @@
         "description": "添付ファイルをダウンロードする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -1732,7 +1817,11 @@
         "description": "添付ファイルを削除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -1821,7 +1910,11 @@
         "description": "プロジェクト内リストの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -1878,7 +1971,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -1942,7 +2038,10 @@
         "description": "リストをアーカイブする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -2006,7 +2105,10 @@
         "description": "アーカイブリストを復元する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -2074,7 +2176,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       },
@@ -2117,7 +2222,11 @@
         "description": "リストの詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -2153,7 +2262,10 @@
         "parameters": [],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -2243,7 +2355,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member"
+            ]
           }
         ]
       }
@@ -2294,7 +2409,10 @@
                       "type": "object",
                       "properties": {
                         "tasks": {
-                          "$ref": "#/components/schemas/Task"
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Task"
+                          }
                         }
                       }
                     },
@@ -2327,8 +2445,10 @@
               }
             },
             "in": "query",
-            "name": "category_ids",
-            "description": "ラベルのIDの配列"
+            "name": "category_ids[]",
+            "description": "ラベルのIDの配列",
+            "style": "form",
+            "explode": true
           },
           {
             "schema": {
@@ -2338,8 +2458,10 @@
               }
             },
             "in": "query",
-            "name": "assignee_ids",
-            "description": "担当者のID"
+            "name": "assignee_ids[]",
+            "description": "担当者のID",
+            "style": "form",
+            "explode": true
           },
           {
             "schema": {
@@ -2384,19 +2506,26 @@
                   "to_do",
                   "done",
                   "cancel",
-                  "pending"
+                  "pending",
+                  "in_progress"
                 ]
               }
             },
             "in": "query",
             "required": false,
-            "name": "status",
-            "description": "タスクのステータス"
+            "name": "status[]",
+            "description": "タスクのステータス",
+            "style": "form",
+            "explode": true
           }
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -2441,7 +2570,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2492,7 +2625,10 @@
                       "type": "object",
                       "properties": {
                         "tasks": {
-                          "$ref": "#/components/schemas/TaskSearch"
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TaskSearch"
+                          }
                         }
                       }
                     },
@@ -2528,7 +2664,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2596,7 +2736,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -2632,7 +2776,11 @@
         "description": "アーカイブされたタスクを削除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -2675,7 +2823,11 @@
         "description": "タスクの詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2754,7 +2906,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2819,7 +2975,11 @@
         "description": "タスクをアーカイブする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2899,7 +3059,11 @@
         "description": "アーカイブタスクを復元する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -2978,7 +3142,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_sub_member",
+              "board_member"
+            ]
           }
         ]
       }
@@ -3043,7 +3211,11 @@
         "description": "タスクをフォローする",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3101,7 +3273,11 @@
         "description": "タスクのフォローを解除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3183,7 +3359,11 @@
         ],
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3229,7 +3409,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3287,7 +3471,11 @@
         "description": "コメントを削除する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3333,7 +3521,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ],
         "parameters": []
@@ -3377,7 +3569,11 @@
         "description": "コメントの詳細情報を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3436,7 +3632,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3517,7 +3717,11 @@
         "description": "ラベルの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_sub_member",
+              "board_member"
+            ]
           }
         ]
       }
@@ -3585,7 +3789,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3620,7 +3828,11 @@
         "operationId": "delete-boards-id-categories-category_id",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3679,7 +3891,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3760,7 +3976,11 @@
         "description": "タスク内チェックリストの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3817,7 +4037,11 @@
         "operationId": "delete-tasks-id-checklists-checklist_id",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -3863,7 +4087,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -3922,7 +4150,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       },
@@ -4000,7 +4232,11 @@
         "description": "チェックリスト内アイテムの一覧を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -4057,7 +4293,11 @@
         "operationId": "delete-checklists-id-items-item_id",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ],
         "description": "アイテムを削除する"
@@ -4104,7 +4344,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -4182,9 +4426,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-
-                }
+                "properties": {}
               }
             }
           },
@@ -4192,7 +4434,11 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "board_owner",
+              "board_member",
+              "board_sub_member"
+            ]
           }
         ]
       }
@@ -4237,7 +4483,11 @@
         "description": "現在設定されているレート制限数と残数を取得する",
         "security": [
           {
-            "ApiKeyAuth": []
+            "OAuth2": [
+              "organization_member",
+              "organization_administrator",
+              "organization_account_administrator"
+            ]
           }
         ]
       }
@@ -4247,9 +4497,7 @@
     "schemas": {
       "Organization": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "title": "Organization",
         "description": "組織の情報",
         "properties": {
@@ -4419,9 +4667,7 @@
       },
       "OrganizationPatchPayload": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "title": "OrganizationPatchPayload",
         "description": "組織更新用のリクエストボディ",
         "properties": {
@@ -4573,9 +4819,7 @@
       },
       "OrganizationUser": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "description": "組織のユーザー情報",
         "title": "OrganizationUser",
         "properties": {
@@ -4664,7 +4908,7 @@
         ]
       },
       "AddUserPayload": {
-        "title": "Board",
+        "title": "AddUserPayload",
         "type": "object",
         "description": "メンバー追加のリクエストボディ",
         "properties": {
@@ -4820,9 +5064,20 @@
               "to_do",
               "done",
               "cancel",
-              "pending"
+              "pending",
+              "in_progress"
             ],
             "default": "to_do"
+          },
+          "work_start_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ステータスが未着手から進行中に変更された日時"
+          },
+          "work_end_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ステータスが完了に変更された日時"
           }
         },
         "required": [
@@ -4840,7 +5095,7 @@
         ]
       },
       "TaskSearch": {
-        "title": "Task",
+        "title": "TaskSearch",
         "x-stoplight": {
           "id": "av5qom9bfk5je"
         },
@@ -4928,9 +5183,20 @@
               "to_do",
               "done",
               "cancel",
-              "pending"
+              "pending",
+              "in_progress"
             ],
             "default": "to_do"
+          },
+          "work_start_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ステータスが未着手から進行中に変更された日時"
+          },
+          "work_end_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ステータスが完了に変更された日時"
           }
         },
         "required": [
@@ -5004,7 +5270,8 @@
               "to_do",
               "done",
               "cancel",
-              "pending"
+              "pending",
+              "in_progress"
             ],
             "default": "to_do"
           }
@@ -5039,11 +5306,13 @@
           },
           "start_date_time": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "開始日時(空文字を指定でクリア)"
           },
           "deadline_date_time": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "締め切り日時(空文字を指定でクリア)"
           },
           "list_id": {
             "type": "number",
@@ -5058,11 +5327,11 @@
           },
           "effort": {
             "type": "string",
-            "description": "タスクの予定"
+            "description": "タスクの予定(空文字を指定でクリア)"
           },
           "actual": {
             "type": "string",
-            "description": "タスクの実績"
+            "description": "タスクの実績(空文字を指定でクリア)"
           },
           "status": {
             "type": "string",
@@ -5071,7 +5340,8 @@
               "to_do",
               "done",
               "cancel",
-              "pending"
+              "pending",
+              "in_progress"
             ],
             "default": "to_do"
           }
@@ -5133,15 +5403,13 @@
         ]
       },
       "OrganizationUserRolePutPayload": {
-        "title": "OrganizationUserRolePutRequestBody",
+        "title": "OrganizationUserRolePutPayload",
         "x-stoplight": {
           "id": "0ee57k9kd9cmz"
         },
         "type": "object",
         "description": "組織のユーザー権限更新用のリクエストボディ",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "properties": {
           "role": {
             "$ref": "#/components/schemas/OrganizationUserUpdateRoleEnum"
@@ -5221,9 +5489,7 @@
       },
       "NotificationConfig": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "description": "プロジェクト毎のお知らせの設定情報",
         "properties": {
           "add_remove_assignee_task": {
@@ -5296,9 +5562,7 @@
       },
       "NotificationConfigPatchPayload": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "description": "プロジェクト毎のお知らせの設定更新用のリクエストボディ",
         "properties": {
           "add_remove_assignee_task": {
@@ -5353,9 +5617,7 @@
       },
       "BoardUser": {
         "type": "object",
-        "x-examples": {
-
-        },
+        "x-examples": {},
         "title": "BoardUser",
         "description": "プロジェクトに参加しているメンバーの情報",
         "properties": {
@@ -5521,9 +5783,17 @@
             "type": "boolean",
             "description": "アーカイブされているかどうか"
           },
-          "is_done_list": {
-            "type": "boolean",
-            "description": "完了リストかどうか"
+          "auto_task_status": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "to_do",
+              "in_progress",
+              "done",
+              "cancel",
+              "pending"
+            ],
+            "description": "リストの自動ステータス（未設定の場合はnull）"
           },
           "created_at": {
             "type": "string",
@@ -5540,7 +5810,7 @@
           "id",
           "name",
           "archived",
-          "is_done_list",
+          "auto_task_status",
           "created_at",
           "updated_at"
         ]
@@ -5561,9 +5831,26 @@
             "type": "string",
             "description": "リストの色コード"
           },
-          "is_done_list": {
-            "type": "boolean",
-            "description": "完了リストかどうか"
+          "auto_task_status": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "to_do",
+                  "in_progress",
+                  "done",
+                  "cancel",
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  ""
+                ]
+              }
+            ],
+            "description": "リストの自動ステータス（空文字を指定でクリア）"
           }
         },
         "required": [
@@ -5571,7 +5858,7 @@
         ]
       },
       "ListPatchPayload": {
-        "title": "ListPostPayload",
+        "title": "ListPatchPayload",
         "x-stoplight": {
           "id": "qbnjdwdqx1l3v"
         },
@@ -5586,9 +5873,26 @@
             "type": "string",
             "description": "リストの色コード"
           },
-          "is_done_list": {
-            "type": "boolean",
-            "description": "完了リストかどうか"
+          "auto_task_status": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "to_do",
+                  "in_progress",
+                  "done",
+                  "cancel",
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  ""
+                ]
+              }
+            ],
+            "description": "リストの自動ステータス（空文字を指定でクリア）"
           }
         }
       },
@@ -5785,11 +6089,12 @@
           "deadline_date_time": {
             "type": "string",
             "format": "date-time",
-            "description": "締め切り日時"
+            "description": "締め切り日時(空文字を指定でクリア)"
           },
           "start_date_time": {
             "type": "string",
-            "description": "開始日時"
+            "format": "date-time",
+            "description": "開始日時(空文字を指定でクリア)"
           }
         }
       },
@@ -5854,6 +6159,29 @@
                 "display_name"
               ]
             }
+          },
+          "sender": {
+            "type": "object",
+            "description": "コメントの作成者",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "ユーザーのID"
+              },
+              "name": {
+                "type": "string",
+                "description": "ユーザーの名前"
+              },
+              "display_name": {
+                "type": "string",
+                "description": "ユーザーのディスプレイ名"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "display_name"
+            ]
           }
         },
         "required": [
@@ -6043,10 +6371,25 @@
       }
     },
     "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Jooto-Api-Key"
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "scopes": {
+              "organization_member": "組織の権限: スタッフ",
+              "organization_administrator": "組織の権限: 管理者",
+              "organization_account_administrator": "組織の権限: アカウント管理者",
+              "board_owner": "プロジェクトの権限: プロジェクトマネージャー",
+              "board_member": "プロジェクトの権限: メンバー",
+              "board_sub_member": "プロジェクトの権限: サブメンバー",
+              "organization_administrator_and_board_member": "管理者またはアカウント管理者の組織権限を持ち、プロジェクト権限がメンバーのユーザー",
+              "organization_administrator_and_board_sub_member": "管理者またはアカウント管理者の組織権限を持ち、プロジェクト権限がサブメンバーのユーザー"
+            },
+            "refreshUrl": "/oauth2/token/refresh",
+            "tokenUrl": "/oauth2/token",
+            "authorizationUrl": "/oauth2/login"
+          }
+        }
       }
     },
     "requestBodies": {
@@ -6057,9 +6400,7 @@
             "schema": {
               "$ref": "#/components/schemas/OrganizationPatchPayload"
             },
-            "examples": {
-
-            }
+            "examples": {}
           }
         }
       },
@@ -6324,10 +6665,5 @@
         "example": 1698796800
       }
     }
-  },
-  "security": [
-    {
-      "ApiKeyAuth": []
-    }
-  ]
+  }
 }
