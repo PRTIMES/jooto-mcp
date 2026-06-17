@@ -16,6 +16,11 @@ const boardListSchema = z.object({
   detail_level: listDetailLevelSchema,
 });
 
+const taskBoardIdSchema = z.number({
+  required_error: '"board_id"パラメータは必須です。プロジェクトが指定されていない場合は、先にユーザーへ対象プロジェクトを確認してください。候補が必要な場合はjooto-list-projectsを使用してください',
+  invalid_type_error: '"board_id"パラメータは数値でなければなりません',
+});
+
 const taskListFilterSchema = {
   category_ids: z.array(z.number()).optional(),
   assignee_ids: z.array(z.number()).optional(),
@@ -112,28 +117,19 @@ export const toolSchemas = {
     }),
   }),
   'jooto-list-tasks': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     page: pageSchema,
     ...taskListFilterSchema,
     detail_level: listDetailLevelSchema,
   }),
   'jooto-list-archived-tasks': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     page: pageSchema,
     ...taskListFilterSchema,
     detail_level: listDetailLevelSchema,
   }),
   'jooto-get-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     task_id: z.number({
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
@@ -273,10 +269,7 @@ export const toolSchemas = {
   }),
   // === Task ===
   'jooto-create-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     name: z.string({
       required_error: '"name"パラメータは必須です',
       invalid_type_error: '"name"パラメータは文字列でなければなりません',
@@ -295,10 +288,7 @@ export const toolSchemas = {
     status: z.enum(['to_do', 'done', 'cancel', 'pending', 'in_progress']).optional(),
   }),
   'jooto-update-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     task_id: z.number({
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
@@ -315,20 +305,14 @@ export const toolSchemas = {
     status: z.enum(['to_do', 'done', 'cancel', 'pending', 'in_progress']).optional(),
   }),
   'jooto-delete-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     task_id: z.number({
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
     }),
   }),
   'jooto-search-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     search_query: z.string({
       required_error: '"search_query"パラメータは必須です',
       invalid_type_error: '"search_query"パラメータは文字列でなければなりません',
@@ -353,20 +337,14 @@ export const toolSchemas = {
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
     }),
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     list_id: z.number({
       required_error: '"list_id"パラメータは必須です',
       invalid_type_error: '"list_id"パラメータは数値でなければなりません',
     }),
   }),
   'jooto-archive-task': z.object({
-    board_id: z.number({
-      required_error: '"board_id"パラメータは必須です',
-      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
-    }),
+    board_id: taskBoardIdSchema,
     task_id: z.number({
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',

@@ -66,6 +66,8 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 タスク一覧は返却件数が多くなりやすいため、`jooto-list-tasks` では可能な限り `category_ids`, `assignee_ids`, `deadline_since`, `deadline_until`, `status` で絞り込んでください。キーワードが分かっている場合は `jooto-search-task` を優先してください。開始日は一覧レスポンスの `start_date_time` で確認できますが、現在のOpenAPIでは開始日による絞り込みパラメータは提供されていません。
 
+タスク検索、タスク一覧、タスク作成・更新などのタスク系ツールは対象プロジェクトの `board_id` が必要です。ユーザーがプロジェクトを指定していない場合は、先に対象プロジェクトを確認してください。候補が必要な場合は `jooto-list-projects` を使用します。
+
 ### `detail_level` ごとの返却フィールド
 
 `standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。

@@ -30,6 +30,10 @@ function searchableDescription(description: string, keywords: string): string {
   return `${description} Search keywords: ${keywords}.`;
 }
 
+const projectSelectionGuidance = 'プロジェクトが指定されていない場合は、先にユーザーへ対象プロジェクトを確認してください。候補が必要な場合はjooto-list-projectsを使用します。';
+const taskProjectIdDescription = `プロジェクトのID。${projectSelectionGuidance}`;
+const destinationProjectIdDescription = `移動先のプロジェクトのID。移動先プロジェクトが指定されていない場合は、先にユーザーへ対象プロジェクトを確認してください。候補が必要な場合はjooto-list-projectsを使用します。`;
+
 const boardListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。'
 );
@@ -324,13 +328,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: searchableDescription('プロジェクト内の未アーカイブのタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。', 'jooto-list-tasks, task list, project tasks, board tasks, active tasks'),
+    description: searchableDescription(`プロジェクト内の未アーカイブのタスク一覧を取得します。${projectSelectionGuidance}1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。`, 'jooto-list-tasks, task list, project tasks, board tasks, active tasks'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         ...paginationProperties,
         ...taskListFilterProperties,
@@ -341,13 +345,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-tasks',
-    description: searchableDescription('プロジェクト内のアーカイブ済みタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。', 'jooto-list-archived-tasks, archived task list, archived tasks, archived project tasks'),
+    description: searchableDescription(`プロジェクト内のアーカイブ済みタスク一覧を取得します。${projectSelectionGuidance}1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。`, 'jooto-list-archived-tasks, archived task list, archived tasks, archived project tasks'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         ...paginationProperties,
         ...taskListFilterProperties,
@@ -358,13 +362,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-task',
-    description: searchableDescription('特定のプロジェクト内の特定のタスク情報を取得します', 'jooto-get-task, task detail, task info, project task detail'),
+    description: searchableDescription(`特定のプロジェクト内の特定のタスク情報を取得します。${projectSelectionGuidance}`, 'jooto-get-task, task detail, task info, project task detail'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         task_id: {
           type: 'number',
@@ -650,13 +654,13 @@ export const toolDefinitions = [
   // === Task ===
   {
     name: 'jooto-create-task',
-    description: searchableDescription('プロジェクト内に新しいタスクを作成します', 'jooto-create-task, create task, new task, add task'),
+    description: searchableDescription(`プロジェクト内に新しいタスクを作成します。${projectSelectionGuidance}`, 'jooto-create-task, create task, new task, add task'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         name: {
           type: 'string',
@@ -713,13 +717,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-task',
-    description: searchableDescription('特定のプロジェクト内の特定のタスク情報を更新します', 'jooto-update-task, update task, edit task, task update'),
+    description: searchableDescription(`特定のプロジェクト内の特定のタスク情報を更新します。${projectSelectionGuidance}`, 'jooto-update-task, update task, edit task, task update'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         task_id: {
           type: 'number',
@@ -780,13 +784,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-task',
-    description: searchableDescription('プロジェクト内のタスクを削除します', 'jooto-delete-task, delete task, remove task'),
+    description: searchableDescription(`プロジェクト内のタスクを削除します。${projectSelectionGuidance}`, 'jooto-delete-task, delete task, remove task'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         task_id: {
           type: 'number',
@@ -798,13 +802,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-search-task',
-    description: searchableDescription('プロジェクト内のタスクをフリーワードで検索します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。', 'jooto-search-task, task search, search tasks, keyword search'),
+    description: searchableDescription(`プロジェクト内のタスクをフリーワードで検索します。${projectSelectionGuidance}通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。`, 'jooto-search-task, task search, search tasks, keyword search'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         search_query: {
           type: 'string',
@@ -834,7 +838,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-move-task',
-    description: searchableDescription('タスクを別のプロジェクトやリストに移動します', 'jooto-move-task, move task, transfer task, move to list'),
+    description: searchableDescription(`タスクを別のプロジェクトやリストに移動します。${projectSelectionGuidance}`, 'jooto-move-task, move task, transfer task, move to list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -844,7 +848,7 @@ export const toolDefinitions = [
         },
         board_id: {
           type: 'number',
-          description: '移動先のプロジェクトのID',
+          description: destinationProjectIdDescription,
         },
         list_id: {
           type: 'number',
@@ -856,13 +860,13 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-archive-task',
-    description: searchableDescription('タスクをアーカイブします', 'jooto-archive-task, archive task, archived task'),
+    description: searchableDescription(`タスクをアーカイブします。${projectSelectionGuidance}`, 'jooto-archive-task, archive task, archived task'),
     inputSchema: {
       type: 'object',
       properties: {
         board_id: {
           type: 'number',
-          description: 'プロジェクトのID',
+          description: taskProjectIdDescription,
         },
         task_id: {
           type: 'number',

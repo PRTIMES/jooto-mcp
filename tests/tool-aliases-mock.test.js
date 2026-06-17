@@ -14,4 +14,12 @@ describe('tool aliases', () => {
     expect(toolHandlers.get('jooto-list-projects')).toBe(toolHandlers.get('jooto-list-boards'));
     expect(toolHandlers.get('jooto-list-archived-projects')).toBe(toolHandlers.get('jooto-list-archived-boards'));
   });
+
+  it('guides task tools to confirm the project before use', () => {
+    const searchTaskTool = toolDefinitions.find((tool) => tool.name === 'jooto-search-task');
+
+    expect(searchTaskTool?.description).toContain('プロジェクトが指定されていない場合');
+    expect(searchTaskTool?.description).toContain('jooto-list-projects');
+    expect(() => toolSchemas['jooto-search-task'].parse({ search_query: 'keyword' })).toThrow(/プロジェクトが指定されていない場合/);
+  });
 });
