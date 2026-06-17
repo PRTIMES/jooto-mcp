@@ -50,6 +50,10 @@ const boardMemberListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。emailが必要な場合のみstandardを指定します。'
 );
 
+const labelListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。色が必要な場合のみstandardを指定します。'
+);
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -197,7 +201,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-labels',
-    description: 'プロジェクトのラベル一覧を取得します',
+    description: 'プロジェクトのラベル一覧を取得します。通常はdetail_level=compactを使用してください。色が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -206,6 +210,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...labelListDetailLevelProperty,
       },
       required: ['board_id'],
     },

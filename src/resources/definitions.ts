@@ -86,9 +86,9 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Labels (= categories) ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/labels{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/labels{?page,detail_level}',
     name: 'ラベル一覧',
-    description: 'プロジェクトのラベル一覧を取得します',
+    description: 'プロジェクトのラベル一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {

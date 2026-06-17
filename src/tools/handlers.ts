@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
+import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -108,7 +108,10 @@ export async function processGetListTool(args: z.infer<ToolSchemas['jooto-get-li
 
 export async function processListLabelsTool(args: z.infer<ToolSchemas['jooto-list-labels']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/categories`, { page: args.page })),
+    async () => formatLabelsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/categories`, { page: args.page })),
+      args.detail_level
+    ),
     'ラベル一覧の取得に失敗しました'
   );
 }

@@ -3,6 +3,7 @@ import {
   formatBoardListResponse,
   formatBoardMembersResponse,
   formatCommentsResponse,
+  formatLabelsResponse,
   formatListsResponse,
   formatTaskSearchResponse,
   formatTasksResponse,
@@ -287,6 +288,70 @@ describe('formatListsResponse', () => {
       order: null,
       color: null,
       auto_task_status: null,
+    });
+  });
+});
+
+describe('formatLabelsResponse', () => {
+  const response = {
+    categories: [
+      {
+        id: 10,
+        board_id: 20,
+        name: 'Accounting',
+        color: '#00ff00',
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact label fields by default', () => {
+    expect(formatLabelsResponse(response)).toEqual({
+      categories: [
+        {
+          id: 10,
+          name: 'Accounting',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard label fields when requested', () => {
+    expect(formatLabelsResponse(response, 'standard')).toEqual({
+      categories: [
+        {
+          id: 10,
+          name: 'Accounting',
+          color: '#00ff00',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard label fields to null', () => {
+    expect(formatLabelsResponse({ categories: [{}] }, 'standard').categories[0]).toEqual({
+      id: null,
+      name: null,
+      color: null,
     });
   });
 });

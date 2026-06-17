@@ -6,7 +6,7 @@
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 import { jootoApiRequest, withPagination } from '../tools/utils.js';
-import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatListsResponse, formatTasksResponse, formatUsersResponse, type DetailLevel } from '../tools/formatters.js';
+import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTasksResponse, formatUsersResponse, type DetailLevel } from '../tools/formatters.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
@@ -120,7 +120,10 @@ const routes: Route[] = [
   // Labels (= categories)
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/categories`, { page: parsePage(p.page) })),
+    handler: async (p) => formatLabelsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/categories`, { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels\/(?<labelId>\d+)$/,
