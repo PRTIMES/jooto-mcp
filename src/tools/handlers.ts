@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatListsResponse } from './formatters.js';
+import { formatBoardListResponse, formatListsResponse, formatTasksResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -116,14 +116,20 @@ export async function processGetLabelTool(args: z.infer<ToolSchemas['jooto-get-l
 
 export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list-tasks']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=false`, { page: args.page })),
+    async () => formatTasksResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=false`, { page: args.page })),
+      args.detail_level
+    ),
     'タスク一覧の取得に失敗しました'
   );
 }
 
 export async function processListArchivedTasksTool(args: z.infer<ToolSchemas['jooto-list-archived-tasks']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=true`, { page: args.page })),
+    async () => formatTasksResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=true`, { page: args.page })),
+      args.detail_level
+    ),
     'アーカイブ済みタスク一覧の取得に失敗しました'
   );
 }

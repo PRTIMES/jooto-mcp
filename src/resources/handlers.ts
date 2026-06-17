@@ -6,7 +6,7 @@
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 import { jootoApiRequest, withPagination } from '../tools/utils.js';
-import { formatBoardListResponse, formatListsResponse, type DetailLevel } from '../tools/formatters.js';
+import { formatBoardListResponse, formatListsResponse, formatTasksResponse, type DetailLevel } from '../tools/formatters.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
@@ -123,11 +123,17 @@ const routes: Route[] = [
   // Tasks
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=false`, { page: parsePage(p.page) })),
+    handler: async (p) => formatTasksResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=false`, { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/archived$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=true`, { page: parsePage(p.page) })),
+    handler: async (p) => formatTasksResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=true`, { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)$/,

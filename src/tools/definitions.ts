@@ -34,6 +34,10 @@ const projectListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。'
 );
 
+const taskListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。'
+);
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -212,7 +216,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -221,13 +225,14 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...taskListDetailLevelProperty,
       },
       required: ['board_id'],
     },
   },
   {
     name: 'jooto-list-archived-tasks',
-    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -236,6 +241,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...taskListDetailLevelProperty,
       },
       required: ['board_id'],
     },

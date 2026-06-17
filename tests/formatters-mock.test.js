@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatBoardListResponse, formatListsResponse } from '../src/tools/formatters.ts';
+import { formatBoardListResponse, formatListsResponse, formatTasksResponse } from '../src/tools/formatters.ts';
 
 describe('formatBoardListResponse', () => {
   const response = {
@@ -133,6 +133,103 @@ describe('formatListsResponse', () => {
       order: null,
       color: null,
       auto_task_status: null,
+    });
+  });
+});
+
+describe('formatTasksResponse', () => {
+  const response = {
+    tasks: [
+      {
+        id: 10,
+        task_number: 12,
+        name: 'Review invoice',
+        description: 'Check the invoice amount and due date.',
+        list_id: 20,
+        status: 'in_progress',
+        assigned_user_ids: [1, 2],
+        start_date_time: '2026-01-01T00:00:00Z',
+        deadline_date_time: '2026-01-05T00:00:00Z',
+        categories: [
+          {
+            id: 30,
+            board_id: 40,
+            name: 'Accounting',
+            color: '#00ff00',
+            created_at: '2026-01-01T00:00:00Z',
+            updated_at: '2026-01-02T00:00:00Z',
+          },
+        ],
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact task fields by default', () => {
+    expect(formatTasksResponse(response)).toEqual({
+      tasks: [
+        {
+          id: 10,
+          name: 'Review invoice',
+          list_id: 20,
+          status: 'in_progress',
+          assigned_user_ids: [1, 2],
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard task fields when requested', () => {
+    expect(formatTasksResponse(response, 'standard')).toEqual({
+      tasks: [
+        {
+          id: 10,
+          name: 'Review invoice',
+          description: 'Check the invoice amount and due date.',
+          list_id: 20,
+          status: 'in_progress',
+          assigned_user_ids: [1, 2],
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+          category_ids: [30],
+          updated_at: '2026-01-02T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard fields to null', () => {
+    expect(formatTasksResponse({ tasks: [{}] }, 'standard').tasks[0]).toEqual({
+      id: null,
+      name: null,
+      description: null,
+      list_id: null,
+      status: null,
+      assigned_user_ids: null,
+      start_date_time: null,
+      deadline_date_time: null,
+      category_ids: null,
+      updated_at: null,
     });
   });
 });
