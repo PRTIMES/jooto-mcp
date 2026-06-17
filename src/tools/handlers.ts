@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
+import { jootoApiRequest, handleMcpOperation, TOKEN_SENSITIVE_PER_PAGE, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
 import { formatBoardActivitiesResponse, formatBoardListResponse, formatBoardMembersResponse, formatChecklistItemsResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
@@ -72,7 +72,10 @@ export async function processGetBoardTool(args: z.infer<ToolSchemas['jooto-get-b
 export async function processListBoardActivitiesTool(args: z.infer<ToolSchemas['jooto-list-board-activities']>) {
   return handleMcpOperation(
     async () => formatBoardActivitiesResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/activities`, { page: args.page })),
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/activities`, {
+        page: args.page,
+        perPage: TOKEN_SENSITIVE_PER_PAGE,
+      })),
       args.detail_level
     ),
     'プロジェクト履歴一覧の取得に失敗しました'
@@ -147,7 +150,10 @@ function buildTaskListPath(boardId: number, archived: boolean, args: TaskListArg
   if (args.deadline_since) queryParams.append('deadline_since', args.deadline_since);
   if (args.deadline_until) queryParams.append('deadline_until', args.deadline_until);
 
-  return withPagination(`/v1/boards/${boardId}/tasks?${queryParams.toString()}`, { page: args.page });
+  return withPagination(`/v1/boards/${boardId}/tasks?${queryParams.toString()}`, {
+    page: args.page,
+    perPage: TOKEN_SENSITIVE_PER_PAGE,
+  });
 }
 
 export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list-tasks']>) {
@@ -340,12 +346,13 @@ export async function processSearchBoardTasksTool(args: z.infer<ToolSchemas['joo
   const queryParams = new URLSearchParams();
   queryParams.append('search_query', args.search_query);
   if (args.page !== undefined) queryParams.append('page', args.page.toString());
-  if (args.per_page !== undefined) queryParams.append('per_page', args.per_page.toString());
   if (args.order) queryParams.append('order', args.order);
 
   return handleMcpOperation(
     async () => formatTaskSearchResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/search?${queryParams.toString()}`)),
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/search?${queryParams.toString()}`, {
+        perPage: args.per_page ?? TOKEN_SENSITIVE_PER_PAGE,
+      })),
       args.detail_level
     ),
     'タスク検索に失敗しました'

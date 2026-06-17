@@ -2,6 +2,7 @@ import https from 'https';
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 
 export const DEFAULT_PER_PAGE = 200;
+export const TOKEN_SENSITIVE_PER_PAGE = 20;
 export const DEFAULT_PAGE = 1;
 
 export interface PaginationOptions {

@@ -5,7 +5,7 @@
  */
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
-import { jootoApiRequest, withPagination } from '../tools/utils.js';
+import { jootoApiRequest, TOKEN_SENSITIVE_PER_PAGE, withPagination } from '../tools/utils.js';
 import { formatBoardActivitiesResponse, formatBoardListResponse, formatBoardMembersResponse, formatChecklistItemsResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTasksResponse, formatUsersResponse, type DetailLevel } from '../tools/formatters.js';
 
 /**
@@ -94,7 +94,10 @@ const routes: Route[] = [
   {
     pattern: /^projects\/(?<projectId>\d+)\/activities$/,
     handler: async (p) => formatBoardActivitiesResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/activities`, { page: parsePage(p.page) })),
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/activities`, {
+        page: parsePage(p.page),
+        perPage: TOKEN_SENSITIVE_PER_PAGE,
+      })),
       parseDetailLevel(p.detail_level)
     ),
   },
@@ -140,14 +143,20 @@ const routes: Route[] = [
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks$/,
     handler: async (p) => formatTasksResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=false`, { page: parsePage(p.page) })),
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=false`, {
+        page: parsePage(p.page),
+        perPage: TOKEN_SENSITIVE_PER_PAGE,
+      })),
       parseDetailLevel(p.detail_level)
     ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/archived$/,
     handler: async (p) => formatTasksResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=true`, { page: parsePage(p.page) })),
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=true`, {
+        page: parsePage(p.page),
+        perPage: TOKEN_SENSITIVE_PER_PAGE,
+      })),
       parseDetailLevel(p.detail_level)
     ),
   },

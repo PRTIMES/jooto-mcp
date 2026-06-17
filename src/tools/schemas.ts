@@ -337,7 +337,11 @@ export const toolSchemas = {
     }).optional(),
     per_page: z.number({
       invalid_type_error: '"per_page"パラメータは数値でなければなりません',
-    }).int('"per_page"パラメータは整数でなければなりません').positive('"per_page"パラメータは1以上でなければなりません').optional(),
+    })
+      .int('"per_page"パラメータは整数でなければなりません')
+      .positive('"per_page"パラメータは1以上でなければなりません')
+      .max(20, '"per_page"パラメータは20以下でなければなりません')
+      .optional(),
     order: z.string({
       invalid_type_error: '"order"パラメータは文字列でなければなりません',
     }).optional(),

@@ -62,7 +62,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///projects/{projectId}/activities{?page,detail_level}',
     name: 'プロジェクト履歴一覧',
-    description: 'プロジェクトの履歴一覧を取得します。通常はdetail_level=compactを使用してください。',
+    description: 'プロジェクトの履歴一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {
@@ -107,13 +107,13 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///projects/{projectId}/tasks{?page,detail_level}',
     name: 'タスク一覧',
-    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。通常はdetail_level=compactを使用してください。',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {
     uriTemplate: 'jooto:///projects/{projectId}/tasks/archived{?page,detail_level}',
     name: 'アーカイブ済みタスク一覧',
-    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。通常はdetail_level=compactを使用してください。',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {

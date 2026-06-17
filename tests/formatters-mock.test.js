@@ -182,7 +182,7 @@ describe('formatBoardActivitiesResponse', () => {
       },
     ],
     page: 1,
-    per_page: 50,
+    per_page: 20,
     total: 1,
     total_pages: 1,
   };
@@ -202,7 +202,7 @@ describe('formatBoardActivitiesResponse', () => {
       ],
       meta: {
         page: 1,
-        per_page: 50,
+        per_page: 20,
         total: 1,
         total_pages: 1,
         detail_level: 'compact',
@@ -229,7 +229,7 @@ describe('formatBoardActivitiesResponse', () => {
       ],
       meta: {
         page: 1,
-        per_page: 50,
+        per_page: 20,
         total: 1,
         total_pages: 1,
         detail_level: 'standard',

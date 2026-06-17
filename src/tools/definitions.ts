@@ -182,7 +182,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-board-activities',
-    description: 'プロジェクトの履歴一覧を取得します。通常はdetail_level=compactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。',
+    description: 'プロジェクトの履歴一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -298,7 +298,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -315,7 +315,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-tasks',
-    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -792,9 +792,10 @@ export const toolDefinitions = [
         },
         per_page: {
           type: 'integer',
-          description: '1ページあたりの取得件数（未指定時は200）',
+          description: '1ページあたりの取得件数（未指定時は20、最大20）',
           minimum: 1,
-          default: 200,
+          maximum: 20,
+          default: 20,
         },
         order: {
           type: 'string',
