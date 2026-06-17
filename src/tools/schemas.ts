@@ -11,6 +11,11 @@ const listDetailLevelSchema = z.enum(['compact', 'standard'], {
   invalid_type_error: '"detail_level"パラメータは"compact"または"standard"でなければなりません',
 }).default('compact');
 
+const boardListSchema = z.object({
+  page: pageSchema,
+  detail_level: listDetailLevelSchema,
+});
+
 const taskListFilterSchema = {
   category_ids: z.array(z.number()).optional(),
   assignee_ids: z.array(z.number()).optional(),
@@ -36,14 +41,10 @@ export const toolSchemas = {
       invalid_type_error: '"user_id"パラメータは数値でなければなりません',
     }),
   }),
-  'jooto-list-boards': z.object({
-    page: pageSchema,
-    detail_level: listDetailLevelSchema,
-  }),
-  'jooto-list-archived-boards': z.object({
-    page: pageSchema,
-    detail_level: listDetailLevelSchema,
-  }),
+  'jooto-list-projects': boardListSchema,
+  'jooto-list-boards': boardListSchema,
+  'jooto-list-archived-projects': boardListSchema,
+  'jooto-list-archived-boards': boardListSchema,
   'jooto-get-board': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',

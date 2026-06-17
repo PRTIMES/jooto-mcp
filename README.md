@@ -73,7 +73,7 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 | ツール | `compact` | `standard` |
 | --- | --- | --- |
 | `jooto-list-users` | `id`, `name`, `display_name` | `id`, `name`, `display_name`, `email`, `role`, `created_at` |
-| `jooto-list-boards`, `jooto-list-archived-boards` | `id`, `title` | `id`, `title`, `description`, `created_at` |
+| `jooto-list-projects` (`jooto-list-boards`), `jooto-list-archived-projects` (`jooto-list-archived-boards`) | `id`, `title` | `id`, `title`, `description`, `created_at` |
 | `jooto-list-board-activities` | `id`, `type`, `data`, `sender_id`, `task_id`, `task_name`, `created_at` | `id`, `type`, `data`, `sender_id`, `sender_name`, `sender_display_name`, `task_id`, `task_name`, `task_status`, `task_list_id`, `created_at` |
 | `jooto-list-board-members` | `id`, `name`, `display_name`, `role` | `id`, `name`, `display_name`, `email`, `role` |
 | `jooto-list-lists`, `jooto-list-archived-lists` | `id`, `name` | `id`, `name`, `order`, `color`, `auto_task_status` |
@@ -90,7 +90,7 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 | 返却される ID | 意味 | 対照表・詳細を取得するツール |
 | --- | --- | --- |
-| `board_id` | プロジェクトID | `jooto-list-boards`, `jooto-list-archived-boards`, `jooto-get-board` |
+| `board_id` | プロジェクトID | `jooto-list-projects`, `jooto-list-archived-projects`, `jooto-list-boards`, `jooto-list-archived-boards`, `jooto-get-board` |
 | `list_id`, `task_list_id` | リストID | `jooto-list-lists`, `jooto-list-archived-lists`, `jooto-get-list` |
 | `task_id` | タスクID | `jooto-list-tasks`, `jooto-list-archived-tasks`, `jooto-search-task`, `jooto-get-task` |
 | `user_id`, `sender_id`, `assigned_user_ids`, `mentioned_user_ids` | ユーザーID | `jooto-list-users`, `jooto-list-board-members`, `jooto-get-user` |
@@ -105,8 +105,8 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 | ツール | 用途 |
 | --- | --- |
 | `jooto-list-users` | 組織ユーザー一覧 |
-| `jooto-list-boards` | 未アーカイブのプロジェクト一覧 |
-| `jooto-list-archived-boards` | アーカイブ済みプロジェクト一覧 |
+| `jooto-list-projects` (`jooto-list-boards`) | 未アーカイブのプロジェクト一覧 |
+| `jooto-list-archived-projects` (`jooto-list-archived-boards`) | アーカイブ済みプロジェクト一覧 |
 | `jooto-list-board-activities` | プロジェクト履歴一覧 |
 | `jooto-list-board-members` | プロジェクトメンバー一覧 |
 | `jooto-list-lists` | 未アーカイブのリスト一覧 |

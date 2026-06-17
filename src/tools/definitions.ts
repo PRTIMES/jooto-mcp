@@ -149,8 +149,30 @@ export const toolDefinitions = [
     },
   },
   {
+    name: 'jooto-list-projects',
+    description: searchableDescription('未アーカイブのプロジェクト一覧を取得します。jooto-list-boardsと同じ結果を返すプロジェクト名のエイリアスです。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-projects, project list, projects list, list projects, プロジェクト一覧, 未アーカイブ プロジェクト一覧'),
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ...paginationProperties,
+        ...boardListDetailLevelProperty,
+      },
+    },
+  },
+  {
     name: 'jooto-list-boards',
     description: searchableDescription('未アーカイブのプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-boards, プロジェクト一覧, ボード一覧, project list, board list, list boards, active projects'),
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ...paginationProperties,
+        ...boardListDetailLevelProperty,
+      },
+    },
+  },
+  {
+    name: 'jooto-list-archived-projects',
+    description: searchableDescription('アーカイブ済みプロジェクト一覧を取得します。jooto-list-archived-boardsと同じ結果を返すプロジェクト名のエイリアスです。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-archived-projects, archived project list, archived projects list, list archived projects, アーカイブ済みプロジェクト一覧'),
     inputSchema: {
       type: 'object',
       properties: {
