@@ -4,7 +4,7 @@
 
 ## 前提条件
 
-- Jooto API キー (エンタープライズプランが必要)
+- Jooto API キー (ビジネスプランが必要)
 - Node.js v18 以上（MCPB を使わず直接セットアップする場合）
 
 ## インストール
@@ -42,11 +42,11 @@ Claude Desktop には `.mcpb` 形式でバンドル化したサーバーをド�
 
 - `command`: 実行するコマンド。macOS / Linux では `node`、Windows では `node.exe`。`PATH` が通っていない場合は `node` のフルパス（例: macOS Homebrew なら `/opt/homebrew/bin/node` や `/usr/local/bin/node`、nvm 利用時は `~/.nvm/versions/node/vXX.X.X/bin/node`）を指定してください。
 - `args`: `server.cjs` への**絶対パス**を配列で渡します。
-- `env.JOOTO_API_KEY`: Jooto エンタープライズプランの API キー（必須）。
+- `env.JOOTO_API_KEY`: Jooto ビジネスプランの API キー（必須）。
 
 ## 注意事項
 
-- この MCP サーバーを使用するには、Jooto のエンタープライズプランと API キーが必要です。
+- この MCP サーバーを使用するには、Jooto のビジネスプランと API キーが必要です。
 - API リクエストは api.jooto.com に対して行われます。
 
 ## MCP ツールの使い方

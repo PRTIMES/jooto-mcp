@@ -3,7 +3,7 @@
   "info": {
     "title": "Jooto API",
     "version": "1.0",
-    "description": "タスク・プロジェクト管理ツールJooto（https://www.jooto.com）のオープンAPIドキュメントです。Jooto APIはエンタープライズプランでのみご利用いただけます。不具合やご不明点等ございましたらお問い合わせよりご連絡くださいませ。"
+    "description": "タスク・プロジェクト管理ツールJooto（https://www.jooto.com）のオープンAPIドキュメントです。Jooto APIはビジネスプランでのみご利用いただけます。不具合やご不明点等ございましたらお問い合わせよりご連絡くださいませ。"
   },
   "servers": [
     {

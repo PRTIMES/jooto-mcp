@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Jooto API MCP サーバー。Jooto（プロジェクト管理ツール）の REST API を MCP (Model Context Protocol) ツールとしてラップし、Claude Desktop 等の MCP クライアントから操作可能にする。エンタープライズプラン API キーが必要。
+Jooto API MCP サーバー。Jooto（プロジェクト管理ツール）の REST API を MCP (Model Context Protocol) ツールとしてラップし、Claude Desktop 等の MCP クライアントから操作可能にする。ビジネスプラン API キーが必要。
 
 ## Commands
 
