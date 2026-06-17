@@ -256,7 +256,7 @@ export const toolSchemas = {
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
     actual: z.string().optional(),
-    status: z.enum(['to_do', 'done', 'cancel', 'pending']).optional(),
+    status: z.enum(['to_do', 'done', 'cancel', 'pending', 'in_progress']).optional(),
   }),
   'jooto-update-task': z.object({
     board_id: z.number({
@@ -276,7 +276,7 @@ export const toolSchemas = {
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
     actual: z.string().optional(),
-    status: z.enum(['to_do', 'done', 'cancel', 'pending']).optional(),
+    status: z.enum(['to_do', 'done', 'cancel', 'pending', 'in_progress']).optional(),
   }),
   'jooto-delete-task': z.object({
     board_id: z.number({

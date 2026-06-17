@@ -562,7 +562,7 @@ export const toolDefinitions = [
         },
         status: {
           type: 'string',
-          enum: ['to_do', 'done', 'cancel', 'pending'],
+          enum: ['to_do', 'done', 'cancel', 'pending', 'in_progress'],
           description: 'タスクのステータス',
         },
       },
@@ -629,7 +629,7 @@ export const toolDefinitions = [
         },
         status: {
           type: 'string',
-          enum: ['to_do', 'done', 'cancel', 'pending'],
+          enum: ['to_do', 'done', 'cancel', 'pending', 'in_progress'],
           description: 'タスクのステータス',
         },
       },
