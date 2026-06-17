@@ -23,7 +23,7 @@ const categoryIdsField: FieldSelector = {
   },
 };
 
-const FIELD_SPECS: Record<'board' | 'list' | 'task', FieldSpec> = {
+const FIELD_SPECS: Record<'board' | 'list' | 'task' | 'taskSearch', FieldSpec> = {
   board: {
     itemsKey: 'boards',
     compact: ['id', 'title'],
@@ -44,6 +44,21 @@ const FIELD_SPECS: Record<'board' | 'list' | 'task', FieldSpec> = {
       'list_id',
       'status',
       'assigned_user_ids',
+      'start_date_time',
+      'deadline_date_time',
+      categoryIdsField,
+      'updated_at',
+    ],
+  },
+  taskSearch: {
+    itemsKey: 'tasks',
+    compact: ['id', 'name', 'list_id', 'status', 'start_date_time', 'deadline_date_time'],
+    standard: [
+      'id',
+      'name',
+      'description',
+      'list_id',
+      'status',
       'start_date_time',
       'deadline_date_time',
       categoryIdsField,
@@ -108,4 +123,8 @@ export function formatListsResponse(response: unknown, detailLevel: DetailLevel 
 
 export function formatTasksResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.task, detailLevel);
+}
+
+export function formatTaskSearchResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.taskSearch, detailLevel);
 }

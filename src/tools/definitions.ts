@@ -34,7 +34,7 @@ const projectListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。'
 );
 
-const taskListDetailLevelProperty = detailLevelProperty(
+const taskDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。'
 );
 
@@ -225,7 +225,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
-        ...taskListDetailLevelProperty,
+        ...taskDetailLevelProperty,
       },
       required: ['board_id'],
     },
@@ -241,7 +241,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
-        ...taskListDetailLevelProperty,
+        ...taskDetailLevelProperty,
       },
       required: ['board_id'],
     },
@@ -685,7 +685,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-search-task',
-    description: 'プロジェクト内のタスクをフリーワードで検索します',
+    description: 'プロジェクト内のタスクをフリーワードで検索します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -713,6 +713,7 @@ export const toolDefinitions = [
           type: 'string',
           description: '並び順（"asc"または"desc"）',
         },
+        ...taskDetailLevelProperty,
       },
       required: ['board_id', 'search_query'],
     },

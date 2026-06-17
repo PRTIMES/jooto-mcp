@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatListsResponse, formatTasksResponse } from './formatters.js';
+import { formatBoardListResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -299,7 +299,10 @@ export async function processSearchBoardTasksTool(args: z.infer<ToolSchemas['joo
   if (args.order) queryParams.append('order', args.order);
 
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/search?${queryParams.toString()}`)),
+    async () => formatTaskSearchResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/search?${queryParams.toString()}`)),
+      args.detail_level
+    ),
     'タスク検索に失敗しました'
   );
 }

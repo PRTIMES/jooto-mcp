@@ -316,6 +316,7 @@ export const toolSchemas = {
     order: z.string({
       invalid_type_error: '"order"パラメータは文字列でなければなりません',
     }).optional(),
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-move-task': z.object({
     task_id: z.number({

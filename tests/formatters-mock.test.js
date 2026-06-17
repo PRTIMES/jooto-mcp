@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { formatBoardListResponse, formatListsResponse, formatTasksResponse } from '../src/tools/formatters.ts';
+import {
+  formatBoardListResponse,
+  formatListsResponse,
+  formatTaskSearchResponse,
+  formatTasksResponse,
+} from '../src/tools/formatters.ts';
 
 describe('formatBoardListResponse', () => {
   const response = {
@@ -226,6 +231,111 @@ describe('formatTasksResponse', () => {
       list_id: null,
       status: null,
       assigned_user_ids: null,
+      start_date_time: null,
+      deadline_date_time: null,
+      category_ids: null,
+      updated_at: null,
+    });
+  });
+});
+
+describe('formatTaskSearchResponse', () => {
+  const response = {
+    tasks: [
+      {
+        id: 10,
+        task_number: 12,
+        name: 'Review invoice',
+        description: 'Check the invoice amount and due date.',
+        list_id: 20,
+        status: 'in_progress',
+        start_date_time: '2026-01-01T00:00:00Z',
+        deadline_date_time: '2026-01-05T00:00:00Z',
+        categories: [
+          {
+            id: 30,
+            board_id: 40,
+            name: 'Accounting',
+            color: '#00ff00',
+            created_at: '2026-01-01T00:00:00Z',
+            updated_at: '2026-01-02T00:00:00Z',
+          },
+        ],
+        comments: [
+          {
+            id: 40,
+            content: 'Comment body',
+          },
+        ],
+        checklists: [
+          {
+            id: 50,
+            title: 'Checklist',
+          },
+        ],
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact task search fields by default', () => {
+    expect(formatTaskSearchResponse(response)).toEqual({
+      tasks: [
+        {
+          id: 10,
+          name: 'Review invoice',
+          list_id: 20,
+          status: 'in_progress',
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard task search fields when requested', () => {
+    expect(formatTaskSearchResponse(response, 'standard')).toEqual({
+      tasks: [
+        {
+          id: 10,
+          name: 'Review invoice',
+          description: 'Check the invoice amount and due date.',
+          list_id: 20,
+          status: 'in_progress',
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+          category_ids: [30],
+          updated_at: '2026-01-02T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard task search fields to null', () => {
+    expect(formatTaskSearchResponse({ tasks: [{}] }, 'standard').tasks[0]).toEqual({
+      id: null,
+      name: null,
+      description: null,
+      list_id: null,
+      status: null,
       start_date_time: null,
       deadline_date_time: null,
       category_ids: null,
