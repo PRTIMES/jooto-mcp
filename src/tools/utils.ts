@@ -36,7 +36,6 @@ export async function handleMcpOperation<T>(
   errorMessage: string
 ) {
   try {
-    console.error("handle operation")
     const response = await operation();
     return formatMcpResponse(response);
   } catch (error) {
