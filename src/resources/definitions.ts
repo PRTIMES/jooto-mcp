@@ -60,6 +60,12 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
     mimeType: 'application/json',
   },
   {
+    uriTemplate: 'jooto:///projects/{projectId}/activities{?page,detail_level}',
+    name: 'プロジェクト履歴一覧',
+    description: 'プロジェクトの履歴一覧を取得します。通常はdetail_level=compactを使用してください。',
+    mimeType: 'application/json',
+  },
+  {
     uriTemplate: 'jooto:///projects/{projectId}/members{?page,detail_level}',
     name: 'プロジェクトメンバー一覧',
     description: 'プロジェクトのメンバー一覧を取得します。通常はdetail_level=compactを使用してください。',

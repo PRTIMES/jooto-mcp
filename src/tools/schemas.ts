@@ -41,6 +41,14 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
   }),
+  'jooto-list-board-activities': z.object({
+    board_id: z.number({
+      required_error: '"board_id"パラメータは必須です',
+      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
+    }),
+    page: pageSchema,
+    detail_level: listDetailLevelSchema,
+  }),
   'jooto-list-board-members': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',

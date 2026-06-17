@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  formatBoardActivitiesResponse,
   formatBoardListResponse,
   formatBoardMembersResponse,
   formatChecklistItemsResponse,
@@ -146,6 +147,108 @@ describe('formatBoardListResponse', () => {
       id: null,
       title: null,
       description: null,
+      created_at: null,
+    });
+  });
+});
+
+describe('formatBoardActivitiesResponse', () => {
+  const response = {
+    activities: [
+      {
+        id: 10,
+        type: 'task_update',
+        data: 'タスクを更新しました',
+        sender: {
+          id: 20,
+          name: 'sender_name',
+          display_name: 'Sender Name',
+          email: 'sender@example.com',
+          avatar_url: 'https://example.com/avatar.png',
+        },
+        task: {
+          id: 30,
+          name: 'Review invoice',
+          status: 'in_progress',
+          list_id: 40,
+          description: 'Task description',
+          categories: [{ id: 50, name: 'Accounting' }],
+        },
+        board: {
+          id: 60,
+          title: 'Product Project',
+        },
+        created_at: '2026-01-01T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 50,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact board activity fields by default', () => {
+    expect(formatBoardActivitiesResponse(response)).toEqual({
+      activities: [
+        {
+          id: 10,
+          type: 'task_update',
+          data: 'タスクを更新しました',
+          sender_id: 20,
+          task_id: 30,
+          task_name: 'Review invoice',
+          created_at: '2026-01-01T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 50,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard board activity fields when requested', () => {
+    expect(formatBoardActivitiesResponse(response, 'standard')).toEqual({
+      activities: [
+        {
+          id: 10,
+          type: 'task_update',
+          data: 'タスクを更新しました',
+          sender_id: 20,
+          sender_name: 'sender_name',
+          sender_display_name: 'Sender Name',
+          task_id: 30,
+          task_name: 'Review invoice',
+          task_status: 'in_progress',
+          task_list_id: 40,
+          created_at: '2026-01-01T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 50,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard board activity fields to null', () => {
+    expect(formatBoardActivitiesResponse({ activities: [{}] }, 'standard').activities[0]).toEqual({
+      id: null,
+      type: null,
+      data: null,
+      sender_id: null,
+      sender_name: null,
+      sender_display_name: null,
+      task_id: null,
+      task_name: null,
+      task_status: null,
+      task_list_id: null,
       created_at: null,
     });
   });

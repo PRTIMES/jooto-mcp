@@ -30,6 +30,10 @@ const boardListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。'
 );
 
+const boardActivityListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。'
+);
+
 const projectListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。'
 );
@@ -137,6 +141,22 @@ export const toolDefinitions = [
           type: 'number',
           description: 'プロジェクトのID',
         },
+      },
+      required: ['board_id'],
+    },
+  },
+  {
+    name: 'jooto-list-board-activities',
+    description: 'プロジェクトの履歴一覧を取得します。通常はdetail_level=compactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        board_id: {
+          type: 'number',
+          description: 'プロジェクトのID',
+        },
+        ...paginationProperties,
+        ...boardActivityListDetailLevelProperty,
       },
       required: ['board_id'],
     },

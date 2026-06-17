@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatBoardMembersResponse, formatChecklistItemsResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
+import { formatBoardActivitiesResponse, formatBoardListResponse, formatBoardMembersResponse, formatChecklistItemsResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -66,6 +66,16 @@ export async function processGetBoardTool(args: z.infer<ToolSchemas['jooto-get-b
   return handleMcpOperation(
     async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}`),
     'プロジェクト情報の取得に失敗しました'
+  );
+}
+
+export async function processListBoardActivitiesTool(args: z.infer<ToolSchemas['jooto-list-board-activities']>) {
+  return handleMcpOperation(
+    async () => formatBoardActivitiesResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/activities`, { page: args.page })),
+      args.detail_level
+    ),
+    'プロジェクト履歴一覧の取得に失敗しました'
   );
 }
 
@@ -441,6 +451,7 @@ toolHandlers.set('jooto-get-user', processGetUserTool);
 toolHandlers.set('jooto-list-boards', processListBoardsTool);
 toolHandlers.set('jooto-list-archived-boards', processListArchivedBoardsTool);
 toolHandlers.set('jooto-get-board', processGetBoardTool);
+toolHandlers.set('jooto-list-board-activities', processListBoardActivitiesTool);
 toolHandlers.set('jooto-list-board-members', processListBoardMembersTool);
 toolHandlers.set('jooto-list-lists', processListListsTool);
 toolHandlers.set('jooto-list-archived-lists', processListArchivedListsTool);

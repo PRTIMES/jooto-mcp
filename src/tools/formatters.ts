@@ -33,11 +33,24 @@ const senderIdField: FieldSelector = {
   },
 };
 
+function nestedField(output: string, sourceKey: string, fieldKey: string): FieldSelector {
+  return {
+    output,
+    read: (source) => asRecord(source[sourceKey])[fieldKey],
+  };
+}
+
 const categoryIdsField = idArrayField('category_ids', 'categories');
 const mentionedUserIdsField = idArrayField('mentioned_user_ids', 'mentioned_users');
 const attachmentIdsField = idArrayField('attachment_ids', 'attachments');
+const senderNameField = nestedField('sender_name', 'sender', 'name');
+const senderDisplayNameField = nestedField('sender_display_name', 'sender', 'display_name');
+const taskIdField = nestedField('task_id', 'task', 'id');
+const taskNameField = nestedField('task_name', 'task', 'name');
+const taskStatusField = nestedField('task_status', 'task', 'status');
+const taskListIdField = nestedField('task_list_id', 'task', 'list_id');
 
-const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'label' | 'task' | 'taskSearch' | 'comment' | 'checklist' | 'checklistItem', FieldSpec> = {
+const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'boardActivity' | 'list' | 'label' | 'task' | 'taskSearch' | 'comment' | 'checklist' | 'checklistItem', FieldSpec> = {
   user: {
     itemsKey: 'users',
     compact: ['id', 'name', 'display_name'],
@@ -52,6 +65,23 @@ const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'label' | 
     itemsKey: 'boards',
     compact: ['id', 'title'],
     standard: ['id', 'title', 'description', 'created_at'],
+  },
+  boardActivity: {
+    itemsKey: 'activities',
+    compact: ['id', 'type', 'data', senderIdField, taskIdField, taskNameField, 'created_at'],
+    standard: [
+      'id',
+      'type',
+      'data',
+      senderIdField,
+      senderNameField,
+      senderDisplayNameField,
+      taskIdField,
+      taskNameField,
+      taskStatusField,
+      taskListIdField,
+      'created_at',
+    ],
   },
   list: {
     itemsKey: 'lists',
@@ -163,6 +193,10 @@ function formatListResponse(response: unknown, spec: FieldSpec, detailLevel: Det
 
 export function formatBoardListResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.board, detailLevel);
+}
+
+export function formatBoardActivitiesResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.boardActivity, detailLevel);
 }
 
 export function formatUsersResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
