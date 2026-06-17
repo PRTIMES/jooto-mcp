@@ -6,6 +6,15 @@
 /**
  * 利用可能なツールの定義
  */
+const paginationProperties = {
+  page: {
+    type: 'integer',
+    description: '取得したいページ番号（未指定時は1）',
+    minimum: 1,
+    default: 1,
+  },
+};
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -29,7 +38,9 @@ export const toolDefinitions = [
     description: '組織に所属するユーザーの一覧を取得します',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        ...paginationProperties,
+      },
     },
   },
   {
@@ -51,7 +62,9 @@ export const toolDefinitions = [
     description: 'プロジェクト一覧を取得します',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        ...paginationProperties,
+      },
     },
   },
   {
@@ -78,6 +91,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'プロジェクトのID',
         },
+        ...paginationProperties,
       },
       required: ['board_id'],
     },
@@ -92,6 +106,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'プロジェクトのID',
         },
+        ...paginationProperties,
       },
       required: ['board_id'],
     },
@@ -124,6 +139,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'プロジェクトのID',
         },
+        ...paginationProperties,
       },
       required: ['board_id'],
     },
@@ -156,6 +172,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'プロジェクトのID',
         },
+        ...paginationProperties,
       },
       required: ['board_id'],
     },
@@ -188,6 +205,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'タスクのID',
         },
+        ...paginationProperties,
       },
       required: ['task_id'],
     },
@@ -220,6 +238,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'タスクのID',
         },
+        ...paginationProperties,
       },
       required: ['task_id'],
     },
@@ -252,6 +271,7 @@ export const toolDefinitions = [
           type: 'number',
           description: 'チェックリストのID',
         },
+        ...paginationProperties,
       },
       required: ['checklist_id'],
     },
@@ -607,12 +627,15 @@ export const toolDefinitions = [
           description: 'フリーワード検索用のクエリ',
         },
         page: {
-          type: 'number',
-          description: '取得したいページ番号',
+          type: 'integer',
+          description: '取得したいページ番号（未指定時は1）',
+          minimum: 1,
+          default: 1,
         },
         per_page: {
-          type: 'number',
+          type: 'integer',
           description: '1ページあたりの取得件数（未指定時は200）',
+          minimum: 1,
           default: 200,
         },
         order: {

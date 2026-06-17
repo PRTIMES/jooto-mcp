@@ -29,7 +29,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Users ===
   {
-    uriTemplate: 'jooto:///users',
+    uriTemplate: 'jooto:///users{?page}',
     name: 'ユーザー一覧',
     description: 'ユーザー一覧を取得します',
     mimeType: 'application/json',
@@ -42,7 +42,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Projects (= boards) ===
   {
-    uriTemplate: 'jooto:///projects',
+    uriTemplate: 'jooto:///projects{?page}',
     name: 'プロジェクト一覧',
     description: 'プロジェクト一覧を取得します',
     mimeType: 'application/json',
@@ -54,14 +54,14 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
     mimeType: 'application/json',
   },
   {
-    uriTemplate: 'jooto:///projects/{projectId}/members',
+    uriTemplate: 'jooto:///projects/{projectId}/members{?page}',
     name: 'プロジェクトメンバー一覧',
     description: 'プロジェクトのメンバー一覧を取得します',
     mimeType: 'application/json',
   },
   // === Lists ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/lists',
+    uriTemplate: 'jooto:///projects/{projectId}/lists{?page}',
     name: 'リスト一覧',
     description: 'プロジェクト内のリスト一覧を取得します',
     mimeType: 'application/json',
@@ -74,7 +74,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Labels (= categories) ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/labels',
+    uriTemplate: 'jooto:///projects/{projectId}/labels{?page}',
     name: 'ラベル一覧',
     description: 'プロジェクトのラベル一覧を取得します',
     mimeType: 'application/json',
@@ -87,7 +87,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Tasks ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks{?page}',
     name: 'タスク一覧',
     description: 'プロジェクト内のタスク一覧を取得します',
     mimeType: 'application/json',
@@ -100,7 +100,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Comments ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments{?page}',
     name: 'コメント一覧',
     description: 'タスクのコメント一覧を取得します',
     mimeType: 'application/json',
@@ -113,7 +113,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Checklists ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists{?page}',
     name: 'チェックリスト一覧',
     description: 'タスクのチェックリスト一覧を取得します',
     mimeType: 'application/json',
@@ -126,7 +126,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Checklist Items ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items{?page}',
     name: 'チェックリストアイテム一覧',
     description: 'チェックリストのアイテム一覧を取得します',
     mimeType: 'application/json',

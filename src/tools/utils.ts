@@ -2,6 +2,12 @@ import https from 'https';
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 
 export const DEFAULT_PER_PAGE = 200;
+export const DEFAULT_PAGE = 1;
+
+export interface PaginationOptions {
+  page?: number;
+  perPage?: number;
+}
 
 /**
  * MCPレスポンスをフォーマットする関数
@@ -75,19 +81,28 @@ export function httpsRequest(options: https.RequestOptions, data?: string): Prom
   });
 }
 
-/**
- * 一覧取得系のAPIパスにデフォルトのper_pageを付与する。
- * 明示的にper_pageが指定されている場合は呼び出し側の値を優先する。
- */
-export function withDefaultPerPage(path: string, perPage = DEFAULT_PER_PAGE): string {
+function withQueryParams(path: string, params: Record<string, string | undefined>): string {
   const [pathname, query = ''] = path.split('?');
   const queryParams = new URLSearchParams(query);
-  if (!queryParams.has('per_page')) {
-    queryParams.set('per_page', perPage.toString());
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && !queryParams.has(key)) {
+      queryParams.set(key, value);
+    }
   }
 
   const queryString = queryParams.toString();
   return queryString ? `${pathname}?${queryString}` : pathname;
+}
+
+/**
+ * 一覧取得系のAPIパスにデフォルトのper_pageと任意のpageを付与する。
+ * 明示的に指定されているクエリパラメータは呼び出し側の値を優先する。
+ */
+export function withPagination(path: string, options: PaginationOptions = {}): string {
+  return withQueryParams(path, {
+    per_page: (options.perPage ?? DEFAULT_PER_PAGE).toString(),
+    page: (options.page ?? DEFAULT_PAGE).toString(),
+  });
 }
 
 /**

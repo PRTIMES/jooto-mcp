@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+const pageSchema = z.number({
+  invalid_type_error: '"page"パラメータは数値でなければなりません',
+}).int('"page"パラメータは整数でなければなりません').positive('"page"パラメータは1以上でなければなりません').optional();
+
 /**
  * ツール引数のZodスキーマ定義
  * 取得系（list / get）は resources としても公開しているが、MCP クライアントの対応状況を鑑み tool としても公開する。
@@ -8,14 +12,18 @@ export const toolSchemas = {
   // === Read（取得系） ===
   'jooto-get-organization': z.object({}),
   'jooto-get-rate-limit': z.object({}),
-  'jooto-list-users': z.object({}),
+  'jooto-list-users': z.object({
+    page: pageSchema,
+  }),
   'jooto-get-user': z.object({
     user_id: z.number({
       required_error: '"user_id"パラメータは必須です',
       invalid_type_error: '"user_id"パラメータは数値でなければなりません',
     }),
   }),
-  'jooto-list-boards': z.object({}),
+  'jooto-list-boards': z.object({
+    page: pageSchema,
+  }),
   'jooto-get-board': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',
@@ -27,12 +35,14 @@ export const toolSchemas = {
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-list-lists': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-list': z.object({
     board_id: z.number({
@@ -49,6 +59,7 @@ export const toolSchemas = {
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-label': z.object({
     board_id: z.number({
@@ -65,6 +76,7 @@ export const toolSchemas = {
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-task': z.object({
     board_id: z.number({
@@ -81,6 +93,7 @@ export const toolSchemas = {
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-comment': z.object({
     task_id: z.number({
@@ -97,6 +110,7 @@ export const toolSchemas = {
       required_error: '"task_id"パラメータは必須です',
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-checklist': z.object({
     task_id: z.number({
@@ -113,6 +127,7 @@ export const toolSchemas = {
       required_error: '"checklist_id"パラメータは必須です',
       invalid_type_error: '"checklist_id"パラメータは数値でなければなりません',
     }),
+    page: pageSchema,
   }),
   'jooto-get-checklist-item': z.object({
     checklist_id: z.number({
@@ -269,7 +284,7 @@ export const toolSchemas = {
     }).optional(),
     per_page: z.number({
       invalid_type_error: '"per_page"パラメータは数値でなければなりません',
-    }).optional(),
+    }).int('"per_page"パラメータは整数でなければなりません').positive('"per_page"パラメータは1以上でなければなりません').optional(),
     order: z.string({
       invalid_type_error: '"order"パラメータは文字列でなければなりません',
     }).optional(),

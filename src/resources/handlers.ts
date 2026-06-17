@@ -5,18 +5,30 @@
  */
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
-import { jootoApiRequest, withDefaultPerPage } from '../tools/utils.js';
+import { jootoApiRequest, withPagination } from '../tools/utils.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
  */
 function parseResourceUri(uri: string): { path: string; params: Record<string, string> } {
   // jooto:///path → /path
-  const match = uri.match(/^jooto:\/\/\/(.*)$/);
+  const match = uri.match(/^jooto:\/\/\/([^?]*)(?:\?(.*))?$/);
   if (!match) {
     throw new McpError(ErrorCode.InvalidRequest, `無効なリソースURI: ${uri}`);
   }
-  return { path: match[1], params: {} };
+  return {
+    path: match[1],
+    params: Object.fromEntries(new URLSearchParams(match[2] ?? '')),
+  };
+}
+
+function parsePage(page?: string): number | undefined {
+  if (page === undefined || page === '') return undefined;
+  const parsed = Number(page);
+  if (!Number.isFinite(parsed) || !Number.isInteger(parsed) || parsed < 1) {
+    throw new McpError(ErrorCode.InvalidRequest, `pageパラメータは1以上の整数でなければなりません: ${page}`);
+  }
+  return parsed;
 }
 
 /**
@@ -41,7 +53,7 @@ const routes: Route[] = [
   // Users
   {
     pattern: /^users$/,
-    handler: async () => jootoApiRequest('GET', withDefaultPerPage('/v1/users')),
+    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/users', { page: parsePage(p.page) })),
   },
   {
     pattern: /^users\/(?<userId>\d+)$/,
@@ -50,7 +62,7 @@ const routes: Route[] = [
   // Projects (= boards)
   {
     pattern: /^projects$/,
-    handler: async () => jootoApiRequest('GET', withDefaultPerPage('/v1/boards')),
+    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards', { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)$/,
@@ -58,12 +70,12 @@ const routes: Route[] = [
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/members$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/users`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/users`, { page: parsePage(p.page) })),
   },
   // Lists
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/lists`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/lists`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists\/(?<listId>\d+)$/,
@@ -72,7 +84,7 @@ const routes: Route[] = [
   // Labels (= categories)
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/categories`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/categories`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels\/(?<labelId>\d+)$/,
@@ -81,7 +93,7 @@ const routes: Route[] = [
   // Tasks
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/tasks`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)$/,
@@ -90,7 +102,7 @@ const routes: Route[] = [
   // Comments
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/comments$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${p.taskId}/comments`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/tasks/${p.taskId}/comments`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/comments\/(?<commentId>\d+)$/,
@@ -99,7 +111,7 @@ const routes: Route[] = [
   // Checklists
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${p.taskId}/checklists`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/tasks/${p.taskId}/checklists`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)$/,
@@ -108,7 +120,7 @@ const routes: Route[] = [
   // Checklist Items
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)\/items$/,
-    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/checklists/${p.checklistId}/items`)),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/checklists/${p.checklistId}/items`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)\/items\/(?<itemId>\d+)$/,
@@ -122,12 +134,12 @@ const routes: Route[] = [
 export async function readResource(uri: string): Promise<{
   contents: Array<{ uri: string; mimeType: string; text: string }>;
 }> {
-  const { path } = parseResourceUri(uri);
+  const { path, params: queryParams } = parseResourceUri(uri);
 
   for (const route of routes) {
     const match = path.match(route.pattern);
     if (match) {
-      const params = match.groups ?? {};
+      const params = { ...queryParams, ...(match.groups ?? {}) };
       try {
         const data = await route.handler(params);
         return {
