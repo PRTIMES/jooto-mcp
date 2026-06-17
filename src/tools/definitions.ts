@@ -9,7 +9,7 @@
 const paginationProperties = {
   page: {
     type: 'integer',
-    description: '取得したいページ番号（未指定時は1）',
+    description: '取得したいページ番号（未指定時は1）。レスポンスのmeta.total_pagesで次ページがある場合でも、一気に全ページを取得せず、必要に応じてユーザーに何ページ分まで取得するか確認してください。',
     minimum: 1,
     default: 1,
   },
@@ -786,7 +786,7 @@ export const toolDefinitions = [
         },
         page: {
           type: 'integer',
-          description: '取得したいページ番号（未指定時は1）',
+          description: '取得したいページ番号（未指定時は1）。レスポンスのmeta.total_pagesで次ページがある場合でも、一気に全ページを取得せず、必要に応じてユーザーに何ページ分まで取得するか確認してください。',
           minimum: 1,
           default: 1,
         },
