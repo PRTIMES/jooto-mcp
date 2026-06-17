@@ -26,6 +26,10 @@ function detailLevelProperty(description: string) {
   };
 }
 
+function searchableDescription(description: string, keywords: string): string {
+  return `${description} Search keywords: ${keywords}.`;
+}
+
 const boardListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。'
 );
@@ -105,7 +109,7 @@ export const toolDefinitions = [
   // === Read（取得系） ===
   {
     name: 'jooto-get-organization',
-    description: '組織情報を取得します',
+    description: searchableDescription('組織情報を取得します', 'jooto-get-organization, organization, workspace, company'),
     inputSchema: {
       type: 'object',
       properties: {},
@@ -113,7 +117,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-rate-limit',
-    description: 'APIのレート制限情報を取得します',
+    description: searchableDescription('APIのレート制限情報を取得します', 'jooto-get-rate-limit, rate limit, api limit, quota'),
     inputSchema: {
       type: 'object',
       properties: {},
@@ -121,7 +125,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-users',
-    description: '組織に所属するユーザーの一覧を取得します。通常はdetail_level=compactを使用してください。email、role、作成日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('組織に所属するユーザーの一覧を取得します。通常はdetail_level=compactを使用してください。email、role、作成日時が必要な場合のみstandardを指定します。', 'jooto-list-users, user list, users, organization users, members'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -132,7 +136,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-user',
-    description: '特定のユーザー情報を取得します',
+    description: searchableDescription('特定のユーザー情報を取得します', 'jooto-get-user, user detail, user info, member detail'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -146,7 +150,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-boards',
-    description: '未アーカイブのプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('未アーカイブのプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-boards, プロジェクト一覧, ボード一覧, project list, board list, list boards, active projects'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -157,7 +161,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-boards',
-    description: 'アーカイブ済みプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('アーカイブ済みプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-archived-boards, アーカイブ済みプロジェクト一覧, アーカイブ済みボード一覧, archived project list, archived board list, archived boards'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -168,7 +172,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-board',
-    description: '特定のプロジェクト情報を取得します',
+    description: searchableDescription('特定のプロジェクト情報を取得します', 'jooto-get-board, プロジェクト詳細, ボード詳細, project detail, board detail, project info'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -182,7 +186,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-board-activities',
-    description: 'プロジェクトの履歴一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクトの履歴一覧を取得します。1ページあたり20件取得します。通常はdetail_level=compactを使用してください。送信者名やタスクの状態・リストIDが必要な場合のみstandardを指定します。', 'jooto-list-board-activities, プロジェクト履歴, ボード履歴, 行動履歴, project activity, board activity, history, activity log'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -198,7 +202,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-board-members',
-    description: 'プロジェクトのメンバー一覧を取得します。通常はdetail_level=compactを使用してください。emailが必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクトのメンバー一覧を取得します。通常はdetail_level=compactを使用してください。emailが必要な場合のみstandardを指定します。', 'jooto-list-board-members, プロジェクトメンバー, ボードメンバー, project members, board members, member list, users'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -214,7 +218,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-lists',
-    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクト内の未アーカイブのリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。', 'jooto-list-lists, list list, project lists, board lists, active lists'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -230,7 +234,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-lists',
-    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクト内のアーカイブ済みリスト一覧を取得します。通常はdetail_level=compactを使用してください。並び順、色、自動ステータスが必要な場合のみstandardを指定します。', 'jooto-list-archived-lists, archived lists, archived project lists, archived board lists'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -246,7 +250,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-list',
-    description: 'プロジェクト内の特定のリスト情報を取得します',
+    description: searchableDescription('プロジェクト内の特定のリスト情報を取得します', 'jooto-get-list, list detail, project list detail, board list detail'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -264,7 +268,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-labels',
-    description: 'プロジェクトのラベル一覧を取得します。通常はdetail_level=compactを使用してください。色が必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクトのラベル一覧を取得します。通常はdetail_level=compactを使用してください。色が必要な場合のみstandardを指定します。', 'jooto-list-labels, label list, category list, labels, categories'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -280,7 +284,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-label',
-    description: '特定のラベルを取得します',
+    description: searchableDescription('特定のラベルを取得します', 'jooto-get-label, label detail, category detail, label info'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -298,7 +302,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
+    description: searchableDescription('プロジェクト内の未アーカイブのタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。', 'jooto-list-tasks, task list, project tasks, board tasks, active tasks'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -315,7 +319,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-tasks',
-    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
+    description: searchableDescription('プロジェクト内のアーカイブ済みタスク一覧を取得します。1ページあたり20件取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。', 'jooto-list-archived-tasks, archived task list, archived tasks, archived project tasks'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -332,7 +336,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-task',
-    description: '特定のプロジェクト内の特定のタスク情報を取得します',
+    description: searchableDescription('特定のプロジェクト内の特定のタスク情報を取得します', 'jooto-get-task, task detail, task info, project task detail'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -350,7 +354,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-comments',
-    description: 'タスクのコメント一覧を取得します。通常はdetail_level=compactを使用してください。更新日時、mentioned_user_ids、attachment_idsが必要な場合のみstandardを指定します。',
+    description: searchableDescription('タスクのコメント一覧を取得します。通常はdetail_level=compactを使用してください。更新日時、mentioned_user_ids、attachment_idsが必要な場合のみstandardを指定します。', 'jooto-list-comments, comment list, task comments, comments'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -366,7 +370,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-comment',
-    description: '特定のコメントを取得します',
+    description: searchableDescription('特定のコメントを取得します', 'jooto-get-comment, comment detail, comment info'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -384,7 +388,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-checklists',
-    description: 'タスクのチェックリスト一覧を取得します。通常はdetail_level=compactを使用してください。作成日時や更新日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('タスクのチェックリスト一覧を取得します。通常はdetail_level=compactを使用してください。作成日時や更新日時が必要な場合のみstandardを指定します。', 'jooto-list-checklists, checklist list, task checklists, checklists'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -400,7 +404,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-checklist',
-    description: '特定のチェックリストを取得します',
+    description: searchableDescription('特定のチェックリストを取得します', 'jooto-get-checklist, checklist detail, checklist info'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -418,7 +422,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-checklist-items',
-    description: 'チェックリストのアイテム一覧を取得します。通常はdetail_level=compactを使用してください。更新日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('チェックリストのアイテム一覧を取得します。通常はdetail_level=compactを使用してください。更新日時が必要な場合のみstandardを指定します。', 'jooto-list-checklist-items, checklist item list, checklist items, checklist entries'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -434,7 +438,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-get-checklist-item',
-    description: '特定のチェックリストアイテムを取得します',
+    description: searchableDescription('特定のチェックリストアイテムを取得します', 'jooto-get-checklist-item, checklist item detail, checklist entry detail'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -453,7 +457,7 @@ export const toolDefinitions = [
   // === Board ===
   {
     name: 'jooto-create-board',
-    description: 'プロジェクトを新規作成します',
+    description: searchableDescription('プロジェクトを新規作成します', 'jooto-create-board, プロジェクト作成, ボード作成, create project, create board, new project'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -471,7 +475,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-board',
-    description: 'プロジェクト情報を更新します',
+    description: searchableDescription('プロジェクト情報を更新します', 'jooto-update-board, プロジェクト更新, ボード更新, update project, update board, edit project'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -493,7 +497,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-board',
-    description: 'プロジェクトを削除します',
+    description: searchableDescription('プロジェクトを削除します', 'jooto-delete-board, プロジェクト削除, ボード削除, delete project, delete board, remove project'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -508,7 +512,7 @@ export const toolDefinitions = [
   // === List ===
   {
     name: 'jooto-create-list',
-    description: 'プロジェクト内に新しいリストを作成します',
+    description: searchableDescription('プロジェクト内に新しいリストを作成します', 'jooto-create-list, create list, new list, create board list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -535,7 +539,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-list',
-    description: 'プロジェクト内の特定のリスト情報を更新します',
+    description: searchableDescription('プロジェクト内の特定のリスト情報を更新します', 'jooto-update-list, update list, edit list, update board list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -566,7 +570,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-list',
-    description: 'プロジェクト内のリストを削除します',
+    description: searchableDescription('プロジェクト内のリストを削除します', 'jooto-delete-list, delete list, remove list, delete board list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -584,7 +588,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-archive-list',
-    description: 'プロジェクト内のリストをアーカイブします',
+    description: searchableDescription('プロジェクト内のリストをアーカイブします', 'jooto-archive-list, archive list, archive board list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -602,7 +606,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-reorder-list',
-    description: 'プロジェクト内のリストの並び順を変更します',
+    description: searchableDescription('プロジェクト内のリストの並び順を変更します', 'jooto-reorder-list, reorder list, sort lists, list order'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -624,7 +628,7 @@ export const toolDefinitions = [
   // === Task ===
   {
     name: 'jooto-create-task',
-    description: 'プロジェクト内に新しいタスクを作成します',
+    description: searchableDescription('プロジェクト内に新しいタスクを作成します', 'jooto-create-task, create task, new task, add task'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -687,7 +691,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-task',
-    description: '特定のプロジェクト内の特定のタスク情報を更新します',
+    description: searchableDescription('特定のプロジェクト内の特定のタスク情報を更新します', 'jooto-update-task, update task, edit task, task update'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -754,7 +758,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-task',
-    description: 'プロジェクト内のタスクを削除します',
+    description: searchableDescription('プロジェクト内のタスクを削除します', 'jooto-delete-task, delete task, remove task'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -772,7 +776,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-search-task',
-    description: 'プロジェクト内のタスクをフリーワードで検索します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
+    description: searchableDescription('プロジェクト内のタスクをフリーワードで検索します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。', 'jooto-search-task, task search, search tasks, keyword search'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -808,7 +812,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-move-task',
-    description: 'タスクを別のプロジェクトやリストに移動します',
+    description: searchableDescription('タスクを別のプロジェクトやリストに移動します', 'jooto-move-task, move task, transfer task, move to list'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -830,7 +834,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-archive-task',
-    description: 'タスクをアーカイブします',
+    description: searchableDescription('タスクをアーカイブします', 'jooto-archive-task, archive task, archived task'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -849,7 +853,7 @@ export const toolDefinitions = [
   // === Comment ===
   {
     name: 'jooto-create-comment',
-    description: 'タスクにコメントを追加します',
+    description: searchableDescription('タスクにコメントを追加します', 'jooto-create-comment, create comment, add comment, task comment'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -867,7 +871,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-comment',
-    description: 'コメントを更新します',
+    description: searchableDescription('コメントを更新します', 'jooto-update-comment, update comment, edit comment'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -890,7 +894,7 @@ export const toolDefinitions = [
   // === Label ===
   {
     name: 'jooto-create-label',
-    description: 'プロジェクトにラベルを追加します',
+    description: searchableDescription('プロジェクトにラベルを追加します', 'jooto-create-label, create label, create category, add label'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -912,7 +916,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-label',
-    description: 'ラベルを更新します',
+    description: searchableDescription('ラベルを更新します', 'jooto-update-label, update label, update category, edit label'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -938,7 +942,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-label',
-    description: 'ラベルを削除します',
+    description: searchableDescription('ラベルを削除します', 'jooto-delete-label, delete label, delete category, remove label'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -957,7 +961,7 @@ export const toolDefinitions = [
   // === Checklist ===
   {
     name: 'jooto-create-checklist',
-    description: 'タスクにチェックリストを追加します',
+    description: searchableDescription('タスクにチェックリストを追加します', 'jooto-create-checklist, create checklist, add checklist, task checklist'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -975,7 +979,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-checklist',
-    description: 'チェックリストを更新します',
+    description: searchableDescription('チェックリストを更新します', 'jooto-update-checklist, update checklist, edit checklist'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -997,7 +1001,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-checklist',
-    description: 'チェックリストを削除します',
+    description: searchableDescription('チェックリストを削除します', 'jooto-delete-checklist, delete checklist, remove checklist'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -1016,7 +1020,7 @@ export const toolDefinitions = [
   // === Checklist Item ===
   {
     name: 'jooto-create-checklist-item',
-    description: 'チェックリストにアイテムを追加します',
+    description: searchableDescription('チェックリストにアイテムを追加します', 'jooto-create-checklist-item, create checklist item, add checklist item, checklist entry'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -1034,7 +1038,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-checklist-item',
-    description: 'チェックリストアイテムを更新します',
+    description: searchableDescription('チェックリストアイテムを更新します', 'jooto-update-checklist-item, update checklist item, edit checklist item, checklist entry'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -1060,7 +1064,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-delete-checklist-item',
-    description: 'チェックリストアイテムを削除します',
+    description: searchableDescription('チェックリストアイテムを削除します', 'jooto-delete-checklist-item, delete checklist item, remove checklist item, checklist entry'),
     inputSchema: {
       type: 'object',
       properties: {
