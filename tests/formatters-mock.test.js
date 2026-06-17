@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   formatBoardListResponse,
+  formatBoardMembersResponse,
   formatCommentsResponse,
   formatListsResponse,
   formatTaskSearchResponse,
@@ -143,6 +144,79 @@ describe('formatBoardListResponse', () => {
       title: null,
       description: null,
       created_at: null,
+    });
+  });
+});
+
+describe('formatBoardMembersResponse', () => {
+  const response = {
+    users: [
+      {
+        id: 10,
+        name: 'member_name',
+        display_name: 'Member Name',
+        email: 'member@example.com',
+        role: 'admin',
+        organization_role: 'member',
+        avatar_url: 'https://example.com/avatar.png',
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact board member fields by default', () => {
+    expect(formatBoardMembersResponse(response)).toEqual({
+      users: [
+        {
+          id: 10,
+          name: 'member_name',
+          display_name: 'Member Name',
+          role: 'admin',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard board member fields when requested', () => {
+    expect(formatBoardMembersResponse(response, 'standard')).toEqual({
+      users: [
+        {
+          id: 10,
+          name: 'member_name',
+          display_name: 'Member Name',
+          email: 'member@example.com',
+          role: 'admin',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard board member fields to null', () => {
+    expect(formatBoardMembersResponse({ users: [{}] }, 'standard').users[0]).toEqual({
+      id: null,
+      name: null,
+      display_name: null,
+      email: null,
+      role: null,
     });
   });
 });

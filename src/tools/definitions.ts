@@ -46,6 +46,10 @@ const userListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。email、role、作成日時が必要な場合のみstandardを指定します。'
 );
 
+const boardMemberListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。emailが必要な場合のみstandardを指定します。'
+);
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -127,7 +131,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-board-members',
-    description: 'プロジェクトのメンバー一覧を取得します',
+    description: 'プロジェクトのメンバー一覧を取得します。通常はdetail_level=compactを使用してください。emailが必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -136,6 +140,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...boardMemberListDetailLevelProperty,
       },
       required: ['board_id'],
     },

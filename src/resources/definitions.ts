@@ -60,9 +60,9 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
     mimeType: 'application/json',
   },
   {
-    uriTemplate: 'jooto:///projects/{projectId}/members{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/members{?page,detail_level}',
     name: 'プロジェクトメンバー一覧',
-    description: 'プロジェクトのメンバー一覧を取得します',
+    description: 'プロジェクトのメンバー一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   // === Lists ===

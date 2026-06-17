@@ -37,11 +37,16 @@ const categoryIdsField = idArrayField('category_ids', 'categories');
 const mentionedUserIdsField = idArrayField('mentioned_user_ids', 'mentioned_users');
 const attachmentIdsField = idArrayField('attachment_ids', 'attachments');
 
-const FIELD_SPECS: Record<'user' | 'board' | 'list' | 'task' | 'taskSearch' | 'comment', FieldSpec> = {
+const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'task' | 'taskSearch' | 'comment', FieldSpec> = {
   user: {
     itemsKey: 'users',
     compact: ['id', 'name', 'display_name'],
     standard: ['id', 'name', 'display_name', 'email', 'role', 'created_at'],
+  },
+  boardMember: {
+    itemsKey: 'users',
+    compact: ['id', 'name', 'display_name', 'role'],
+    standard: ['id', 'name', 'display_name', 'email', 'role'],
   },
   board: {
     itemsKey: 'boards',
@@ -147,6 +152,10 @@ export function formatBoardListResponse(response: unknown, detailLevel: DetailLe
 
 export function formatUsersResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.user, detailLevel);
+}
+
+export function formatBoardMembersResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.boardMember, detailLevel);
 }
 
 export function formatListsResponse(response: unknown, detailLevel: DetailLevel = 'compact') {

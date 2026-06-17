@@ -47,6 +47,7 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-list-lists': z.object({
     board_id: z.number({

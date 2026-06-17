@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
+import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -71,7 +71,10 @@ export async function processGetBoardTool(args: z.infer<ToolSchemas['jooto-get-b
 
 export async function processListBoardMembersTool(args: z.infer<ToolSchemas['jooto-list-board-members']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/users`, { page: args.page })),
+    async () => formatBoardMembersResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/users`, { page: args.page })),
+      args.detail_level
+    ),
     'プロジェクトメンバー一覧の取得に失敗しました'
   );
 }
