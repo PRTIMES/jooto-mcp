@@ -1,6 +1,8 @@
 import https from 'https';
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 
+export const DEFAULT_PER_PAGE = 200;
+
 /**
  * MCPレスポンスをフォーマットする関数
  * @param response APIレスポンス
@@ -71,6 +73,21 @@ export function httpsRequest(options: https.RequestOptions, data?: string): Prom
     
     req.end();
   });
+}
+
+/**
+ * 一覧取得系のAPIパスにデフォルトのper_pageを付与する。
+ * 明示的にper_pageが指定されている場合は呼び出し側の値を優先する。
+ */
+export function withDefaultPerPage(path: string, perPage = DEFAULT_PER_PAGE): string {
+  const [pathname, query = ''] = path.split('?');
+  const queryParams = new URLSearchParams(query);
+  if (!queryParams.has('per_page')) {
+    queryParams.set('per_page', perPage.toString());
+  }
+
+  const queryString = queryParams.toString();
+  return queryString ? `${pathname}?${queryString}` : pathname;
 }
 
 /**

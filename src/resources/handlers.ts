@@ -5,7 +5,7 @@
  */
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
-import { jootoApiRequest } from '../tools/utils.js';
+import { jootoApiRequest, withDefaultPerPage } from '../tools/utils.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
@@ -41,7 +41,7 @@ const routes: Route[] = [
   // Users
   {
     pattern: /^users$/,
-    handler: async () => jootoApiRequest('GET', '/v1/users'),
+    handler: async () => jootoApiRequest('GET', withDefaultPerPage('/v1/users')),
   },
   {
     pattern: /^users\/(?<userId>\d+)$/,
@@ -50,7 +50,7 @@ const routes: Route[] = [
   // Projects (= boards)
   {
     pattern: /^projects$/,
-    handler: async () => jootoApiRequest('GET', '/v1/boards'),
+    handler: async () => jootoApiRequest('GET', withDefaultPerPage('/v1/boards')),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)$/,
@@ -58,12 +58,12 @@ const routes: Route[] = [
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/members$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/boards/${p.projectId}/users`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/users`)),
   },
   // Lists
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/boards/${p.projectId}/lists`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/lists`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists\/(?<listId>\d+)$/,
@@ -72,7 +72,7 @@ const routes: Route[] = [
   // Labels (= categories)
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/boards/${p.projectId}/categories`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/categories`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/labels\/(?<labelId>\d+)$/,
@@ -81,7 +81,7 @@ const routes: Route[] = [
   // Tasks
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/boards/${p.projectId}/tasks`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${p.projectId}/tasks`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)$/,
@@ -90,7 +90,7 @@ const routes: Route[] = [
   // Comments
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/comments$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/tasks/${p.taskId}/comments`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${p.taskId}/comments`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/comments\/(?<commentId>\d+)$/,
@@ -99,7 +99,7 @@ const routes: Route[] = [
   // Checklists
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/tasks/${p.taskId}/checklists`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${p.taskId}/checklists`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)$/,
@@ -108,7 +108,7 @@ const routes: Route[] = [
   // Checklist Items
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)\/items$/,
-    handler: async (p) => jootoApiRequest('GET', `/v1/checklists/${p.checklistId}/items`),
+    handler: async (p) => jootoApiRequest('GET', withDefaultPerPage(`/v1/checklists/${p.checklistId}/items`)),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)\/items\/(?<itemId>\d+)$/,

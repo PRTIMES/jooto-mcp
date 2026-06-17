@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { jootoApiRequest, handleMcpOperation } from './utils.js';
+import { jootoApiRequest, handleMcpOperation, withDefaultPerPage } from './utils.js';
 import { ToolSchemas } from './schemas.js';
 
 /**
@@ -26,7 +26,7 @@ export async function processGetRateLimitTool(_args: z.infer<ToolSchemas['jooto-
 
 export async function processListUsersTool(_args: z.infer<ToolSchemas['jooto-list-users']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', '/v1/users'),
+    async () => await jootoApiRequest('GET', withDefaultPerPage('/v1/users')),
     'ユーザー一覧の取得に失敗しました'
   );
 }
@@ -40,7 +40,7 @@ export async function processGetUserTool(args: z.infer<ToolSchemas['jooto-get-us
 
 export async function processListBoardsTool(_args: z.infer<ToolSchemas['jooto-list-boards']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', '/v1/boards'),
+    async () => await jootoApiRequest('GET', withDefaultPerPage('/v1/boards')),
     'プロジェクト一覧の取得に失敗しました'
   );
 }
@@ -54,14 +54,14 @@ export async function processGetBoardTool(args: z.infer<ToolSchemas['jooto-get-b
 
 export async function processListBoardMembersTool(args: z.infer<ToolSchemas['jooto-list-board-members']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}/users`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${args.board_id}/users`)),
     'プロジェクトメンバー一覧の取得に失敗しました'
   );
 }
 
 export async function processListListsTool(args: z.infer<ToolSchemas['jooto-list-lists']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}/lists`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${args.board_id}/lists`)),
     'リスト一覧の取得に失敗しました'
   );
 }
@@ -75,7 +75,7 @@ export async function processGetListTool(args: z.infer<ToolSchemas['jooto-get-li
 
 export async function processListLabelsTool(args: z.infer<ToolSchemas['jooto-list-labels']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}/categories`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${args.board_id}/categories`)),
     'ラベル一覧の取得に失敗しました'
   );
 }
@@ -89,7 +89,7 @@ export async function processGetLabelTool(args: z.infer<ToolSchemas['jooto-get-l
 
 export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list-tasks']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}/tasks`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${args.board_id}/tasks`)),
     'タスク一覧の取得に失敗しました'
   );
 }
@@ -103,7 +103,7 @@ export async function processGetTaskTool(args: z.infer<ToolSchemas['jooto-get-ta
 
 export async function processListCommentsTool(args: z.infer<ToolSchemas['jooto-list-comments']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/tasks/${args.task_id}/comments`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${args.task_id}/comments`)),
     'コメント一覧の取得に失敗しました'
   );
 }
@@ -117,7 +117,7 @@ export async function processGetCommentTool(args: z.infer<ToolSchemas['jooto-get
 
 export async function processListChecklistsTool(args: z.infer<ToolSchemas['jooto-list-checklists']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/tasks/${args.task_id}/checklists`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/tasks/${args.task_id}/checklists`)),
     'チェックリスト一覧の取得に失敗しました'
   );
 }
@@ -131,7 +131,7 @@ export async function processGetChecklistTool(args: z.infer<ToolSchemas['jooto-g
 
 export async function processListChecklistItemsTool(args: z.infer<ToolSchemas['jooto-list-checklist-items']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/checklists/${args.checklist_id}/items`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/checklists/${args.checklist_id}/items`)),
     'チェックリストアイテム一覧の取得に失敗しました'
   );
 }
@@ -255,11 +255,11 @@ export async function processSearchBoardTasksTool(args: z.infer<ToolSchemas['joo
   const queryParams = new URLSearchParams();
   queryParams.append('search_query', args.search_query);
   if (args.page) queryParams.append('page', args.page.toString());
-  if (args.per_page) queryParams.append('per_page', args.per_page.toString());
+  if (args.per_page !== undefined) queryParams.append('per_page', args.per_page.toString());
   if (args.order) queryParams.append('order', args.order);
 
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', `/v1/boards/${args.board_id}/search?${queryParams.toString()}`),
+    async () => await jootoApiRequest('GET', withDefaultPerPage(`/v1/boards/${args.board_id}/search?${queryParams.toString()}`)),
     'タスク検索に失敗しました'
   );
 }

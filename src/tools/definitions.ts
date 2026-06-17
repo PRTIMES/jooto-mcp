@@ -612,7 +612,8 @@ export const toolDefinitions = [
         },
         per_page: {
           type: 'number',
-          description: '1ページあたりの取得件数',
+          description: '1ページあたりの取得件数（未指定時は200）',
+          default: 200,
         },
         order: {
           type: 'string',
