@@ -29,9 +29,9 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Users ===
   {
-    uriTemplate: 'jooto:///users{?page}',
+    uriTemplate: 'jooto:///users{?page,detail_level}',
     name: 'ユーザー一覧',
-    description: 'ユーザー一覧を取得します',
+    description: 'ユーザー一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {

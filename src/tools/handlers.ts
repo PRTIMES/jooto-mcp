@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse } from './formatters.js';
+import { formatBoardListResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -27,7 +27,10 @@ export async function processGetRateLimitTool(_args: z.infer<ToolSchemas['jooto-
 
 export async function processListUsersTool(args: z.infer<ToolSchemas['jooto-list-users']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination('/v1/users', { page: args.page })),
+    async () => formatUsersResponse(
+      await jootoApiRequest('GET', withPagination('/v1/users', { page: args.page })),
+      args.detail_level
+    ),
     'ユーザー一覧の取得に失敗しました'
   );
 }

@@ -19,6 +19,7 @@ export const toolSchemas = {
   'jooto-get-rate-limit': z.object({}),
   'jooto-list-users': z.object({
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-get-user': z.object({
     user_id: z.number({

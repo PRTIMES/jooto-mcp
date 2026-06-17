@@ -37,7 +37,12 @@ const categoryIdsField = idArrayField('category_ids', 'categories');
 const mentionedUserIdsField = idArrayField('mentioned_user_ids', 'mentioned_users');
 const attachmentIdsField = idArrayField('attachment_ids', 'attachments');
 
-const FIELD_SPECS: Record<'board' | 'list' | 'task' | 'taskSearch' | 'comment', FieldSpec> = {
+const FIELD_SPECS: Record<'user' | 'board' | 'list' | 'task' | 'taskSearch' | 'comment', FieldSpec> = {
+  user: {
+    itemsKey: 'users',
+    compact: ['id', 'name', 'display_name'],
+    standard: ['id', 'name', 'display_name', 'email', 'role', 'created_at'],
+  },
   board: {
     itemsKey: 'boards',
     compact: ['id', 'title'],
@@ -138,6 +143,10 @@ function formatListResponse(response: unknown, spec: FieldSpec, detailLevel: Det
 
 export function formatBoardListResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.board, detailLevel);
+}
+
+export function formatUsersResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.user, detailLevel);
 }
 
 export function formatListsResponse(response: unknown, detailLevel: DetailLevel = 'compact') {

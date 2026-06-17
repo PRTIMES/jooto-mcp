@@ -5,7 +5,81 @@ import {
   formatListsResponse,
   formatTaskSearchResponse,
   formatTasksResponse,
+  formatUsersResponse,
 } from '../src/tools/formatters.ts';
+
+describe('formatUsersResponse', () => {
+  const response = {
+    users: [
+      {
+        id: 10,
+        name: 'user_name',
+        display_name: 'User Name',
+        email: 'user@example.com',
+        role: 'admin',
+        avatar_url: 'https://example.com/avatar.png',
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact user fields by default', () => {
+    expect(formatUsersResponse(response)).toEqual({
+      users: [
+        {
+          id: 10,
+          name: 'user_name',
+          display_name: 'User Name',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard user fields when requested', () => {
+    expect(formatUsersResponse(response, 'standard')).toEqual({
+      users: [
+        {
+          id: 10,
+          name: 'user_name',
+          display_name: 'User Name',
+          email: 'user@example.com',
+          role: 'admin',
+          created_at: '2026-01-01T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard user fields to null', () => {
+    expect(formatUsersResponse({ users: [{}] }, 'standard').users[0]).toEqual({
+      id: null,
+      name: null,
+      display_name: null,
+      email: null,
+      role: null,
+      created_at: null,
+    });
+  });
+});
 
 describe('formatBoardListResponse', () => {
   const response = {
