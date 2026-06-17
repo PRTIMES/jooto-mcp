@@ -47,7 +47,69 @@ Claude Desktop には `.mcpb` 形式でバンドル化したサーバーをド�
 ## 注意事項
 
 - この MCP サーバーを使用するには、Jooto のエンタープライズプランと API キーが必要です。
-- API リクエストは app.jooto.com に対して行われます。
+- API リクエストは api.jooto.com に対して行われます。
+
+## MCP ツールの使い方
+
+Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「プロジェクト」と説明しています。ツール引数では API に合わせて `board_id` を使います。Jooto API の `category` は「ラベル」として扱います。
+
+### 一覧取得の情報量
+
+一覧取得系ツールは、AI へ渡すトークン量を抑えるため `detail_level` を持ちます。未指定時は `compact` です。
+
+- `compact`: 通常利用向けの最小情報。まずはこちらを使います。
+- `standard`: 説明文、更新日時、関連 ID など追加情報が必要な場合だけ使います。
+
+一覧取得では `page` を指定できます。未指定時は `page=1` です。API 呼び出し時の `per_page` はサーバー側で既定値 `200` を付与します。
+
+プロジェクト、リスト、タスクの通常一覧は未アーカイブのみを返します。アーカイブ済みを見たい場合は、専用のアーカイブ一覧ツールを使います。
+
+### ID の引き直し先
+
+`compact` / `standard` では、ネストしたオブジェクトを丸ごと返さず `*_id` や `*_ids` に変換することがあります。名前や詳細が必要な場合は、以下のツールで引き直します。
+
+| 返却される ID | 意味 | 対照表・詳細を取得するツール |
+| --- | --- | --- |
+| `board_id` | プロジェクトID | `jooto-list-boards`, `jooto-list-archived-boards`, `jooto-get-board` |
+| `list_id`, `task_list_id` | リストID | `jooto-list-lists`, `jooto-list-archived-lists`, `jooto-get-list` |
+| `task_id` | タスクID | `jooto-list-tasks`, `jooto-list-archived-tasks`, `jooto-search-task`, `jooto-get-task` |
+| `user_id`, `sender_id`, `assigned_user_ids`, `mentioned_user_ids` | ユーザーID | `jooto-list-users`, `jooto-list-board-members`, `jooto-get-user` |
+| `category_id`, `category_ids` | ラベルID | `jooto-list-labels`, `jooto-get-label` |
+| `comment_id` | コメントID | `jooto-list-comments`, `jooto-get-comment` |
+| `checklist_id` | チェックリストID | `jooto-list-checklists`, `jooto-get-checklist` |
+| `item_id` | チェックリストアイテムID | `jooto-list-checklist-items`, `jooto-get-checklist-item` |
+| `attachment_ids` | 添付ファイルID | 現時点では添付ファイル詳細取得ツールは未実装です |
+
+### 主な一覧取得ツール
+
+| ツール | 用途 |
+| --- | --- |
+| `jooto-list-users` | 組織ユーザー一覧 |
+| `jooto-list-boards` | 未アーカイブのプロジェクト一覧 |
+| `jooto-list-archived-boards` | アーカイブ済みプロジェクト一覧 |
+| `jooto-list-board-activities` | プロジェクト履歴一覧 |
+| `jooto-list-board-members` | プロジェクトメンバー一覧 |
+| `jooto-list-lists` | 未アーカイブのリスト一覧 |
+| `jooto-list-archived-lists` | アーカイブ済みリスト一覧 |
+| `jooto-list-labels` | ラベル一覧 |
+| `jooto-list-tasks` | 未アーカイブのタスク一覧 |
+| `jooto-list-archived-tasks` | アーカイブ済みタスク一覧 |
+| `jooto-search-task` | タスク検索 |
+| `jooto-list-comments` | コメント一覧 |
+| `jooto-list-checklists` | チェックリスト一覧 |
+| `jooto-list-checklist-items` | チェックリストアイテム一覧 |
+
+### 主な更新系ツール
+
+| 対象 | ツール |
+| --- | --- |
+| プロジェクト | `jooto-create-board`, `jooto-update-board`, `jooto-delete-board` |
+| リスト | `jooto-create-list`, `jooto-update-list`, `jooto-delete-list`, `jooto-archive-list`, `jooto-reorder-list` |
+| タスク | `jooto-create-task`, `jooto-update-task`, `jooto-delete-task`, `jooto-move-task`, `jooto-archive-task` |
+| コメント | `jooto-create-comment`, `jooto-update-comment` |
+| ラベル | `jooto-create-label`, `jooto-update-label`, `jooto-delete-label` |
+| チェックリスト | `jooto-create-checklist`, `jooto-update-checklist`, `jooto-delete-checklist` |
+| チェックリストアイテム | `jooto-create-checklist-item`, `jooto-update-checklist-item`, `jooto-delete-checklist-item` |
 
 ## 開発・テスト
 
