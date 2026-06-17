@@ -40,8 +40,15 @@ export async function processGetUserTool(args: z.infer<ToolSchemas['jooto-get-us
 
 export async function processListBoardsTool(args: z.infer<ToolSchemas['jooto-list-boards']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination('/v1/boards', { page: args.page })),
+    async () => await jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: args.page })),
     'プロジェクト一覧の取得に失敗しました'
+  );
+}
+
+export async function processListArchivedBoardsTool(args: z.infer<ToolSchemas['jooto-list-archived-boards']>) {
+  return handleMcpOperation(
+    async () => await jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: args.page })),
+    'アーカイブ済みプロジェクト一覧の取得に失敗しました'
   );
 }
 
@@ -61,8 +68,15 @@ export async function processListBoardMembersTool(args: z.infer<ToolSchemas['joo
 
 export async function processListListsTool(args: z.infer<ToolSchemas['jooto-list-lists']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists`, { page: args.page })),
+    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=false`, { page: args.page })),
     'リスト一覧の取得に失敗しました'
+  );
+}
+
+export async function processListArchivedListsTool(args: z.infer<ToolSchemas['jooto-list-archived-lists']>) {
+  return handleMcpOperation(
+    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/lists?archived=true`, { page: args.page })),
+    'アーカイブ済みリスト一覧の取得に失敗しました'
   );
 }
 
@@ -89,8 +103,15 @@ export async function processGetLabelTool(args: z.infer<ToolSchemas['jooto-get-l
 
 export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list-tasks']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks`, { page: args.page })),
+    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=false`, { page: args.page })),
     'タスク一覧の取得に失敗しました'
+  );
+}
+
+export async function processListArchivedTasksTool(args: z.infer<ToolSchemas['jooto-list-archived-tasks']>) {
+  return handleMcpOperation(
+    async () => await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=true`, { page: args.page })),
+    'アーカイブ済みタスク一覧の取得に失敗しました'
   );
 }
 
@@ -378,13 +399,16 @@ toolHandlers.set('jooto-get-rate-limit', processGetRateLimitTool);
 toolHandlers.set('jooto-list-users', processListUsersTool);
 toolHandlers.set('jooto-get-user', processGetUserTool);
 toolHandlers.set('jooto-list-boards', processListBoardsTool);
+toolHandlers.set('jooto-list-archived-boards', processListArchivedBoardsTool);
 toolHandlers.set('jooto-get-board', processGetBoardTool);
 toolHandlers.set('jooto-list-board-members', processListBoardMembersTool);
 toolHandlers.set('jooto-list-lists', processListListsTool);
+toolHandlers.set('jooto-list-archived-lists', processListArchivedListsTool);
 toolHandlers.set('jooto-get-list', processGetListTool);
 toolHandlers.set('jooto-list-labels', processListLabelsTool);
 toolHandlers.set('jooto-get-label', processGetLabelTool);
 toolHandlers.set('jooto-list-tasks', processListTasksTool);
+toolHandlers.set('jooto-list-archived-tasks', processListArchivedTasksTool);
 toolHandlers.set('jooto-get-task', processGetTaskTool);
 toolHandlers.set('jooto-list-comments', processListCommentsTool);
 toolHandlers.set('jooto-get-comment', processGetCommentTool);

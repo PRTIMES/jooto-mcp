@@ -44,7 +44,13 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///projects{?page}',
     name: 'プロジェクト一覧',
-    description: 'プロジェクト一覧を取得します',
+    description: '未アーカイブのプロジェクト一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/archived{?page}',
+    name: 'アーカイブ済みプロジェクト一覧',
+    description: 'アーカイブ済みプロジェクト一覧を取得します',
     mimeType: 'application/json',
   },
   {
@@ -63,7 +69,13 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///projects/{projectId}/lists{?page}',
     name: 'リスト一覧',
-    description: 'プロジェクト内のリスト一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/lists/archived{?page}',
+    name: 'アーカイブ済みリスト一覧',
+    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します',
     mimeType: 'application/json',
   },
   {
@@ -89,7 +101,13 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///projects/{projectId}/tasks{?page}',
     name: 'タスク一覧',
-    description: 'プロジェクト内のタスク一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します',
+    mimeType: 'application/json',
+  },
+  {
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/archived{?page}',
+    name: 'アーカイブ済みタスク一覧',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します',
     mimeType: 'application/json',
   },
   {

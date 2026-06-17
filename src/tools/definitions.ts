@@ -59,7 +59,17 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-boards',
-    description: 'プロジェクト一覧を取得します',
+    description: '未アーカイブのプロジェクト一覧を取得します',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ...paginationProperties,
+      },
+    },
+  },
+  {
+    name: 'jooto-list-archived-boards',
+    description: 'アーカイブ済みプロジェクト一覧を取得します',
     inputSchema: {
       type: 'object',
       properties: {
@@ -98,7 +108,22 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-lists',
-    description: 'プロジェクト内のリスト一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのリスト一覧を取得します',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        board_id: {
+          type: 'number',
+          description: 'プロジェクトのID',
+        },
+        ...paginationProperties,
+      },
+      required: ['board_id'],
+    },
+  },
+  {
+    name: 'jooto-list-archived-lists',
+    description: 'プロジェクト内のアーカイブ済みリスト一覧を取得します',
     inputSchema: {
       type: 'object',
       properties: {
@@ -164,7 +189,22 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: 'プロジェクト内のタスク一覧を取得します',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        board_id: {
+          type: 'number',
+          description: 'プロジェクトのID',
+        },
+        ...paginationProperties,
+      },
+      required: ['board_id'],
+    },
+  },
+  {
+    name: 'jooto-list-archived-tasks',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します',
     inputSchema: {
       type: 'object',
       properties: {

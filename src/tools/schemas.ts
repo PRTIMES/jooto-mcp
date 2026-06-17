@@ -24,6 +24,9 @@ export const toolSchemas = {
   'jooto-list-boards': z.object({
     page: pageSchema,
   }),
+  'jooto-list-archived-boards': z.object({
+    page: pageSchema,
+  }),
   'jooto-get-board': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',
@@ -38,6 +41,13 @@ export const toolSchemas = {
     page: pageSchema,
   }),
   'jooto-list-lists': z.object({
+    board_id: z.number({
+      required_error: '"board_id"パラメータは必須です',
+      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
+    }),
+    page: pageSchema,
+  }),
+  'jooto-list-archived-lists': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
@@ -72,6 +82,13 @@ export const toolSchemas = {
     }),
   }),
   'jooto-list-tasks': z.object({
+    board_id: z.number({
+      required_error: '"board_id"パラメータは必須です',
+      invalid_type_error: '"board_id"パラメータは数値でなければなりません',
+    }),
+    page: pageSchema,
+  }),
+  'jooto-list-archived-tasks': z.object({
     board_id: z.number({
       required_error: '"board_id"パラメータは必須です',
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',

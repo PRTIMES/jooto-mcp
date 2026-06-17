@@ -34,7 +34,11 @@
   "tools": [
     {
       "name": "jooto-list-boards",
-      "description": "List projects"
+      "description": "List active projects"
+    },
+    {
+      "name": "jooto-list-archived-boards",
+      "description": "List archived projects"
     },
     {
       "name": "jooto-get-board",
@@ -58,7 +62,11 @@
     },
     {
       "name": "jooto-list-lists",
-      "description": "List all lists in a project"
+      "description": "List active lists in a project"
+    },
+    {
+      "name": "jooto-list-archived-lists",
+      "description": "List archived lists in a project"
     },
     {
       "name": "jooto-get-list",
@@ -86,7 +94,11 @@
     },
     {
       "name": "jooto-list-tasks",
-      "description": "List tasks in a project"
+      "description": "List active tasks in a project"
+    },
+    {
+      "name": "jooto-list-archived-tasks",
+      "description": "List archived tasks in a project"
     },
     {
       "name": "jooto-get-task",

@@ -62,7 +62,11 @@ const routes: Route[] = [
   // Projects (= boards)
   {
     pattern: /^projects$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards', { page: parsePage(p.page) })),
+    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: parsePage(p.page) })),
+  },
+  {
+    pattern: /^projects\/archived$/,
+    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)$/,
@@ -75,7 +79,11 @@ const routes: Route[] = [
   // Lists
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/lists`, { page: parsePage(p.page) })),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/lists?archived=false`, { page: parsePage(p.page) })),
+  },
+  {
+    pattern: /^projects\/(?<projectId>\d+)\/lists\/archived$/,
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/lists?archived=true`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/lists\/(?<listId>\d+)$/,
@@ -93,7 +101,11 @@ const routes: Route[] = [
   // Tasks
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks`, { page: parsePage(p.page) })),
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=false`, { page: parsePage(p.page) })),
+  },
+  {
+    pattern: /^projects\/(?<projectId>\d+)\/tasks\/archived$/,
+    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/boards/${p.projectId}/tasks?archived=true`, { page: parsePage(p.page) })),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)$/,
