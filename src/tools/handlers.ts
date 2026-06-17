@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatBoardMembersResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
+import { formatBoardListResponse, formatBoardMembersResponse, formatChecklistItemsResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse, formatUsersResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -186,7 +186,10 @@ export async function processGetChecklistTool(args: z.infer<ToolSchemas['jooto-g
 
 export async function processListChecklistItemsTool(args: z.infer<ToolSchemas['jooto-list-checklist-items']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/checklists/${args.checklist_id}/items`, { page: args.page })),
+    async () => formatChecklistItemsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/checklists/${args.checklist_id}/items`, { page: args.page })),
+      args.detail_level
+    ),
     'チェックリストアイテム一覧の取得に失敗しました'
   );
 }

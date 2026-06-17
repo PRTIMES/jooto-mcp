@@ -37,7 +37,7 @@ const categoryIdsField = idArrayField('category_ids', 'categories');
 const mentionedUserIdsField = idArrayField('mentioned_user_ids', 'mentioned_users');
 const attachmentIdsField = idArrayField('attachment_ids', 'attachments');
 
-const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'label' | 'task' | 'taskSearch' | 'comment' | 'checklist', FieldSpec> = {
+const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'label' | 'task' | 'taskSearch' | 'comment' | 'checklist' | 'checklistItem', FieldSpec> = {
   user: {
     itemsKey: 'users',
     compact: ['id', 'name', 'display_name'],
@@ -111,6 +111,11 @@ const FIELD_SPECS: Record<'user' | 'boardMember' | 'board' | 'list' | 'label' | 
     itemsKey: 'checklists',
     compact: ['id', 'title', 'percentage'],
     standard: ['id', 'title', 'percentage', 'created_at', 'updated_at'],
+  },
+  checklistItem: {
+    itemsKey: 'items',
+    compact: ['id', 'content', 'checked', 'assigned_user_ids', 'start_date_time', 'deadline_date_time'],
+    standard: ['id', 'content', 'checked', 'assigned_user_ids', 'start_date_time', 'deadline_date_time', 'updated_at'],
   },
 };
 
@@ -190,4 +195,8 @@ export function formatCommentsResponse(response: unknown, detailLevel: DetailLev
 
 export function formatChecklistsResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.checklist, detailLevel);
+}
+
+export function formatChecklistItemsResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.checklistItem, detailLevel);
 }

@@ -144,9 +144,9 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Checklist Items ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/checklists/{checklistId}/items{?page,detail_level}',
     name: 'チェックリストアイテム一覧',
-    description: 'チェックリストのアイテム一覧を取得します',
+    description: 'チェックリストのアイテム一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {

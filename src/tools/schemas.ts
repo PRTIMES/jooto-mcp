@@ -161,6 +161,7 @@ export const toolSchemas = {
       invalid_type_error: '"checklist_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-get-checklist-item': z.object({
     checklist_id: z.number({

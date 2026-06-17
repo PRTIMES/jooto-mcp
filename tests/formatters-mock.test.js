@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   formatBoardListResponse,
   formatBoardMembersResponse,
+  formatChecklistItemsResponse,
   formatChecklistsResponse,
   formatCommentsResponse,
   formatLabelsResponse,
@@ -715,6 +716,84 @@ describe('formatChecklistsResponse', () => {
       title: null,
       percentage: null,
       created_at: null,
+      updated_at: null,
+    });
+  });
+});
+
+describe('formatChecklistItemsResponse', () => {
+  const response = {
+    items: [
+      {
+        id: 10,
+        content: 'Confirm amount',
+        checked: false,
+        assigned_user_ids: [20, 30],
+        start_date_time: '2026-01-01T00:00:00Z',
+        deadline_date_time: '2026-01-05T00:00:00Z',
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact checklist item fields by default', () => {
+    expect(formatChecklistItemsResponse(response)).toEqual({
+      items: [
+        {
+          id: 10,
+          content: 'Confirm amount',
+          checked: false,
+          assigned_user_ids: [20, 30],
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard checklist item fields when requested', () => {
+    expect(formatChecklistItemsResponse(response, 'standard')).toEqual({
+      items: [
+        {
+          id: 10,
+          content: 'Confirm amount',
+          checked: false,
+          assigned_user_ids: [20, 30],
+          start_date_time: '2026-01-01T00:00:00Z',
+          deadline_date_time: '2026-01-05T00:00:00Z',
+          updated_at: '2026-01-02T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard checklist item fields to null', () => {
+    expect(formatChecklistItemsResponse({ items: [{}] }, 'standard').items[0]).toEqual({
+      id: null,
+      content: null,
+      checked: null,
+      assigned_user_ids: null,
+      start_date_time: null,
+      deadline_date_time: null,
       updated_at: null,
     });
   });
