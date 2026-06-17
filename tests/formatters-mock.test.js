@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   formatBoardListResponse,
   formatBoardMembersResponse,
+  formatChecklistsResponse,
   formatCommentsResponse,
   formatLabelsResponse,
   formatListsResponse,
@@ -646,6 +647,75 @@ describe('formatCommentsResponse', () => {
       updated_at: null,
       mentioned_user_ids: null,
       attachment_ids: null,
+    });
+  });
+});
+
+describe('formatChecklistsResponse', () => {
+  const response = {
+    checklists: [
+      {
+        id: 10,
+        title: 'Review steps',
+        task_id: 20,
+        percentage: 50,
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact checklist fields by default', () => {
+    expect(formatChecklistsResponse(response)).toEqual({
+      checklists: [
+        {
+          id: 10,
+          title: 'Review steps',
+          percentage: 50,
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard checklist fields when requested', () => {
+    expect(formatChecklistsResponse(response, 'standard')).toEqual({
+      checklists: [
+        {
+          id: 10,
+          title: 'Review steps',
+          percentage: 50,
+          created_at: '2026-01-01T00:00:00Z',
+          updated_at: '2026-01-02T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard checklist fields to null', () => {
+    expect(formatChecklistsResponse({ checklists: [{}] }, 'standard').checklists[0]).toEqual({
+      id: null,
+      title: null,
+      percentage: null,
+      created_at: null,
+      updated_at: null,
     });
   });
 });

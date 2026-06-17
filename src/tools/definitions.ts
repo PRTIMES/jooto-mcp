@@ -54,6 +54,10 @@ const labelListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。色が必要な場合のみstandardを指定します。'
 );
 
+const checklistListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。作成日時や更新日時が必要な場合のみstandardを指定します。'
+);
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -319,7 +323,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-checklists',
-    description: 'タスクのチェックリスト一覧を取得します',
+    description: 'タスクのチェックリスト一覧を取得します。通常はdetail_level=compactを使用してください。作成日時や更新日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -328,6 +332,7 @@ export const toolDefinitions = [
           description: 'タスクのID',
         },
         ...paginationProperties,
+        ...checklistListDetailLevelProperty,
       },
       required: ['task_id'],
     },

@@ -6,7 +6,7 @@
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 import { jootoApiRequest, withPagination } from '../tools/utils.js';
-import { formatBoardListResponse, formatBoardMembersResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTasksResponse, formatUsersResponse, type DetailLevel } from '../tools/formatters.js';
+import { formatBoardListResponse, formatBoardMembersResponse, formatChecklistsResponse, formatCommentsResponse, formatLabelsResponse, formatListsResponse, formatTasksResponse, formatUsersResponse, type DetailLevel } from '../tools/formatters.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
@@ -163,7 +163,10 @@ const routes: Route[] = [
   // Checklists
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination(`/v1/tasks/${p.taskId}/checklists`, { page: parsePage(p.page) })),
+    handler: async (p) => formatChecklistsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/tasks/${p.taskId}/checklists`, { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)\/tasks\/(?<taskId>\d+)\/checklists\/(?<checklistId>\d+)$/,
