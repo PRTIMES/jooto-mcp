@@ -197,7 +197,7 @@ export async function processCreateBoardListTool(args: z.infer<ToolSchemas['joot
   const boardId = args.board_id;
   const requestBody: Record<string, any> = { name: args.name };
   if (args.color) requestBody.color = args.color;
-  if (args.is_done_list !== undefined) requestBody.is_done_list = args.is_done_list;
+  if (args.auto_task_status !== undefined) requestBody.auto_task_status = args.auto_task_status;
 
   return handleMcpOperation(
     async () => await jootoApiRequest('POST', `/v1/boards/${boardId}/lists`, requestBody),

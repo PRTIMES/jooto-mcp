@@ -4,6 +4,7 @@ const pageSchema = z.number({
   invalid_type_error: '"page"パラメータは数値でなければなりません',
 }).int('"page"パラメータは整数でなければなりません').positive('"page"パラメータは1以上でなければなりません').optional();
 
+const autoTaskStatusSchema = z.enum(['to_do', 'in_progress', 'done', 'cancel', 'pending', '']).optional();
 /**
  * ツール引数のZodスキーマ定義
  * 取得系（list / get）は resources としても公開しているが、MCP クライアントの対応状況を鑑み tool としても公開する。
@@ -189,7 +190,7 @@ export const toolSchemas = {
       invalid_type_error: '"name"パラメータは文字列でなければなりません',
     }),
     color: z.string().optional(),
-    is_done_list: z.boolean().optional(),
+    auto_task_status: autoTaskStatusSchema,
   }),
   'jooto-update-list': z.object({
     board_id: z.number({
@@ -202,7 +203,7 @@ export const toolSchemas = {
     }),
     name: z.string().optional(),
     color: z.string().optional(),
-    is_done_list: z.boolean().optional(),
+    auto_task_status: autoTaskStatusSchema,
   }),
   'jooto-delete-list': z.object({
     board_id: z.number({

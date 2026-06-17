@@ -408,9 +408,10 @@ export const toolDefinitions = [
           type: 'string',
           description: 'リストの色コード',
         },
-        is_done_list: {
-          type: 'boolean',
-          description: '完了リストかどうか',
+        auto_task_status: {
+          type: 'string',
+          enum: ['to_do', 'in_progress', 'done', 'cancel', 'pending', ''],
+          description: 'このリストに移動したタスクへ自動設定するステータス。空文字を指定するとクリアします',
         },
       },
       required: ['board_id', 'name'],
@@ -438,9 +439,10 @@ export const toolDefinitions = [
           type: 'string',
           description: 'リストの色コード',
         },
-        is_done_list: {
-          type: 'boolean',
-          description: '完了リストかどうか',
+        auto_task_status: {
+          type: 'string',
+          enum: ['to_do', 'in_progress', 'done', 'cancel', 'pending', ''],
+          description: 'このリストに移動したタスクへ自動設定するステータス。空文字を指定するとクリアします',
         },
       },
       required: ['board_id', 'list_id'],
