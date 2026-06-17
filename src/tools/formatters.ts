@@ -8,22 +8,36 @@ type FieldSelector = string | {
 
 interface FieldSpec {
   itemsKey: string;
-  compact: readonly string[];
+  compact: readonly FieldSelector[];
   standard: readonly FieldSelector[];
 }
 
-const categoryIdsField: FieldSelector = {
-  output: 'category_ids',
+function idArrayField(output: string, sourceKey: string): FieldSelector {
+  return {
+    output,
+    read: (source) => {
+      const items = source[sourceKey];
+      if (!Array.isArray(items)) return undefined;
+      return items
+        .map((item) => asRecord(item).id)
+        .filter((id): id is number => typeof id === 'number');
+    },
+  };
+}
+
+const senderIdField: FieldSelector = {
+  output: 'sender_id',
   read: (source) => {
-    const categories = source.categories;
-    if (!Array.isArray(categories)) return undefined;
-    return categories
-      .map((category) => asRecord(category).id)
-      .filter((id): id is number => typeof id === 'number');
+    const sender = asRecord(source.sender);
+    return sender.id;
   },
 };
 
-const FIELD_SPECS: Record<'board' | 'list' | 'task' | 'taskSearch', FieldSpec> = {
+const categoryIdsField = idArrayField('category_ids', 'categories');
+const mentionedUserIdsField = idArrayField('mentioned_user_ids', 'mentioned_users');
+const attachmentIdsField = idArrayField('attachment_ids', 'attachments');
+
+const FIELD_SPECS: Record<'board' | 'list' | 'task' | 'taskSearch' | 'comment', FieldSpec> = {
   board: {
     itemsKey: 'boards',
     compact: ['id', 'title'],
@@ -65,6 +79,19 @@ const FIELD_SPECS: Record<'board' | 'list' | 'task' | 'taskSearch', FieldSpec> =
       'updated_at',
     ],
   },
+  comment: {
+    itemsKey: 'comments',
+    compact: ['id', 'content', senderIdField, 'created_at'],
+    standard: [
+      'id',
+      'content',
+      senderIdField,
+      'created_at',
+      'updated_at',
+      mentionedUserIdsField,
+      attachmentIdsField,
+    ],
+  },
 };
 
 function asRecord(value: unknown): JsonRecord {
@@ -73,10 +100,6 @@ function asRecord(value: unknown): JsonRecord {
 
 function pickDefined(record: JsonRecord): JsonRecord {
   return Object.fromEntries(Object.entries(record).filter(([, value]) => value !== undefined));
-}
-
-function pickFields(source: JsonRecord, fields: readonly string[]): JsonRecord {
-  return Object.fromEntries(fields.map((field) => [field, source[field]]));
 }
 
 function fieldName(selector: FieldSelector): string {
@@ -93,7 +116,7 @@ function formatItem(item: unknown, spec: FieldSpec, detailLevel: DetailLevel): J
     return Object.fromEntries(spec.standard.map((field) => [fieldName(field), fieldValue(source, field) ?? null]));
   }
 
-  return pickDefined(pickFields(source, spec.compact));
+  return pickDefined(Object.fromEntries(spec.compact.map((field) => [fieldName(field), fieldValue(source, field)])));
 }
 
 function formatListResponse(response: unknown, spec: FieldSpec, detailLevel: DetailLevel) {
@@ -127,4 +150,8 @@ export function formatTasksResponse(response: unknown, detailLevel: DetailLevel 
 
 export function formatTaskSearchResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
   return formatListResponse(response, FIELD_SPECS.taskSearch, detailLevel);
+}
+
+export function formatCommentsResponse(response: unknown, detailLevel: DetailLevel = 'compact') {
+  return formatListResponse(response, FIELD_SPECS.comment, detailLevel);
 }

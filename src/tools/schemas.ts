@@ -122,6 +122,7 @@ export const toolSchemas = {
       invalid_type_error: '"task_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-get-comment': z.object({
     task_id: z.number({

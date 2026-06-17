@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   formatBoardListResponse,
+  formatCommentsResponse,
   formatListsResponse,
   formatTaskSearchResponse,
   formatTasksResponse,
@@ -340,6 +341,98 @@ describe('formatTaskSearchResponse', () => {
       deadline_date_time: null,
       category_ids: null,
       updated_at: null,
+    });
+  });
+});
+
+describe('formatCommentsResponse', () => {
+  const response = {
+    comments: [
+      {
+        id: 10,
+        content: 'Please review this invoice.',
+        created_at: '2026-01-01T00:00:00Z',
+        updated_at: '2026-01-02T00:00:00Z',
+        task_id: 20,
+        sender: {
+          id: 30,
+          name: 'sender',
+          display_name: 'Sender',
+        },
+        mentioned_users: [
+          {
+            id: 40,
+            name: 'mentioned',
+            display_name: 'Mentioned',
+          },
+        ],
+        attachments: [
+          {
+            id: 50,
+            name: 'invoice.pdf',
+            url: 'https://example.com/invoice.pdf',
+          },
+        ],
+      },
+    ],
+    page: 1,
+    per_page: 200,
+    total: 1,
+    total_pages: 1,
+  };
+
+  it('returns compact comment fields by default', () => {
+    expect(formatCommentsResponse(response)).toEqual({
+      comments: [
+        {
+          id: 10,
+          content: 'Please review this invoice.',
+          sender_id: 30,
+          created_at: '2026-01-01T00:00:00Z',
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'compact',
+      },
+    });
+  });
+
+  it('returns standard comment fields when requested', () => {
+    expect(formatCommentsResponse(response, 'standard')).toEqual({
+      comments: [
+        {
+          id: 10,
+          content: 'Please review this invoice.',
+          sender_id: 30,
+          created_at: '2026-01-01T00:00:00Z',
+          updated_at: '2026-01-02T00:00:00Z',
+          mentioned_user_ids: [40],
+          attachment_ids: [50],
+        },
+      ],
+      meta: {
+        page: 1,
+        per_page: 200,
+        total: 1,
+        total_pages: 1,
+        detail_level: 'standard',
+      },
+    });
+  });
+
+  it('normalizes missing standard comment fields to null', () => {
+    expect(formatCommentsResponse({ comments: [{}] }, 'standard').comments[0]).toEqual({
+      id: null,
+      content: null,
+      sender_id: null,
+      created_at: null,
+      updated_at: null,
+      mentioned_user_ids: null,
+      attachment_ids: null,
     });
   });
 });

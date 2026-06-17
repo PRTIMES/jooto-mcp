@@ -38,6 +38,10 @@ const taskDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。'
 );
 
+const commentListDetailLevelProperty = detailLevelProperty(
+  '返却する情報量。通常はcompactを使用してください。更新日時、mentioned_user_ids、attachment_idsが必要な場合のみstandardを指定します。'
+);
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -266,7 +270,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-comments',
-    description: 'タスクのコメント一覧を取得します',
+    description: 'タスクのコメント一覧を取得します。通常はdetail_level=compactを使用してください。更新日時、mentioned_user_ids、attachment_idsが必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -275,6 +279,7 @@ export const toolDefinitions = [
           description: 'タスクのID',
         },
         ...paginationProperties,
+        ...commentListDetailLevelProperty,
       },
       required: ['task_id'],
     },

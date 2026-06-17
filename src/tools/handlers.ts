@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
-import { formatBoardListResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse } from './formatters.js';
+import { formatBoardListResponse, formatCommentsResponse, formatListsResponse, formatTaskSearchResponse, formatTasksResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -143,7 +143,10 @@ export async function processGetTaskTool(args: z.infer<ToolSchemas['jooto-get-ta
 
 export async function processListCommentsTool(args: z.infer<ToolSchemas['jooto-list-comments']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination(`/v1/tasks/${args.task_id}/comments`, { page: args.page })),
+    async () => formatCommentsResponse(
+      await jootoApiRequest('GET', withPagination(`/v1/tasks/${args.task_id}/comments`, { page: args.page })),
+      args.detail_level
+    ),
     'コメント一覧の取得に失敗しました'
   );
 }

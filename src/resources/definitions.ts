@@ -118,9 +118,9 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   },
   // === Comments ===
   {
-    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments{?page}',
+    uriTemplate: 'jooto:///projects/{projectId}/tasks/{taskId}/comments{?page,detail_level}',
     name: 'コメント一覧',
-    description: 'タスクのコメント一覧を取得します',
+    description: 'タスクのコメント一覧を取得します。通常はdetail_level=compactを使用してください。',
     mimeType: 'application/json',
   },
   {
