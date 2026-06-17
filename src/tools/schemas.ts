@@ -5,10 +5,19 @@ const pageSchema = z.number({
 }).int('"page"パラメータは整数でなければなりません').positive('"page"パラメータは1以上でなければなりません').optional();
 
 const autoTaskStatusSchema = z.enum(['to_do', 'in_progress', 'done', 'cancel', 'pending', '']).optional();
+const taskStatusSchema = z.enum(['to_do', 'in_progress', 'done', 'cancel', 'pending']);
 
 const listDetailLevelSchema = z.enum(['compact', 'standard'], {
   invalid_type_error: '"detail_level"パラメータは"compact"または"standard"でなければなりません',
 }).default('compact');
+
+const taskListFilterSchema = {
+  category_ids: z.array(z.number()).optional(),
+  assignee_ids: z.array(z.number()).optional(),
+  deadline_since: z.string().optional(),
+  deadline_until: z.string().optional(),
+  status: z.array(taskStatusSchema).optional(),
+};
 /**
  * ツール引数のZodスキーマ定義
  * 取得系（list / get）は resources としても公開しているが、MCP クライアントの対応状況を鑑み tool としても公開する。
@@ -107,6 +116,7 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    ...taskListFilterSchema,
     detail_level: listDetailLevelSchema,
   }),
   'jooto-list-archived-tasks': z.object({
@@ -115,6 +125,7 @@ export const toolSchemas = {
       invalid_type_error: '"board_id"パラメータは数値でなければなりません',
     }),
     page: pageSchema,
+    ...taskListFilterSchema,
     detail_level: listDetailLevelSchema,
   }),
   'jooto-get-task': z.object({

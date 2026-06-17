@@ -64,6 +64,8 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 プロジェクト、リスト、タスクの通常一覧は未アーカイブのみを返します。アーカイブ済みを見たい場合は、専用のアーカイブ一覧ツールを使います。
 
+タスク一覧は返却件数が多くなりやすいため、`jooto-list-tasks` では可能な限り `category_ids`, `assignee_ids`, `deadline_since`, `deadline_until`, `status` で絞り込んでください。キーワードが分かっている場合は `jooto-search-task` を優先してください。開始日は一覧レスポンスの `start_date_time` で確認できますが、現在のOpenAPIでは開始日による絞り込みパラメータは提供されていません。
+
 ### `detail_level` ごとの返却フィールド
 
 `standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。

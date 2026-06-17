@@ -133,10 +133,27 @@ export async function processGetLabelTool(args: z.infer<ToolSchemas['jooto-get-l
   );
 }
 
+type TaskListArgs = z.infer<ToolSchemas['jooto-list-tasks']> | z.infer<ToolSchemas['jooto-list-archived-tasks']>;
+
+function appendArrayQueryParams(queryParams: URLSearchParams, key: string, values?: Array<number | string>) {
+  values?.forEach((value) => queryParams.append(key, value.toString()));
+}
+
+function buildTaskListPath(boardId: number, archived: boolean, args: TaskListArgs) {
+  const queryParams = new URLSearchParams({ archived: archived.toString() });
+  appendArrayQueryParams(queryParams, 'category_ids[]', args.category_ids);
+  appendArrayQueryParams(queryParams, 'assignee_ids[]', args.assignee_ids);
+  appendArrayQueryParams(queryParams, 'status[]', args.status);
+  if (args.deadline_since) queryParams.append('deadline_since', args.deadline_since);
+  if (args.deadline_until) queryParams.append('deadline_until', args.deadline_until);
+
+  return withPagination(`/v1/boards/${boardId}/tasks?${queryParams.toString()}`, { page: args.page });
+}
+
 export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list-tasks']>) {
   return handleMcpOperation(
     async () => formatTasksResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=false`, { page: args.page })),
+      await jootoApiRequest('GET', buildTaskListPath(args.board_id, false, args)),
       args.detail_level
     ),
     'タスク一覧の取得に失敗しました'
@@ -146,7 +163,7 @@ export async function processListTasksTool(args: z.infer<ToolSchemas['jooto-list
 export async function processListArchivedTasksTool(args: z.infer<ToolSchemas['jooto-list-archived-tasks']>) {
   return handleMcpOperation(
     async () => formatTasksResponse(
-      await jootoApiRequest('GET', withPagination(`/v1/boards/${args.board_id}/tasks?archived=true`, { page: args.page })),
+      await jootoApiRequest('GET', buildTaskListPath(args.board_id, true, args)),
       args.detail_level
     ),
     'アーカイブ済みタスク一覧の取得に失敗しました'

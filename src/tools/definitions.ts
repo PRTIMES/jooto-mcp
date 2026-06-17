@@ -66,6 +66,41 @@ const checklistItemListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。更新日時が必要な場合のみstandardを指定します。'
 );
 
+const taskListFilterProperties = {
+  category_ids: {
+    type: 'array',
+    description: '絞り込み対象のラベルID配列。タスク一覧は件数が多くなりやすいため、可能なら指定してください。',
+    items: {
+      type: 'number',
+    },
+  },
+  assignee_ids: {
+    type: 'array',
+    description: '絞り込み対象の担当者ID配列。タスク一覧は件数が多くなりやすいため、可能なら指定してください。',
+    items: {
+      type: 'number',
+    },
+  },
+  deadline_since: {
+    type: 'string',
+    description: 'この日時以降が締切のタスクに絞り込みます。ISO 8601形式を指定してください。',
+    format: 'date-time',
+  },
+  deadline_until: {
+    type: 'string',
+    description: 'この日時以前が締切のタスクに絞り込みます。ISO 8601形式を指定してください。',
+    format: 'date-time',
+  },
+  status: {
+    type: 'array',
+    description: '絞り込み対象のタスクステータス配列。',
+    items: {
+      type: 'string',
+      enum: ['to_do', 'in_progress', 'done', 'cancel', 'pending'],
+    },
+  },
+};
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -263,7 +298,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-tasks',
-    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
+    description: 'プロジェクト内の未アーカイブのタスク一覧を取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -272,6 +307,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...taskListFilterProperties,
         ...taskDetailLevelProperty,
       },
       required: ['board_id'],
@@ -279,7 +315,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-archived-tasks',
-    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。通常はdetail_level=compactを使用してください。description、category_ids、更新日時が必要な場合のみstandardを指定します。',
+    description: 'プロジェクト内のアーカイブ済みタスク一覧を取得します。件数が多くなりやすいため、可能ならcategory_ids、assignee_ids、deadline_since/deadline_until、statusで絞り込むか、キーワードがある場合はjooto-search-taskを使用してください。通常はdetail_level=compactを使用してください。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -288,6 +324,7 @@ export const toolDefinitions = [
           description: 'プロジェクトのID',
         },
         ...paginationProperties,
+        ...taskListFilterProperties,
         ...taskDetailLevelProperty,
       },
       required: ['board_id'],
