@@ -64,6 +64,24 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 プロジェクト、リスト、タスクの通常一覧は未アーカイブのみを返します。アーカイブ済みを見たい場合は、専用のアーカイブ一覧ツールを使います。
 
+### `detail_level` ごとの返却フィールド
+
+`standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。
+
+| ツール | `compact` | `standard` |
+| --- | --- | --- |
+| `jooto-list-users` | `id`, `name`, `display_name` | `id`, `name`, `display_name`, `email`, `role`, `created_at` |
+| `jooto-list-boards`, `jooto-list-archived-boards` | `id`, `title` | `id`, `title`, `description`, `created_at` |
+| `jooto-list-board-activities` | `id`, `type`, `data`, `sender_id`, `task_id`, `task_name`, `created_at` | `id`, `type`, `data`, `sender_id`, `sender_name`, `sender_display_name`, `task_id`, `task_name`, `task_status`, `task_list_id`, `created_at` |
+| `jooto-list-board-members` | `id`, `name`, `display_name`, `role` | `id`, `name`, `display_name`, `email`, `role` |
+| `jooto-list-lists`, `jooto-list-archived-lists` | `id`, `name` | `id`, `name`, `order`, `color`, `auto_task_status` |
+| `jooto-list-labels` | `id`, `name` | `id`, `name`, `color` |
+| `jooto-list-tasks`, `jooto-list-archived-tasks` | `id`, `name`, `list_id`, `status`, `assigned_user_ids`, `start_date_time`, `deadline_date_time` | `id`, `name`, `description`, `list_id`, `status`, `assigned_user_ids`, `start_date_time`, `deadline_date_time`, `category_ids`, `updated_at` |
+| `jooto-search-task` | `id`, `name`, `list_id`, `status`, `start_date_time`, `deadline_date_time` | `id`, `name`, `description`, `list_id`, `status`, `start_date_time`, `deadline_date_time`, `category_ids`, `updated_at` |
+| `jooto-list-comments` | `id`, `content`, `sender_id`, `created_at` | `id`, `content`, `sender_id`, `created_at`, `updated_at`, `mentioned_user_ids`, `attachment_ids` |
+| `jooto-list-checklists` | `id`, `title`, `percentage` | `id`, `title`, `percentage`, `created_at`, `updated_at` |
+| `jooto-list-checklist-items` | `id`, `content`, `checked`, `assigned_user_ids`, `start_date_time`, `deadline_date_time` | `id`, `content`, `checked`, `assigned_user_ids`, `start_date_time`, `deadline_date_time`, `updated_at` |
+
 ### ID の引き直し先
 
 `compact` / `standard` では、ネストしたオブジェクトを丸ごと返さず `*_id` や `*_ids` に変換することがあります。名前や詳細が必要な場合は、以下のツールで引き直します。
