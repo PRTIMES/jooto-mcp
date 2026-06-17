@@ -5,6 +5,10 @@ const pageSchema = z.number({
 }).int('"page"パラメータは整数でなければなりません').positive('"page"パラメータは1以上でなければなりません').optional();
 
 const autoTaskStatusSchema = z.enum(['to_do', 'in_progress', 'done', 'cancel', 'pending', '']).optional();
+
+const listDetailLevelSchema = z.enum(['compact', 'standard'], {
+  invalid_type_error: '"detail_level"パラメータは"compact"または"standard"でなければなりません',
+}).default('compact');
 /**
  * ツール引数のZodスキーマ定義
  * 取得系（list / get）は resources としても公開しているが、MCP クライアントの対応状況を鑑み tool としても公開する。
@@ -24,9 +28,11 @@ export const toolSchemas = {
   }),
   'jooto-list-boards': z.object({
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-list-archived-boards': z.object({
     page: pageSchema,
+    detail_level: listDetailLevelSchema,
   }),
   'jooto-get-board': z.object({
     board_id: z.number({

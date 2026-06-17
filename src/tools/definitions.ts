@@ -15,6 +15,15 @@ const paginationProperties = {
   },
 };
 
+const boardListDetailLevelProperty = {
+  detail_level: {
+    type: 'string',
+    enum: ['compact', 'standard'],
+    description: '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
+    default: 'compact',
+  },
+};
+
 export const toolDefinitions = [
   // === Read（取得系） ===
   {
@@ -59,21 +68,23 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-boards',
-    description: '未アーカイブのプロジェクト一覧を取得します',
+    description: '未アーカイブのプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
         ...paginationProperties,
+        ...boardListDetailLevelProperty,
       },
     },
   },
   {
     name: 'jooto-list-archived-boards',
-    description: 'アーカイブ済みプロジェクト一覧を取得します',
+    description: 'アーカイブ済みプロジェクト一覧を取得します。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。',
     inputSchema: {
       type: 'object',
       properties: {
         ...paginationProperties,
+        ...boardListDetailLevelProperty,
       },
     },
   },

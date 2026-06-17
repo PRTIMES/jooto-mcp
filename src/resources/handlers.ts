@@ -6,6 +6,7 @@
 
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 import { jootoApiRequest, withPagination } from '../tools/utils.js';
+import { formatBoardListResponse, type ListDetailLevel } from '../tools/formatters.js';
 
 /**
  * URI パスからパラメータを抽出するヘルパー
@@ -29,6 +30,15 @@ function parsePage(page?: string): number | undefined {
     throw new McpError(ErrorCode.InvalidRequest, `pageパラメータは1以上の整数でなければなりません: ${page}`);
   }
   return parsed;
+}
+
+function parseDetailLevel(detailLevel?: string): ListDetailLevel {
+  if (detailLevel === undefined || detailLevel === '') return 'compact';
+  if (detailLevel === 'compact' || detailLevel === 'standard') return detailLevel;
+  throw new McpError(
+    ErrorCode.InvalidRequest,
+    `detail_levelパラメータは"compact"または"standard"でなければなりません: ${detailLevel}`
+  );
 }
 
 /**
@@ -62,11 +72,17 @@ const routes: Route[] = [
   // Projects (= boards)
   {
     pattern: /^projects$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: parsePage(p.page) })),
+    handler: async (p) => formatBoardListResponse(
+      await jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/archived$/,
-    handler: async (p) => jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: parsePage(p.page) })),
+    handler: async (p) => formatBoardListResponse(
+      await jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: parsePage(p.page) })),
+      parseDetailLevel(p.detail_level)
+    ),
   },
   {
     pattern: /^projects\/(?<projectId>\d+)$/,

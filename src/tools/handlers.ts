@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { jootoApiRequest, handleMcpOperation, withPagination } from './utils.js';
 import { ToolSchemas } from './schemas.js';
+import { formatBoardListResponse } from './formatters.js';
 
 /**
  * ツールハンドラーのマップを作成
@@ -40,14 +41,20 @@ export async function processGetUserTool(args: z.infer<ToolSchemas['jooto-get-us
 
 export async function processListBoardsTool(args: z.infer<ToolSchemas['jooto-list-boards']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: args.page })),
+    async () => formatBoardListResponse(
+      await jootoApiRequest('GET', withPagination('/v1/boards?archived=false', { page: args.page })),
+      args.detail_level
+    ),
     'プロジェクト一覧の取得に失敗しました'
   );
 }
 
 export async function processListArchivedBoardsTool(args: z.infer<ToolSchemas['jooto-list-archived-boards']>) {
   return handleMcpOperation(
-    async () => await jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: args.page })),
+    async () => formatBoardListResponse(
+      await jootoApiRequest('GET', withPagination('/v1/boards?archived=true', { page: args.page })),
+      args.detail_level
+    ),
     'アーカイブ済みプロジェクト一覧の取得に失敗しました'
   );
 }

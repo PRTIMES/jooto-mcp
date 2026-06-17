@@ -34,11 +34,11 @@
   "tools": [
     {
       "name": "jooto-list-boards",
-      "description": "List active projects"
+      "description": "List active projects in compact form by default"
     },
     {
       "name": "jooto-list-archived-boards",
-      "description": "List archived projects"
+      "description": "List archived projects in compact form by default"
     },
     {
       "name": "jooto-get-board",
