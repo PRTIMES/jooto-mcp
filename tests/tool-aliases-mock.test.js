@@ -32,17 +32,18 @@ describe('tool aliases', () => {
     const taskTool = toolDefinitions.find((tool) => tool.name === 'jooto-create-task');
 
     expect(taskTool?.description).toContain('開始日時と締切日時を両方設定する必要があります');
-    expect(taskTool?.description).toContain('未指定側にも同じ値を自動設定');
-    expect(taskTool?.inputSchema.properties.start_date_time.description).toContain('未指定側にも同じ値を自動設定');
-    expect(taskTool?.inputSchema.properties.deadline_date_time.description).toContain('未指定側にも同じ値を自動設定');
+    expect(taskTool?.description).toContain('時刻付きなら開始日時と締切日時が1分差');
+    expect(taskTool?.description).toContain('日付のみは同日を許容');
+    expect(taskTool?.inputSchema.properties.start_date_time.description).toContain('1分差');
+    expect(taskTool?.inputSchema.properties.deadline_date_time.description).toContain('1分差');
   });
 
   it('explains how an existing task date is preserved or cleared on update', () => {
     const taskTool = toolDefinitions.find((tool) => tool.name === 'jooto-update-task');
 
     expect(taskTool?.description).toContain('反対側が設定済みなら変更対象だけを送信');
-    expect(taskTool?.description).toContain('両方を新しい値に揃えます');
-    expect(taskTool?.description).toContain('反対側が未設定の場合も');
+    expect(taskTool?.description).toContain('時刻付きなら新しい値を基準に1分差');
+    expect(taskTool?.description).toContain('反対側が未設定の場合も同様に補完');
     expect(taskTool?.description).toContain('空文字を明示的に指定');
     expect(taskTool?.description).toContain('パラメータ自体を省略');
     expect(taskTool?.inputSchema.properties.start_date_time.description).toContain('変更対象だけを送信');
@@ -53,57 +54,81 @@ describe('tool aliases', () => {
     const createItemTool = toolDefinitions.find((tool) => tool.name === 'jooto-create-checklist-item');
     const updateItemTool = toolDefinitions.find((tool) => tool.name === 'jooto-update-checklist-item');
 
-    expect(createItemTool?.description).toContain('未指定側にも同じ値を自動設定');
+    expect(createItemTool?.description).toContain('時刻付きなら開始日時と締切日時が1分差');
     expect(updateItemTool?.description).toContain('反対側が設定済みなら変更対象だけを送信');
-    expect(updateItemTool?.description).toContain('両方を新しい値に揃えます');
-    expect(updateItemTool?.description).toContain('反対側が未設定の場合も');
+    expect(updateItemTool?.description).toContain('時刻付きなら新しい値を基準に1分差');
+    expect(updateItemTool?.description).toContain('反対側が未設定の場合も同様に補完');
     expect(updateItemTool?.description).toContain('空文字を明示的に指定');
     expect(updateItemTool?.description).toContain('パラメータ自体を省略');
   });
 
-  it('copies a single date to the missing side on creation', () => {
-    expect(normalizeDatePairForCreate({ start_date_time: '2026-07-24T09:00:00+09:00' })).toEqual({
-      start_date_time: '2026-07-24T09:00:00+09:00',
-      deadline_date_time: '2026-07-24T09:00:00+09:00',
+  it('separates a single date-time by one minute on creation', () => {
+    expect(normalizeDatePairForCreate({ start_date_time: '2026-07-24T09:00:00.0Z' })).toEqual({
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T09:01:00.0Z',
     });
-    expect(normalizeDatePairForCreate({ deadline_date_time: '2026-07-24T18:00:00+09:00' })).toEqual({
-      start_date_time: '2026-07-24T18:00:00+09:00',
-      deadline_date_time: '2026-07-24T18:00:00+09:00',
+    expect(normalizeDatePairForCreate({ deadline_date_time: '2026-07-24T18:00:00.0Z' })).toEqual({
+      start_date_time: '2026-07-24T17:59:00.0Z',
+      deadline_date_time: '2026-07-24T18:00:00.0Z',
+    });
+  });
+
+  it('copies a single date-only value to the missing side on creation', () => {
+    expect(normalizeDatePairForCreate({ start_date_time: '2026-07-24' })).toEqual({
+      start_date_time: '2026-07-24',
+      deadline_date_time: '2026-07-24',
     });
   });
 
   it('keeps explicitly specified dates unchanged', () => {
     expect(normalizeDatePairForCreate({
-      start_date_time: '2026-07-24T09:00:00+09:00',
-      deadline_date_time: '2026-07-24T18:00:00+09:00',
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T18:00:00.0Z',
     })).toEqual({
-      start_date_time: '2026-07-24T09:00:00+09:00',
-      deadline_date_time: '2026-07-24T18:00:00+09:00',
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T18:00:00.0Z',
+    });
+  });
+
+  it('moves an explicitly identical deadline date-time one minute after the start', () => {
+    expect(normalizeDatePairForCreate({
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T09:00:00.0Z',
+    })).toEqual({
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T09:01:00.0Z',
+    });
+    expect(normalizeDatePairForCreate({
+      start_date_time: '2026-07-24',
+      deadline_date_time: '2026-07-24',
+    })).toEqual({
+      start_date_time: '2026-07-24',
+      deadline_date_time: '2026-07-24',
     });
   });
 
   it('sends only the specified date when the opposite side is already set', () => {
     expect(normalizeDatePairForUpdate(
-      { start_date_time: '2026-07-25T09:00:00+09:00' },
-      { deadline_date_time: '2026-07-30T18:00:00+09:00' }
+      { start_date_time: '2026-07-25T09:00:00.0Z' },
+      { deadline_date_time: '2026-07-30T18:00:00.0Z' }
     )).toEqual({
-      start_date_time: '2026-07-25T09:00:00+09:00',
+      start_date_time: '2026-07-25T09:00:00.0Z',
     });
     expect(normalizeDatePairForUpdate(
-      { deadline_date_time: '2026-07-31T18:00:00+09:00' },
-      { start_date_time: '2026-07-24T09:00:00+09:00' }
+      { deadline_date_time: '2026-07-31T18:00:00.0Z' },
+      { start_date_time: '2026-07-24T09:00:00.0Z' }
     )).toEqual({
-      deadline_date_time: '2026-07-31T18:00:00+09:00',
+      deadline_date_time: '2026-07-31T18:00:00.0Z',
     });
   });
 
-  it('uses the specified date for both sides when the opposite side is unset', () => {
+  it('completes an unset opposite date-time with a one-minute difference', () => {
     expect(normalizeDatePairForUpdate(
-      { deadline_date_time: '2026-07-31T18:00:00+09:00' },
+      { deadline_date_time: '2026-07-31T18:00:00.0Z' },
       {}
     )).toEqual({
-      start_date_time: '2026-07-31T18:00:00+09:00',
-      deadline_date_time: '2026-07-31T18:00:00+09:00',
+      start_date_time: '2026-07-31T17:59:00.0Z',
+      deadline_date_time: '2026-07-31T18:00:00.0Z',
     });
   });
 
@@ -119,11 +144,31 @@ describe('tool aliases', () => {
 
   it('uses the new deadline for both sides when it is before the current start date', () => {
     expect(normalizeDatePairForUpdate(
-      { deadline_date_time: '2026-07-23T23:59:59Z' },
-      { start_date_time: '2026-07-24T00:00:00Z' }
+      { deadline_date_time: '2026-07-23T23:59:59.0Z' },
+      { start_date_time: '2026-07-24T00:00:00.0Z' }
     )).toEqual({
-      start_date_time: '2026-07-23T23:59:59Z',
-      deadline_date_time: '2026-07-23T23:59:59Z',
+      start_date_time: '2026-07-23T23:58:59.0Z',
+      deadline_date_time: '2026-07-23T23:59:59.0Z',
+    });
+  });
+
+  it('separates a date-time from an identical existing opposite value', () => {
+    expect(normalizeDatePairForUpdate(
+      { start_date_time: '2026-07-24T09:00:00.0Z' },
+      { deadline_date_time: '2026-07-24T09:00:00.0Z' }
+    )).toEqual({
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T09:01:00.0Z',
+    });
+    expect(normalizeDatePairForUpdate(
+      {
+        start_date_time: '2026-07-24T09:00:00.0Z',
+        deadline_date_time: '2026-07-24T09:00:00.0Z',
+      },
+      {}
+    )).toEqual({
+      start_date_time: '2026-07-24T09:00:00.0Z',
+      deadline_date_time: '2026-07-24T09:01:00.0Z',
     });
   });
 
