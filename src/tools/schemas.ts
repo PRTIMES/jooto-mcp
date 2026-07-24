@@ -102,10 +102,17 @@ export function normalizeJootoDateTime(value: string): string {
   return utcDate.toISOString().replace('.000Z', 'Z');
 }
 
-function jootoDateTimeSchema(fieldName: 'start_date_time' | 'deadline_date_time') {
+function jootoDateTimeSchema(
+  fieldName: 'start_date_time' | 'deadline_date_time',
+  options: { allowEmpty?: boolean } = {}
+) {
   return z.string({
     invalid_type_error: `"${fieldName}"パラメータは文字列でなければなりません`,
   }).transform((value, context) => {
+    if (options.allowEmpty && value === '') {
+      return value;
+    }
+
     try {
       return normalizeJootoDateTime(value);
     } catch {
@@ -393,8 +400,8 @@ export const toolSchemas = {
     name: z.string().optional(),
     description: z.string().optional(),
     assigned_user_ids: z.array(z.number()).optional(),
-    start_date_time: jootoDateTimeSchema('start_date_time'),
-    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
+    start_date_time: jootoDateTimeSchema('start_date_time', { allowEmpty: true }),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time', { allowEmpty: true }),
     list_id: z.number().optional(),
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
@@ -559,8 +566,8 @@ export const toolSchemas = {
     }),
     content: z.string().optional(),
     checked: z.boolean().optional(),
-    start_date_time: jootoDateTimeSchema('start_date_time'),
-    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
+    start_date_time: jootoDateTimeSchema('start_date_time', { allowEmpty: true }),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time', { allowEmpty: true }),
   }),
   'jooto-delete-checklist-item': z.object({
     checklist_id: z.number({

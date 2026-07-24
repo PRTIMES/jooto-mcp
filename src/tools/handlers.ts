@@ -14,6 +14,23 @@ type DatePairFields = {
   deadline_date_time?: string;
 };
 
+function compareDateValues(left: string, right: string): number | undefined {
+  const dateOnlyPattern = /^\d{4}-\d{2}-\d{2}$/;
+  if (dateOnlyPattern.test(left) || dateOnlyPattern.test(right)) {
+    const leftDate = left.slice(0, 10);
+    const rightDate = right.slice(0, 10);
+    return leftDate === rightDate ? 0 : leftDate > rightDate ? 1 : -1;
+  }
+
+  const leftTimestamp = Date.parse(left);
+  const rightTimestamp = Date.parse(right);
+  if (Number.isNaN(leftTimestamp) || Number.isNaN(rightTimestamp)) {
+    return undefined;
+  }
+
+  return leftTimestamp === rightTimestamp ? 0 : leftTimestamp > rightTimestamp ? 1 : -1;
+}
+
 export function normalizeDatePairForCreate<T extends DatePairFields>(requestBody: T): T {
   if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
     requestBody.deadline_date_time = requestBody.start_date_time;
@@ -28,13 +45,42 @@ export function normalizeDatePairForUpdate<T extends DatePairFields>(
   requestBody: T,
   currentData: DatePairFields
 ): T {
-  if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
-    requestBody.deadline_date_time = currentData.deadline_date_time || requestBody.start_date_time;
-  } else if (requestBody.deadline_date_time !== undefined && requestBody.start_date_time === undefined) {
-    requestBody.start_date_time = currentData.start_date_time || requestBody.deadline_date_time;
+  if (
+    requestBody.start_date_time !== undefined &&
+    requestBody.start_date_time !== '' &&
+    requestBody.deadline_date_time === undefined
+  ) {
+    if (
+      !currentData.deadline_date_time ||
+      compareDateValues(requestBody.start_date_time, currentData.deadline_date_time) === 1
+    ) {
+      requestBody.deadline_date_time = requestBody.start_date_time;
+    }
+  } else if (
+    requestBody.deadline_date_time !== undefined &&
+    requestBody.deadline_date_time !== '' &&
+    requestBody.start_date_time === undefined
+  ) {
+    if (
+      !currentData.start_date_time ||
+      compareDateValues(requestBody.deadline_date_time, currentData.start_date_time) === -1
+    ) {
+      requestBody.start_date_time = requestBody.deadline_date_time;
+    }
   }
 
   return requestBody;
+}
+
+export function shouldLoadDatePairForUpdate(requestBody: DatePairFields): boolean {
+  const hasStartDate = requestBody.start_date_time !== undefined;
+  const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
+  if (hasStartDate === hasDeadlineDate) {
+    return false;
+  }
+
+  const specifiedDate = hasStartDate ? requestBody.start_date_time : requestBody.deadline_date_time;
+  return specifiedDate !== '';
 }
 
 // === Read（取得系） ===
@@ -360,9 +406,7 @@ export async function processUpdateBoardTaskTool(args: z.infer<ToolSchemas['joot
   const { board_id, task_id, ...requestBody } = args;
   return handleMcpOperation(
     async () => {
-      const hasStartDate = requestBody.start_date_time !== undefined;
-      const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
-      if (hasStartDate !== hasDeadlineDate) {
+      if (shouldLoadDatePairForUpdate(requestBody)) {
         const currentTask = await jootoApiRequest('GET', `/v1/boards/${board_id}/tasks/${task_id}`);
         normalizeDatePairForUpdate(requestBody, currentTask);
       }
@@ -494,9 +538,7 @@ export async function processUpdateChecklistItemTool(args: z.infer<ToolSchemas['
   const { checklist_id, item_id, ...requestBody } = args;
   return handleMcpOperation(
     async () => {
-      const hasStartDate = requestBody.start_date_time !== undefined;
-      const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
-      if (hasStartDate !== hasDeadlineDate) {
+      if (shouldLoadDatePairForUpdate(requestBody)) {
         const currentItem = await jootoApiRequest('GET', `/v1/checklists/${checklist_id}/items/${item_id}`);
         normalizeDatePairForUpdate(requestBody, currentItem);
       }

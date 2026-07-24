@@ -59,6 +59,35 @@ describe('date normalization', () => {
     expect(result.deadline_date_time).toBe('2026-07-24T09:00:00Z');
   });
 
+  it('preserves an empty task date when explicitly clearing it on update', () => {
+    const result = toolSchemas['jooto-update-task'].parse({
+      board_id: 1,
+      task_id: 2,
+      start_date_time: '',
+    });
+
+    expect(result.start_date_time).toBe('');
+    expect(result.deadline_date_time).toBeUndefined();
+  });
+
+  it('preserves an empty checklist item date when explicitly clearing it on update', () => {
+    const result = toolSchemas['jooto-update-checklist-item'].parse({
+      checklist_id: 1,
+      item_id: 2,
+      deadline_date_time: '',
+    });
+
+    expect(result.start_date_time).toBeUndefined();
+    expect(result.deadline_date_time).toBe('');
+  });
+
+  it.each([
+    ['jooto-create-task', { board_id: 1, name: 'Test task', list_id: 2, start_date_time: '' }],
+    ['jooto-create-checklist-item', { checklist_id: 1, content: 'Test item', deadline_date_time: '' }],
+  ])('rejects an empty date during creation for %s', (toolName, args) => {
+    expect(toolSchemas[toolName].safeParse(args).success).toBe(false);
+  });
+
   it('returns a field-specific validation error for an invalid task date', () => {
     const result = toolSchemas['jooto-update-task'].safeParse({
       board_id: 1,
@@ -91,4 +120,14 @@ describe('date normalization', () => {
       expect(deadlineDateProperty.description).toContain('YYYY-MM-DDTHH:mm:ssZ');
     }
   );
+
+  it.each([
+    'jooto-update-task',
+    'jooto-update-checklist-item',
+  ])('documents date clearing and omission for %s', (toolName) => {
+    const tool = toolDefinitions.find((definition) => definition.name === toolName);
+
+    expect(tool.description).toContain('空文字');
+    expect(tool.description).toContain('パラメータ自体を省略');
+  });
 });
