@@ -99,7 +99,7 @@ export function normalizeJootoDateTime(value: string): string {
     throw new Error('変換後の日時が対応範囲外です');
   }
 
-  return utcDate.toISOString().replace('.000Z', 'Z');
+  return utcDate.toISOString().replace('.000Z', '.0Z');
 }
 
 function jootoDateTimeSchema(
@@ -118,7 +118,7 @@ function jootoDateTimeSchema(
     } catch {
       context.addIssue({
         code: z.ZodIssueCode.custom,
-        message: `"${fieldName}"は日付のみならYYYY-MM-DD、時刻付きならタイムゾーンを含むYYYY-MM-DDTHH:mm:ssZ形式で指定してください`,
+        message: `"${fieldName}"は日付のみならYYYY-MM-DD、時刻付きならタイムゾーンを含むYYYY-MM-DDTHH:mm:ss.0Z形式で指定してください`,
       });
       return z.NEVER;
     }

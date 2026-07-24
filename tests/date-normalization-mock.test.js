@@ -13,12 +13,12 @@ describe('date normalization', () => {
   });
 
   it.each([
-    ['2026-07-24T09:30:00Z', '2026-07-24T09:30:00Z'],
-    ['2026-07-24T09:30Z', '2026-07-24T09:30:00Z'],
-    ['2026-07-24T09:30:00+09:00', '2026-07-24T00:30:00Z'],
-    ['2026/07/24 09:30:00+0900', '2026-07-24T00:30:00Z'],
-    ['2026-07-24T09:30:00.123Z', '2026-07-24T09:30:00Z'],
-  ])('normalizes a date-time value to UTC: %s', (input, expected) => {
+    ['2026-07-24T09:30:00Z', '2026-07-24T09:30:00.0Z'],
+    ['2026-07-24T09:30Z', '2026-07-24T09:30:00.0Z'],
+    ['2026-07-24T09:30:00+09:00', '2026-07-24T00:30:00.0Z'],
+    ['2026/07/24 09:30:00+0900', '2026-07-24T00:30:00.0Z'],
+    ['2026-07-24T09:30:00.123Z', '2026-07-24T09:30:00.0Z'],
+  ])('normalizes a date-time value to the Jooto UTC format: %s', (input, expected) => {
     expect(normalizeJootoDateTime(input)).toBe(expected);
   });
 
@@ -44,7 +44,7 @@ describe('date normalization', () => {
     });
 
     expect(result.start_date_time).toBe('2026-07-24');
-    expect(result.deadline_date_time).toBe('2026-07-24T09:00:00Z');
+    expect(result.deadline_date_time).toBe('2026-07-24T09:00:00.0Z');
   });
 
   it('normalizes checklist item date fields while parsing tool arguments', () => {
@@ -56,7 +56,7 @@ describe('date normalization', () => {
     });
 
     expect(result.start_date_time).toBe('2026-07-24');
-    expect(result.deadline_date_time).toBe('2026-07-24T09:00:00Z');
+    expect(result.deadline_date_time).toBe('2026-07-24T09:00:00.0Z');
   });
 
   it('preserves an empty task date when explicitly clearing it on update', () => {
@@ -113,11 +113,11 @@ describe('date normalization', () => {
 
       expect(startDateProperty.format).toBeUndefined();
       expect(deadlineDateProperty.format).toBeUndefined();
-      expect(tool.description).toContain('YYYY-MM-DDTHH:mm:ssZ');
+      expect(tool.description).toContain('YYYY-MM-DDTHH:mm:ss.0Z');
       expect(startDateProperty.description).toContain('YYYY-MM-DD');
-      expect(startDateProperty.description).toContain('YYYY-MM-DDTHH:mm:ssZ');
+      expect(startDateProperty.description).toContain('YYYY-MM-DDTHH:mm:ss.0Z');
       expect(deadlineDateProperty.description).toContain('YYYY-MM-DD');
-      expect(deadlineDateProperty.description).toContain('YYYY-MM-DDTHH:mm:ssZ');
+      expect(deadlineDateProperty.description).toContain('YYYY-MM-DDTHH:mm:ss.0Z');
     }
   );
 
