@@ -9,6 +9,34 @@ import { formatBoardActivitiesResponse, formatBoardListResponse, formatBoardMemb
  */
 export const toolHandlers = new Map();
 
+type TaskDateFields = {
+  start_date_time?: string;
+  deadline_date_time?: string;
+};
+
+export function normalizeTaskDatePairForCreate<T extends TaskDateFields>(requestBody: T): T {
+  if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
+    requestBody.deadline_date_time = requestBody.start_date_time;
+  } else if (requestBody.deadline_date_time !== undefined && requestBody.start_date_time === undefined) {
+    requestBody.start_date_time = requestBody.deadline_date_time;
+  }
+
+  return requestBody;
+}
+
+export function normalizeTaskDatePairForUpdate<T extends TaskDateFields>(
+  requestBody: T,
+  currentTask: TaskDateFields
+): T {
+  if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
+    requestBody.deadline_date_time = currentTask.deadline_date_time || requestBody.start_date_time;
+  } else if (requestBody.deadline_date_time !== undefined && requestBody.start_date_time === undefined) {
+    requestBody.start_date_time = currentTask.start_date_time || requestBody.deadline_date_time;
+  }
+
+  return requestBody;
+}
+
 // === Read（取得系） ===
 
 export async function processGetOrganizationTool(_args: z.infer<ToolSchemas['jooto-get-organization']>) {
@@ -314,12 +342,13 @@ export async function processCreateBoardTaskTool(args: z.infer<ToolSchemas['joot
   };
   if (args.description) requestBody.description = args.description;
   if (args.assigned_user_ids) requestBody.assigned_user_ids = args.assigned_user_ids;
-  if (args.start_date_time) requestBody.start_date_time = args.start_date_time;
-  if (args.deadline_date_time) requestBody.deadline_date_time = args.deadline_date_time;
+  if (args.start_date_time !== undefined) requestBody.start_date_time = args.start_date_time;
+  if (args.deadline_date_time !== undefined) requestBody.deadline_date_time = args.deadline_date_time;
   if (args.category_ids) requestBody.category_ids = args.category_ids;
   if (args.effort) requestBody.effort = args.effort;
   if (args.actual) requestBody.actual = args.actual;
   if (args.status) requestBody.status = args.status;
+  normalizeTaskDatePairForCreate(requestBody);
 
   return handleMcpOperation(
     async () => await jootoApiRequest('POST', `/v1/boards/${boardId}/tasks`, requestBody),
@@ -330,7 +359,16 @@ export async function processCreateBoardTaskTool(args: z.infer<ToolSchemas['joot
 export async function processUpdateBoardTaskTool(args: z.infer<ToolSchemas['jooto-update-task']>) {
   const { board_id, task_id, ...requestBody } = args;
   return handleMcpOperation(
-    async () => await jootoApiRequest('PATCH', `/v1/boards/${board_id}/tasks/${task_id}`, requestBody),
+    async () => {
+      const hasStartDate = requestBody.start_date_time !== undefined;
+      const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
+      if (hasStartDate !== hasDeadlineDate) {
+        const currentTask = await jootoApiRequest('GET', `/v1/boards/${board_id}/tasks/${task_id}`);
+        normalizeTaskDatePairForUpdate(requestBody, currentTask);
+      }
+
+      return await jootoApiRequest('PATCH', `/v1/boards/${board_id}/tasks/${task_id}`, requestBody);
+    },
     'タスク情報の更新に失敗しました'
   );
 }

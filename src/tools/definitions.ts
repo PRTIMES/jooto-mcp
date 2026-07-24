@@ -33,6 +33,9 @@ function searchableDescription(description: string, keywords: string): string {
 const projectSelectionGuidance = 'プロジェクトが指定されていない場合は、先にユーザーへ対象プロジェクトを確認してください。候補が必要な場合はjooto-list-projectsを使用します。';
 const taskProjectIdDescription = `プロジェクトのID。${projectSelectionGuidance}`;
 const destinationProjectIdDescription = `移動先のプロジェクトのID。移動先プロジェクトが指定されていない場合は、先にユーザーへ対象プロジェクトを確認してください。候補が必要な場合はjooto-list-projectsを使用します。`;
+const taskDatePairGuidance = 'Jootoでは開始日時と締切日時を両方設定する必要があります。';
+const taskDateCreateGuidance = '新規作成時に片方だけを指定した場合は、未指定側にも同じ値を自動設定します。';
+const taskDateUpdateGuidance = '更新時に片方だけを指定した場合は、現在のタスクから反対側の値を取得して維持します。反対側が未設定の場合のみ、指定された値を両方に設定します。';
 
 const boardListDetailLevelProperty = detailLevelProperty(
   '返却する情報量。通常はcompactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。'
@@ -654,7 +657,7 @@ export const toolDefinitions = [
   // === Task ===
   {
     name: 'jooto-create-task',
-    description: searchableDescription(`プロジェクト内に新しいタスクを作成します。${projectSelectionGuidance}`, 'jooto-create-task, create task, new task, add task'),
+    description: searchableDescription(`プロジェクト内に新しいタスクを作成します。${taskDatePairGuidance}${taskDateCreateGuidance}${projectSelectionGuidance}`, 'jooto-create-task, create task, new task, add task'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -684,12 +687,12 @@ export const toolDefinitions = [
         start_date_time: {
           type: 'string',
           format: 'date-time',
-          description: 'タスクの開始日時',
+          description: `タスクの開始日時。${taskDatePairGuidance}${taskDateCreateGuidance}`,
         },
         deadline_date_time: {
           type: 'string',
           format: 'date-time',
-          description: 'タスクの締め切り日時',
+          description: `タスクの締め切り日時。${taskDatePairGuidance}${taskDateCreateGuidance}`,
         },
         category_ids: {
           type: 'array',
@@ -717,7 +720,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-update-task',
-    description: searchableDescription(`特定のプロジェクト内の特定のタスク情報を更新します。${projectSelectionGuidance}`, 'jooto-update-task, update task, edit task, task update'),
+    description: searchableDescription(`特定のプロジェクト内の特定のタスク情報を更新します。${taskDatePairGuidance}${taskDateUpdateGuidance}${projectSelectionGuidance}`, 'jooto-update-task, update task, edit task, task update'),
     inputSchema: {
       type: 'object',
       properties: {
@@ -747,12 +750,12 @@ export const toolDefinitions = [
         start_date_time: {
           type: 'string',
           format: 'date-time',
-          description: 'タスクの開始日時',
+          description: `タスクの開始日時。${taskDatePairGuidance}${taskDateUpdateGuidance}`,
         },
         deadline_date_time: {
           type: 'string',
           format: 'date-time',
-          description: 'タスクの締め切り日時',
+          description: `タスクの締め切り日時。${taskDatePairGuidance}${taskDateUpdateGuidance}`,
         },
         list_id: {
           type: 'number',

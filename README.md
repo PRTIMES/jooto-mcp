@@ -68,6 +68,8 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 タスク検索、タスク一覧、タスク作成・更新などのタスク系ツールは対象プロジェクトの `board_id` が必要です。ユーザーがプロジェクトを指定していない場合は、先に対象プロジェクトを確認してください。候補が必要な場合は `jooto-list-projects` を使用します。
 
+タスクの開始日時と締切日時は両方設定する必要があります。`jooto-create-task` で `start_date_time` と `deadline_date_time` の片方だけを指定した場合、MCPサーバーは未指定側にも同じ値を自動設定します。`jooto-update-task` で片方だけを指定した場合は、現在のタスクを取得して既存の反対側の値を維持します。反対側が未設定の場合のみ、指定された値を両方に設定します。
+
 ### `detail_level` ごとの返却フィールド
 
 `standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。
