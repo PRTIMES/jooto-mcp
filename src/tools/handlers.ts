@@ -9,12 +9,12 @@ import { formatBoardActivitiesResponse, formatBoardListResponse, formatBoardMemb
  */
 export const toolHandlers = new Map();
 
-type TaskDateFields = {
+type DatePairFields = {
   start_date_time?: string;
   deadline_date_time?: string;
 };
 
-export function normalizeTaskDatePairForCreate<T extends TaskDateFields>(requestBody: T): T {
+export function normalizeDatePairForCreate<T extends DatePairFields>(requestBody: T): T {
   if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
     requestBody.deadline_date_time = requestBody.start_date_time;
   } else if (requestBody.deadline_date_time !== undefined && requestBody.start_date_time === undefined) {
@@ -24,14 +24,14 @@ export function normalizeTaskDatePairForCreate<T extends TaskDateFields>(request
   return requestBody;
 }
 
-export function normalizeTaskDatePairForUpdate<T extends TaskDateFields>(
+export function normalizeDatePairForUpdate<T extends DatePairFields>(
   requestBody: T,
-  currentTask: TaskDateFields
+  currentData: DatePairFields
 ): T {
   if (requestBody.start_date_time !== undefined && requestBody.deadline_date_time === undefined) {
-    requestBody.deadline_date_time = currentTask.deadline_date_time || requestBody.start_date_time;
+    requestBody.deadline_date_time = currentData.deadline_date_time || requestBody.start_date_time;
   } else if (requestBody.deadline_date_time !== undefined && requestBody.start_date_time === undefined) {
-    requestBody.start_date_time = currentTask.start_date_time || requestBody.deadline_date_time;
+    requestBody.start_date_time = currentData.start_date_time || requestBody.deadline_date_time;
   }
 
   return requestBody;
@@ -348,7 +348,7 @@ export async function processCreateBoardTaskTool(args: z.infer<ToolSchemas['joot
   if (args.effort) requestBody.effort = args.effort;
   if (args.actual) requestBody.actual = args.actual;
   if (args.status) requestBody.status = args.status;
-  normalizeTaskDatePairForCreate(requestBody);
+  normalizeDatePairForCreate(requestBody);
 
   return handleMcpOperation(
     async () => await jootoApiRequest('POST', `/v1/boards/${boardId}/tasks`, requestBody),
@@ -364,7 +364,7 @@ export async function processUpdateBoardTaskTool(args: z.infer<ToolSchemas['joot
       const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
       if (hasStartDate !== hasDeadlineDate) {
         const currentTask = await jootoApiRequest('GET', `/v1/boards/${board_id}/tasks/${task_id}`);
-        normalizeTaskDatePairForUpdate(requestBody, currentTask);
+        normalizeDatePairForUpdate(requestBody, currentTask);
       }
 
       return await jootoApiRequest('PATCH', `/v1/boards/${board_id}/tasks/${task_id}`, requestBody);
@@ -483,6 +483,7 @@ export async function processDeleteTaskChecklistTool(args: z.infer<ToolSchemas['
 
 export async function processCreateChecklistItemTool(args: z.infer<ToolSchemas['jooto-create-checklist-item']>) {
   const { checklist_id, ...requestBody } = args;
+  normalizeDatePairForCreate(requestBody);
   return handleMcpOperation(
     async () => await jootoApiRequest('POST', `/v1/checklists/${checklist_id}/items`, requestBody),
     'チェックリストアイテムの作成に失敗しました'
@@ -492,7 +493,16 @@ export async function processCreateChecklistItemTool(args: z.infer<ToolSchemas['
 export async function processUpdateChecklistItemTool(args: z.infer<ToolSchemas['jooto-update-checklist-item']>) {
   const { checklist_id, item_id, ...requestBody } = args;
   return handleMcpOperation(
-    async () => await jootoApiRequest('PATCH', `/v1/checklists/${checklist_id}/items/${item_id}`, requestBody),
+    async () => {
+      const hasStartDate = requestBody.start_date_time !== undefined;
+      const hasDeadlineDate = requestBody.deadline_date_time !== undefined;
+      if (hasStartDate !== hasDeadlineDate) {
+        const currentItem = await jootoApiRequest('GET', `/v1/checklists/${checklist_id}/items/${item_id}`);
+        normalizeDatePairForUpdate(requestBody, currentItem);
+      }
+
+      return await jootoApiRequest('PATCH', `/v1/checklists/${checklist_id}/items/${item_id}`, requestBody);
+    },
     'チェックリストアイテムの更新に失敗しました'
   );
 }

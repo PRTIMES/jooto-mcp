@@ -34,7 +34,7 @@ function padDateTimePart(value: number): string {
   return value.toString().padStart(2, '0');
 }
 
-export function normalizeTaskDateTime(value: string): string {
+export function normalizeJootoDateTime(value: string): string {
   const input = value.trim();
   const dateOnlyMatch = input.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
   if (dateOnlyMatch) {
@@ -102,12 +102,12 @@ export function normalizeTaskDateTime(value: string): string {
   return utcDate.toISOString().replace('.000Z', 'Z');
 }
 
-function taskDateTimeSchema(fieldName: 'start_date_time' | 'deadline_date_time') {
+function jootoDateTimeSchema(fieldName: 'start_date_time' | 'deadline_date_time') {
   return z.string({
     invalid_type_error: `"${fieldName}"パラメータは文字列でなければなりません`,
   }).transform((value, context) => {
     try {
-      return normalizeTaskDateTime(value);
+      return normalizeJootoDateTime(value);
     } catch {
       context.addIssue({
         code: z.ZodIssueCode.custom,
@@ -377,8 +377,8 @@ export const toolSchemas = {
     }),
     description: z.string().optional(),
     assigned_user_ids: z.array(z.number()).optional(),
-    start_date_time: taskDateTimeSchema('start_date_time'),
-    deadline_date_time: taskDateTimeSchema('deadline_date_time'),
+    start_date_time: jootoDateTimeSchema('start_date_time'),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
     actual: z.string().optional(),
@@ -393,8 +393,8 @@ export const toolSchemas = {
     name: z.string().optional(),
     description: z.string().optional(),
     assigned_user_ids: z.array(z.number()).optional(),
-    start_date_time: taskDateTimeSchema('start_date_time'),
-    deadline_date_time: taskDateTimeSchema('deadline_date_time'),
+    start_date_time: jootoDateTimeSchema('start_date_time'),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
     list_id: z.number().optional(),
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
@@ -545,6 +545,8 @@ export const toolSchemas = {
       required_error: '"content"パラメータは必須です',
       invalid_type_error: '"content"パラメータは文字列でなければなりません',
     }),
+    start_date_time: jootoDateTimeSchema('start_date_time'),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
   }),
   'jooto-update-checklist-item': z.object({
     checklist_id: z.number({
@@ -557,6 +559,8 @@ export const toolSchemas = {
     }),
     content: z.string().optional(),
     checked: z.boolean().optional(),
+    start_date_time: jootoDateTimeSchema('start_date_time'),
+    deadline_date_time: jootoDateTimeSchema('deadline_date_time'),
   }),
   'jooto-delete-checklist-item': z.object({
     checklist_id: z.number({

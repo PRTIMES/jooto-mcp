@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { toolDefinitions } from '../src/tools/definitions.ts';
 import {
-  normalizeTaskDatePairForCreate,
-  normalizeTaskDatePairForUpdate,
+  normalizeDatePairForCreate,
+  normalizeDatePairForUpdate,
   toolHandlers,
 } from '../src/tools/handlers.ts';
 import { toolSchemas } from '../src/tools/schemas.ts';
@@ -45,19 +45,28 @@ describe('tool aliases', () => {
     expect(taskTool?.inputSchema.properties.deadline_date_time.description).toContain('反対側の値を取得して維持');
   });
 
-  it('copies a single task date to the missing side on creation', () => {
-    expect(normalizeTaskDatePairForCreate({ start_date_time: '2026-07-24T09:00:00+09:00' })).toEqual({
+  it('explains checklist item date completion for create and update', () => {
+    const createItemTool = toolDefinitions.find((tool) => tool.name === 'jooto-create-checklist-item');
+    const updateItemTool = toolDefinitions.find((tool) => tool.name === 'jooto-update-checklist-item');
+
+    expect(createItemTool?.description).toContain('未指定側にも同じ値を自動設定');
+    expect(updateItemTool?.description).toContain('現在のアイテムから反対側の値を取得して維持');
+    expect(updateItemTool?.description).toContain('反対側が未設定の場合のみ');
+  });
+
+  it('copies a single date to the missing side on creation', () => {
+    expect(normalizeDatePairForCreate({ start_date_time: '2026-07-24T09:00:00+09:00' })).toEqual({
       start_date_time: '2026-07-24T09:00:00+09:00',
       deadline_date_time: '2026-07-24T09:00:00+09:00',
     });
-    expect(normalizeTaskDatePairForCreate({ deadline_date_time: '2026-07-24T18:00:00+09:00' })).toEqual({
+    expect(normalizeDatePairForCreate({ deadline_date_time: '2026-07-24T18:00:00+09:00' })).toEqual({
       start_date_time: '2026-07-24T18:00:00+09:00',
       deadline_date_time: '2026-07-24T18:00:00+09:00',
     });
   });
 
-  it('keeps explicitly specified task dates unchanged', () => {
-    expect(normalizeTaskDatePairForCreate({
+  it('keeps explicitly specified dates unchanged', () => {
+    expect(normalizeDatePairForCreate({
       start_date_time: '2026-07-24T09:00:00+09:00',
       deadline_date_time: '2026-07-24T18:00:00+09:00',
     })).toEqual({
@@ -66,15 +75,15 @@ describe('tool aliases', () => {
     });
   });
 
-  it('preserves the existing opposite task date on update', () => {
-    expect(normalizeTaskDatePairForUpdate(
+  it('preserves the existing opposite date on update', () => {
+    expect(normalizeDatePairForUpdate(
       { start_date_time: '2026-07-25T09:00:00+09:00' },
       { deadline_date_time: '2026-07-30T18:00:00+09:00' }
     )).toEqual({
       start_date_time: '2026-07-25T09:00:00+09:00',
       deadline_date_time: '2026-07-30T18:00:00+09:00',
     });
-    expect(normalizeTaskDatePairForUpdate(
+    expect(normalizeDatePairForUpdate(
       { deadline_date_time: '2026-07-31T18:00:00+09:00' },
       { start_date_time: '2026-07-24T09:00:00+09:00' }
     )).toEqual({
@@ -83,8 +92,8 @@ describe('tool aliases', () => {
     });
   });
 
-  it('uses the specified task date for both sides when the opposite side is unset', () => {
-    expect(normalizeTaskDatePairForUpdate(
+  it('uses the specified date for both sides when the opposite side is unset', () => {
+    expect(normalizeDatePairForUpdate(
       { deadline_date_time: '2026-07-31T18:00:00+09:00' },
       {}
     )).toEqual({

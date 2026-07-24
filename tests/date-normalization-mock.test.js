@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { toolDefinitions } from '../src/tools/definitions.ts';
-import { normalizeTaskDateTime, toolSchemas } from '../src/tools/schemas.ts';
+import { normalizeJootoDateTime, toolSchemas } from '../src/tools/schemas.ts';
 
-describe('task date normalization', () => {
+describe('date normalization', () => {
   it.each([
     ['2026-07-24', '2026-07-24'],
     ['2026/07/24', '2026-07-24'],
     ['2026/7/4', '2026-07-04'],
     ['2024-02-29', '2024-02-29'],
   ])('normalizes a date-only value: %s', (input, expected) => {
-    expect(normalizeTaskDateTime(input)).toBe(expected);
+    expect(normalizeJootoDateTime(input)).toBe(expected);
   });
 
   it.each([
@@ -19,7 +19,7 @@ describe('task date normalization', () => {
     ['2026/07/24 09:30:00+0900', '2026-07-24T00:30:00Z'],
     ['2026-07-24T09:30:00.123Z', '2026-07-24T09:30:00Z'],
   ])('normalizes a date-time value to UTC: %s', (input, expected) => {
-    expect(normalizeTaskDateTime(input)).toBe(expected);
+    expect(normalizeJootoDateTime(input)).toBe(expected);
   });
 
   it.each([
@@ -31,7 +31,7 @@ describe('task date normalization', () => {
     '2026-07-24T09:30:00+24:00',
     '7月24日',
   ])('rejects a value that cannot be normalized: %s', (input) => {
-    expect(() => normalizeTaskDateTime(input)).toThrow();
+    expect(() => normalizeJootoDateTime(input)).toThrow();
   });
 
   it('normalizes task date fields while parsing tool arguments', () => {
@@ -39,6 +39,18 @@ describe('task date normalization', () => {
       board_id: 1,
       name: 'Test task',
       list_id: 2,
+      start_date_time: '2026/07/24',
+      deadline_date_time: '2026-07-24T18:00:00+09:00',
+    });
+
+    expect(result.start_date_time).toBe('2026-07-24');
+    expect(result.deadline_date_time).toBe('2026-07-24T09:00:00Z');
+  });
+
+  it('normalizes checklist item date fields while parsing tool arguments', () => {
+    const result = toolSchemas['jooto-create-checklist-item'].parse({
+      checklist_id: 1,
+      content: 'Test item',
       start_date_time: '2026/07/24',
       deadline_date_time: '2026-07-24T18:00:00+09:00',
     });
@@ -58,7 +70,12 @@ describe('task date normalization', () => {
     expect(result.error?.issues[0].message).toContain('"start_date_time"は日付のみならYYYY-MM-DD');
   });
 
-  it.each(['jooto-create-task', 'jooto-update-task'])(
+  it.each([
+    'jooto-create-task',
+    'jooto-update-task',
+    'jooto-create-checklist-item',
+    'jooto-update-checklist-item',
+  ])(
     'documents both supported canonical formats for %s',
     (toolName) => {
       const tool = toolDefinitions.find((definition) => definition.name === toolName);
