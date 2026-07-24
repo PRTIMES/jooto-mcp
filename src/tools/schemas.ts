@@ -21,6 +21,103 @@ const taskBoardIdSchema = z.number({
   invalid_type_error: '"board_id"パラメータは数値でなければなりません',
 });
 
+function isValidCalendarDate(year: number, month: number, day: number): boolean {
+  if (year < 1 || year > 9999 || month < 1 || month > 12 || day < 1) {
+    return false;
+  }
+
+  const daysPerMonth = [31, (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= daysPerMonth[month - 1];
+}
+
+function padDateTimePart(value: number): string {
+  return value.toString().padStart(2, '0');
+}
+
+export function normalizeTaskDateTime(value: string): string {
+  const input = value.trim();
+  const dateOnlyMatch = input.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+  if (dateOnlyMatch) {
+    const [, yearText, monthText, dayText] = dateOnlyMatch;
+    const year = Number(yearText);
+    const month = Number(monthText);
+    const day = Number(dayText);
+    if (!isValidCalendarDate(year, month, day)) {
+      throw new Error('実在しない日付です');
+    }
+
+    return `${yearText}-${padDateTimePart(month)}-${padDateTimePart(day)}`;
+  }
+
+  const dateTimeMatch = input.match(
+    /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})[Tt ](\d{1,2}):(\d{2})(?::(\d{2})(?:\.\d{1,9})?)?(Z|z|[+-]\d{2}:?\d{2})$/
+  );
+  if (!dateTimeMatch) {
+    throw new Error('対応していない日付形式です');
+  }
+
+  const [, yearText, monthText, dayText, hourText, minuteText, secondText = '00', timeZoneText] = dateTimeMatch;
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
+  const hour = Number(hourText);
+  const minute = Number(minuteText);
+  const second = Number(secondText);
+  if (
+    !isValidCalendarDate(year, month, day) ||
+    hour < 0 || hour > 23 ||
+    minute < 0 || minute > 59 ||
+    second < 0 || second > 59
+  ) {
+    throw new Error('実在しない日時です');
+  }
+
+  let offsetMinutes = 0;
+  if (timeZoneText.toUpperCase() !== 'Z') {
+    const offsetMatch = timeZoneText.match(/^([+-])(\d{2}):?(\d{2})$/);
+    if (!offsetMatch) {
+      throw new Error('タイムゾーンが不正です');
+    }
+
+    const [, sign, offsetHourText, offsetMinuteText] = offsetMatch;
+    const offsetHour = Number(offsetHourText);
+    const offsetMinute = Number(offsetMinuteText);
+    if (offsetHour > 23 || offsetMinute > 59) {
+      throw new Error('タイムゾーンが不正です');
+    }
+
+    offsetMinutes = (offsetHour * 60 + offsetMinute) * (sign === '+' ? 1 : -1);
+  }
+
+  const localDateTime = new Date(0);
+  localDateTime.setUTCFullYear(year, month - 1, day);
+  localDateTime.setUTCHours(hour, minute, second, 0);
+  const utcTimestamp = localDateTime.getTime() - offsetMinutes * 60_000;
+  const utcDate = new Date(utcTimestamp);
+  const utcYear = utcDate.getUTCFullYear();
+  if (Number.isNaN(utcTimestamp) || utcYear < 1 || utcYear > 9999) {
+    throw new Error('変換後の日時が対応範囲外です');
+  }
+
+  return utcDate.toISOString().replace('.000Z', 'Z');
+}
+
+function taskDateTimeSchema(fieldName: 'start_date_time' | 'deadline_date_time') {
+  return z.string({
+    invalid_type_error: `"${fieldName}"パラメータは文字列でなければなりません`,
+  }).transform((value, context) => {
+    try {
+      return normalizeTaskDateTime(value);
+    } catch {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `"${fieldName}"は日付のみならYYYY-MM-DD、時刻付きならタイムゾーンを含むYYYY-MM-DDTHH:mm:ssZ形式で指定してください`,
+      });
+      return z.NEVER;
+    }
+  }).optional();
+}
+
 const taskListFilterSchema = {
   category_ids: z.array(z.number()).optional(),
   assignee_ids: z.array(z.number()).optional(),
@@ -280,8 +377,8 @@ export const toolSchemas = {
     }),
     description: z.string().optional(),
     assigned_user_ids: z.array(z.number()).optional(),
-    start_date_time: z.string().optional(),
-    deadline_date_time: z.string().optional(),
+    start_date_time: taskDateTimeSchema('start_date_time'),
+    deadline_date_time: taskDateTimeSchema('deadline_date_time'),
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
     actual: z.string().optional(),
@@ -296,8 +393,8 @@ export const toolSchemas = {
     name: z.string().optional(),
     description: z.string().optional(),
     assigned_user_ids: z.array(z.number()).optional(),
-    start_date_time: z.string().optional(),
-    deadline_date_time: z.string().optional(),
+    start_date_time: taskDateTimeSchema('start_date_time'),
+    deadline_date_time: taskDateTimeSchema('deadline_date_time'),
     list_id: z.number().optional(),
     category_ids: z.array(z.number()).optional(),
     effort: z.string().optional(),
