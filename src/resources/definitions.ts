@@ -40,6 +40,13 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
     description: '特定のユーザー情報を取得します',
     mimeType: 'application/json',
   },
+  // === Notifications ===
+  {
+    uriTemplate: 'jooto:///notifications',
+    name: '通知一覧',
+    description: '自分宛ての通知一覧を取得します。',
+    mimeType: 'application/json',
+  },
   // === Projects (= boards) ===
   {
     uriTemplate: 'jooto:///projects{?page,detail_level}',

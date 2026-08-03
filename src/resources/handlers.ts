@@ -72,6 +72,11 @@ const routes: Route[] = [
     pattern: /^users\/(?<userId>\d+)$/,
     handler: async (p) => jootoApiRequest('GET', `/v1/users/${p.userId}`),
   },
+  // Notifications
+  {
+    pattern: /^notifications$/,
+    handler: async () => jootoApiRequest('GET', '/v1/notifications'),
+  },
   // Projects (= boards)
   {
     pattern: /^projects$/,

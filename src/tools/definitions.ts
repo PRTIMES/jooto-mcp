@@ -160,6 +160,14 @@ export const toolDefinitions = [
     },
   },
   {
+    name: 'jooto-list-notifications',
+    description: searchableDescription('自分宛ての通知一覧を取得します。', 'jooto-list-notifications, 通知, お知らせ, 通知一覧, ベル, notification, notifications, inbox, alerts'),
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  {
     name: 'jooto-list-projects',
     description: searchableDescription('未アーカイブのプロジェクト一覧を取得します。jooto-list-boardsと同じ結果を返すプロジェクト名のエイリアスです。通常はdetail_level=compactを使用してください。descriptionや作成日時が必要な場合のみstandardを指定します。', 'jooto-list-projects, project list, projects list, list projects, プロジェクト一覧, 未アーカイブ プロジェクト一覧'),
     inputSchema: {

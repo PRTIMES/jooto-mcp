@@ -150,6 +150,7 @@ export const toolSchemas = {
       invalid_type_error: '"user_id"パラメータは数値でなければなりません',
     }),
   }),
+  'jooto-list-notifications': z.object({}),
   'jooto-list-projects': boardListSchema,
   'jooto-list-boards': boardListSchema,
   'jooto-list-archived-projects': boardListSchema,
