@@ -44,7 +44,7 @@ export const resourceTemplateDefinitions: ResourceTemplateDefinition[] = [
   {
     uriTemplate: 'jooto:///notifications',
     name: '通知一覧',
-    description: '自分宛ての通知一覧を取得します。',
+    description: '自分宛ての通知一覧を取得します。直近2週間のタスク関連通知のみが対象です。',
     mimeType: 'application/json',
   },
   // === Projects (= boards) ===

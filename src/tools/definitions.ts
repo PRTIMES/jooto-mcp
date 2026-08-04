@@ -161,7 +161,7 @@ export const toolDefinitions = [
   },
   {
     name: 'jooto-list-notifications',
-    description: searchableDescription('自分宛ての通知一覧を取得します。', 'jooto-list-notifications, 通知, お知らせ, 通知一覧, ベル, notification, notifications, inbox, alerts'),
+    description: searchableDescription('自分宛ての通知一覧を取得します。直近2週間のタスク関連通知のみが対象です。', 'jooto-list-notifications, 通知, お知らせ, 通知一覧, ベル, notification, notifications, inbox, alerts'),
     inputSchema: {
       type: 'object',
       properties: {},

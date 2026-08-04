@@ -119,7 +119,7 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 | ツール | 用途 |
 | --- | --- |
 | `jooto-list-users` | 組織ユーザー一覧 |
-| `jooto-list-notifications` | 自分宛ての通知一覧 |
+| `jooto-list-notifications` | 自分宛ての通知一覧（直近2週間・タスク関連のみ） |
 | `jooto-list-projects` (`jooto-list-boards`) | 未アーカイブのプロジェクト一覧 |
 | `jooto-list-archived-projects` (`jooto-list-archived-boards`) | アーカイブ済みプロジェクト一覧 |
 | `jooto-list-board-activities` | プロジェクト履歴一覧 |
