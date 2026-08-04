@@ -62,6 +62,8 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 一覧取得では `page` を指定できます。未指定時は `page=1` です。API 呼び出し時の `per_page` はサーバー側で既定値 `200` を付与します。ただし、タスク一覧、タスク検索、プロジェクト履歴一覧は返却量が大きいため `per_page=20` を付与します。レスポンスの `meta.total_pages` で次ページがある場合でも、一気に全ページを取得せず、必要に応じてユーザーに何ページ分まで取得するか確認してください。
 
+通知一覧 (`jooto-list-notifications`) は例外で、`page` も `detail_level` も指定できません。
+
 プロジェクト、リスト、タスクの通常一覧は未アーカイブのみを返します。アーカイブ済みを見たい場合は、専用のアーカイブ一覧ツールを使います。
 
 タスク一覧は返却件数が多くなりやすいため、`jooto-list-tasks` では可能な限り `category_ids`, `assignee_ids`, `deadline_since`, `deadline_until`, `status` で絞り込んでください。キーワードが分かっている場合は `jooto-search-task` を優先してください。開始日は一覧レスポンスの `start_date_time` で確認できますが、現在のOpenAPIでは開始日による絞り込みパラメータは提供されていません。
@@ -80,7 +82,7 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 
 ### `detail_level` ごとの返却フィールド
 
-`standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。
+`standard` は `compact` への追加差分ではなく、その `detail_level` で返却されるフィールド一式です。一覧レスポンスには、各アイテム配列とは別に `page`, `per_page`, `total`, `total_pages`, `detail_level` を含む `meta` が返ります。通知一覧 (`jooto-list-notifications`) は整形せずそのまま返すため、この表の対象外です。
 
 | ツール | `compact` | `standard` |
 | --- | --- | --- |
@@ -117,6 +119,7 @@ Jooto API の `board` は、MCP 上ではユーザー向けの語彙として「
 | ツール | 用途 |
 | --- | --- |
 | `jooto-list-users` | 組織ユーザー一覧 |
+| `jooto-list-notifications` | 自分宛ての通知一覧（直近2週間・タスク関連のみ） |
 | `jooto-list-projects` (`jooto-list-boards`) | 未アーカイブのプロジェクト一覧 |
 | `jooto-list-archived-projects` (`jooto-list-archived-boards`) | アーカイブ済みプロジェクト一覧 |
 | `jooto-list-board-activities` | プロジェクト履歴一覧 |

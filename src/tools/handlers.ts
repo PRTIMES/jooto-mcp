@@ -175,6 +175,13 @@ export async function processGetUserTool(args: z.infer<ToolSchemas['jooto-get-us
   );
 }
 
+export async function processListNotificationsTool(_args: z.infer<ToolSchemas['jooto-list-notifications']>) {
+  return handleMcpOperation(
+    async () => await jootoApiRequest('GET', '/v1/notifications'),
+    '通知一覧の取得に失敗しました'
+  );
+}
+
 export async function processListBoardsTool(args: z.infer<ToolSchemas['jooto-list-boards']>) {
   return handleMcpOperation(
     async () => formatBoardListResponse(
@@ -623,6 +630,7 @@ toolHandlers.set('jooto-get-organization', processGetOrganizationTool);
 toolHandlers.set('jooto-get-rate-limit', processGetRateLimitTool);
 toolHandlers.set('jooto-list-users', processListUsersTool);
 toolHandlers.set('jooto-get-user', processGetUserTool);
+toolHandlers.set('jooto-list-notifications', processListNotificationsTool);
 toolHandlers.set('jooto-list-projects', processListBoardsTool);
 toolHandlers.set('jooto-list-boards', processListBoardsTool);
 toolHandlers.set('jooto-list-archived-projects', processListArchivedBoardsTool);

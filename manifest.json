@@ -217,6 +217,10 @@
       "description": "Get user details"
     },
     {
+      "name": "jooto-list-notifications",
+      "description": "List your notifications"
+    },
+    {
       "name": "jooto-get-rate-limit",
       "description": "Check API rate limits"
     }
